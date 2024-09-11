@@ -7,7 +7,5 @@ public interface DataConverter<T> {
 
     List<T> convertData() throws IOException; 
 
-    T createDomainFromRow (String[] row); 
-
     List<T> getData();
 }

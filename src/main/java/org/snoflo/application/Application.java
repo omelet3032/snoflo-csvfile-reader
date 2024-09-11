@@ -11,16 +11,11 @@ public class Application {
         this.appController = appController;
     }
 
-    public static synchronized Application getInstance(AppController appController) {
+    public static synchronized Application start(AppController appController) {
         if (instance == null) {
             instance = new Application(appController);
         }
         return instance;
     }
-
-    public void start() {
-        appController.executeMainMenu();
-    }
-
 
 }

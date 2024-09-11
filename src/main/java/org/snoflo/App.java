@@ -1,13 +1,13 @@
 package org.snoflo;
 
 import org.snoflo.application.Application;
-import org.snoflo.controller.AppController;
+import org.snoflo.controller.QuestionController;
 
 public class App {
     
     public static void main(String[] args) {
-        Application application = Application.getInstance(new AppController());
-        application.start();
+
+        Application.start(new QuestionController());
 
     }
 }
