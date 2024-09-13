@@ -12,13 +12,14 @@ public class QuestionDataConverter implements DataConverter<Question> {
 	private List<String[]> dataOfCsvFile;
 	private List<Question> conversionData;
 	private CsvFileReader csvFileReader;
-	private CsvFileDto csvFileDto;
-	private String csvFile; // 추후 dto로 변경
 
-	public QuestionDataConverter(CsvFileReader csvFileReader, CsvFileDto csvFileDto) {
+	private CsvFileDto csvFileDto;
+
+	public QuestionDataConverter(CsvFileDto csvFileDto) {
+		this.csvFileReader = new QuestionCsvFileReader();
 		this.csvFileDto = csvFileDto;
-		this.csvFileReader = csvFileReader;
-		this.dataOfCsvFile = csvFileReader.readCsvFile(csvFileDto.csvFile());
+		
+		this.dataOfCsvFile = csvFileReader.readCsvFile(csvFileDto.getCsvFileName()); //  추후 수정
 	}
 
 	@Override

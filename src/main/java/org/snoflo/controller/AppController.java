@@ -11,6 +11,5 @@ public abstract class AppController {
 
     protected Scanner scanner;
     
-    protected QuestionService appService;
 
 }

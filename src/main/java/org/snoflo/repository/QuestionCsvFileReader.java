@@ -12,7 +12,7 @@ public class QuestionCsvFileReader implements CsvFileReader {
 	public List<String[]> readCsvFile(String csvFile) {
 
 		List<String[]> list = new ArrayList<>();
-
+		System.out.println("csvFile : " + csvFile);
 		try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
 
 			String line;

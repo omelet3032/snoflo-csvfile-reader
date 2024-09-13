@@ -1,5 +1,7 @@
 package org.snoflo.view;
 
+import java.util.List;
+
 import org.snoflo.model.Question;
 
 public class AppView {
@@ -10,10 +12,25 @@ public class AppView {
         System.out.println("---------------------------------");
     }
 
-    public void showSelectMenu() {
+    public void showPromptCsvFile() {
         System.out.println("---------------------------------");
+        System.out.println("csv 파일 등록");
+        System.out.println("---------------------------------");
+    }
+
+    public void showSelectCsvFile(List<String> csvFileList) {
+        System.out.println("---------------------------------");
+        for (int i = 0; i < csvFileList.size(); i++) {
+            System.out.println(i + ". " + csvFileList.get(i));
+        }
+        System.out.println("---------------------------------");
+    }
+
+    public void showSelectMenu() {
+        System.out.println("--------------------------------");
         System.out.println("메뉴 선택");
-        System.out.println("1. id로 검색");
+        System.out.println("1. 파일 검색");
+        System.out.println("2. id로 검색");
         System.out.println("---------------------------------");
     }
 
@@ -27,6 +44,5 @@ public class AppView {
         System.out.println();
         System.out.println("conceptById : " + concept);
     }
-
 
 }
