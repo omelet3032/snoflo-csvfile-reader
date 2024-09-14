@@ -12,13 +12,13 @@ import org.snoflo.repository.QuestionDataConverter;
 public class QuestionServiceImpl implements QuestionService {
 
     private DataConverter<Question> dataConverter;
-    private CsvFileDto csvFileDto;
+    // private CsvFileDto csvFileDto;
    
     public QuestionServiceImpl() {
     }
 
     public QuestionServiceImpl (CsvFileDto csvFileDto) {
-        this.csvFileDto = csvFileDto;
+        // this.csvFileDto = csvFileDto;
         this.dataConverter = new QuestionDataConverter(csvFileDto);
     }
 

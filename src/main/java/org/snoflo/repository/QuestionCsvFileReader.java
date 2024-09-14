@@ -17,8 +17,9 @@ public class QuestionCsvFileReader implements CsvFileReader {
 
 		// String folderName = "csv";
 		// Path dirPath = Paths.get(System.getProperty("user.dir"), csvFileDto.folderName().toString());
-		Path dirPath = Paths.get(csvFileDto.folderName().toString());
-		Path filePath = dirPath.resolve(csvFileDto.fileName());
+		// Path dirPath = Paths.get(csvFileDto.folderName().toString());
+		Path folderPath = csvFileDto.folderName();
+		Path filePath = folderPath.resolve(csvFileDto.fileName());
 
 		List<String[]> list = new ArrayList<>();
 		
