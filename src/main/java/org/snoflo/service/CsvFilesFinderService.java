@@ -8,11 +8,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.snoflo.dto.CsvFileDto;
+import org.snoflo.model.Question;
+import org.snoflo.repository.DataConverter;
+
 /* 
  * 이 클래스가 관계를 맺어야 하는 클래스는 CsvFileDto와 AppView
  * 그리고 Service클래스 Controller 클래스
  */
 public class CsvFilesFinderService {
+
+    // private DataConverter<Question> dataConverter;
+
+    // public CsvFilesFinderService (DataConverter<Question> dataConverter) {
+    //     this.dataConverter = dataConverter;
+    // }
 
     public List<Path> getFolderNames() {
         Path dirPath = Paths.get(System.getProperty("user.dir"));
@@ -41,5 +51,6 @@ public class CsvFilesFinderService {
 
         return Collections.emptyList();
     }
+
 
 }

@@ -7,15 +7,22 @@ import java.util.stream.Collectors;
 import org.snoflo.dto.CsvFileDto;
 import org.snoflo.model.Question;
 
-public class QuestionDataConverter implements DataConverter<Question> {
+public class QuestionDataConverter implements DataConverter {
 
 	private List<String[]> dataOfCsvFile;
 	private List<Question> conversionData;
 	private CsvFileReader csvFileReader;
+	// private CsvFileDto csvFileDto;
 
-	public QuestionDataConverter(CsvFileDto csvFileDto) {
-		this.csvFileReader = new QuestionCsvFileReader();
+	// private CsvFilesFinderService csvFilesFinderService;
+
+	public QuestionDataConverter(CsvFileReader csvFileReader, CsvFileDto csvFileDto) throws IOException {
+		this.csvFileReader = csvFileReader;
+		// this.csvFilesFinderService = csvFilesFinderService;
+		// csvFilesFinderService.getCsvFileDto();
+		// CsvFileDto csvFileDto = new CsvFileDto(null);
 		this.dataOfCsvFile = csvFileReader.readCsvFile(csvFileDto); //  추후 수정
+		convertData();
 	}
 
 	@Override

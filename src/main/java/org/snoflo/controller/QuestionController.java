@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.snoflo.dto.CsvFileDto;
-import org.snoflo.repository.CsvFilesFinder;
 import org.snoflo.model.Question;
 import org.snoflo.repository.QuestionDataConverter;
 import org.snoflo.service.CsvFilesFinderService;
@@ -18,17 +17,15 @@ import org.snoflo.view.AppView;
 public class QuestionController extends AppController {
 
     private QuestionService appService;
-    private CsvFilesFinderService finderService;
 
-    public QuestionController() {
-        this.view = new AppView();
-        this.scanner = new Scanner(System.in);
+    public QuestionController(QuestionService appService) {
 
-        // this.appService = new QuestionServiceImpl();
-        this.finderService = new CsvFilesFinderService();
-
-        CsvFileDto csvFileDto = setFolderAndFile();
-        this.appService = new QuestionServiceImpl(csvFileDto);
+        // 이 시점에서 dto는 값을 가지게 된다.
+        // DataConverter 클래스는 QuestionService가 실행되면서 동시에 실행된다.
+        //dto가 필요한 클래스는 DataConverter 클래스와 Reader 클래스다.
+        // 
+        // this.appService = new QuestionServiceImpl(csvFileDto);
+        this.appService = appService;
         executeMainMenu();
     }
 
@@ -38,49 +35,25 @@ public class QuestionController extends AppController {
         int number = Integer.parseInt(scanner.nextLine());
 
         switch (number) {
-            case 1 -> executeFindById();
+            case 1 -> executeFindAll();
             default -> executeMainMenu();
         }
     }
 
-    public CsvFileDto setFolderAndFile() {
-        Path selectedFolder = executeFindFolder();
-        Path selectedFile = executeFindCsvFile(selectedFolder);
-
-        CsvFileDto csvFileDto = new CsvFileDto(selectedFile);
-        return csvFileDto;
-    }
-
-    private Path executeFindFolder() {
-        view.showPromptFolder();
-
-        List<Path> folderList = finderService.getFolderNames();
-
-        view.showSelectFolder(folderList);
-        int number = scanner.nextInt();
-        scanner.nextLine();
-
-        Path selectedFolder = folderList.get(number);
-        return selectedFolder;
-    }
-
-    private Path executeFindCsvFile(Path selectedFolder) {
-        view.showPromptCsvFile();
-        List<Path> fileList = finderService.getFileNames(selectedFolder);
-
-        view.showSelectCsvFile(fileList);
-        int number = scanner.nextInt();
-        scanner.nextLine();
-        Path selectedFile = fileList.get(number);
-        return selectedFile;
-    }
-
-    public void executeFindById() {
+    // QuestionService의 메서드 시작
+    private void executeFindById() {
         view.showPromptFindById();
         int id = scanner.nextInt();
         scanner.nextLine();
         Question conceptById = appService.findConceptById(id);
         view.showResultFindById(conceptById);
     }
+
+    private void executeFindAll() {
+        List<Question> list = appService.findAll();
+        view.showResultFindAll(list);
+    }
+
+
 
 }

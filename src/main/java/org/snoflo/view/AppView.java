@@ -27,7 +27,6 @@ public class AppView {
         System.out.println("---------------------------------");
     }
 
-
     public void showPromptCsvFile() {
         System.out.println("---------------------------------");
         System.out.println("csv 파일 등록");
@@ -45,9 +44,17 @@ public class AppView {
     public void showSelectMenu() {
         System.out.println("--------------------------------");
         System.out.println("메뉴 선택");
-        System.out.println("1. 파일 검색");
+        System.out.println("1. 전체 출력");
         System.out.println("2. id로 검색");
         System.out.println("---------------------------------");
+    }
+
+    public void showResultFindAll(List<Question> list) {
+        System.out.println("--------------------------------");
+        for (Question question : list) {
+            System.out.println(question.toString());
+        }
+        System.out.println("--------------------------------");
     }
 
     public void showPromptFindById() {

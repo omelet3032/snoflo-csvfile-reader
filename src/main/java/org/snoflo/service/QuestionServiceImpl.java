@@ -1,26 +1,17 @@
 package org.snoflo.service;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import org.snoflo.dto.CsvFileDto;
-import org.snoflo.repository.CsvFilesFinder;
 import org.snoflo.model.Question;
 import org.snoflo.repository.DataConverter;
 import org.snoflo.repository.QuestionDataConverter;
 
 public class QuestionServiceImpl implements QuestionService {
 
-    private DataConverter<Question> dataConverter;
-   
-    public QuestionServiceImpl() {
-    }
+    private DataConverter dataConverter;
 
-    public QuestionServiceImpl (CsvFileDto csvFileDto) {
-        this.dataConverter = new QuestionDataConverter(csvFileDto);
-    }
-
-    public QuestionServiceImpl (DataConverter<Question> dataConverter) {
+    public QuestionServiceImpl (DataConverter dataConverter) {
         this.dataConverter = dataConverter;
     }
 
@@ -37,18 +28,16 @@ public class QuestionServiceImpl implements QuestionService {
         return null;
 	}
 
-    // CsvFilesFinder클래스가 제공하는 csv파일리스트 찾기 메서드를 실행하여 그 값을 반환한다.
     @Override
-    public List<Path> findFile(Path selectedFolder) {
-        CsvFilesFinder csvFilesFinder = new CsvFilesFinder();
-        // System.out.println("ServiceImpl path : " + selectedFolder.toString());
-        return csvFilesFinder.getFileNames(selectedFolder);
+    public List<Question> findAll() {
+        List<Question> list = dataConverter.getData();
+
+        return list;
+        
     }
 
-    @Override
-	public List<Path> findFolder() {
-        CsvFilesFinder csvFilesFinder = new CsvFilesFinder();
-		return csvFilesFinder.getFolderNames();
-	}
+
+    
+    
 
 }

@@ -2,14 +2,13 @@ package org.snoflo.controller;
 
 import java.util.Scanner;
 
-import org.snoflo.service.QuestionService;
 import org.snoflo.view.AppView;
 
 public abstract class AppController {
 
-    protected AppView view;
+    protected AppView view = new AppView();
 
-    protected Scanner scanner;
+    protected Scanner scanner = new Scanner(System.in);
     
 
 }

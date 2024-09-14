@@ -1,21 +1,38 @@
 package org.snoflo.application;
 
+import java.io.IOException;
+
 import org.snoflo.controller.AppController;
+import org.snoflo.controller.FinderController;
+import org.snoflo.controller.QuestionController;
+import org.snoflo.dto.CsvFileDto;
+import org.snoflo.repository.QuestionCsvFileReader;
+import org.snoflo.repository.QuestionDataConverter;
+import org.snoflo.service.CsvFilesFinderService;
+import org.snoflo.service.QuestionServiceImpl;
 
 public class Application {
 
     private AppController appController;
-    private static Application instance;
+    private FinderController finderController;
+    private QuestionController questionController;
 
-    private Application(AppController appController) {
+    public Application(AppController appController) {
         this.appController = appController;
     }
 
-    public static synchronized Application start(AppController appController) {
-        if (instance == null) {
-            instance = new Application(appController);
-        }
-        return instance;
-    }
+    // public Application () {
+    //     this.finderController = new FinderController(new CsvFilesFinderService());
+    // }
 
+    public Application () {
+    }
+    
+    public void start() throws IOException {
+        this.finderController = new FinderController(new CsvFilesFinderService());
+        CsvFileDto csvFileDto = finderController.setFolderAndFile();
+        // 이시점에서 dto가 결정됨
+        this.questionController = new QuestionController(new QuestionServiceImpl(new QuestionDataConverter(new QuestionCsvFileReader(), csvFileDto)));
+    }
+  
 }

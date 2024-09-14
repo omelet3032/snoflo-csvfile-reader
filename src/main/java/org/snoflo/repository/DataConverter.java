@@ -3,9 +3,11 @@ package org.snoflo.repository;
 import java.io.IOException;
 import java.util.List;
 
-public interface DataConverter<T> {
+import org.snoflo.model.Question;
 
-    List<T> convertData() throws IOException; 
+public interface DataConverter {
 
-    List<T> getData();
+    List<Question> convertData() throws IOException; 
+
+    List<Question> getData();
 }
