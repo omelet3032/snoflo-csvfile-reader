@@ -13,7 +13,6 @@ public class FinderController extends AppController {
 
     public FinderController(CsvFilesFinderService finderService) {
         this.finderService = finderService;
-        // CsvFileDto csvFileDto = setFolderAndFile();
     }
 
     public CsvFileDto setFolderAndFile() {
@@ -24,7 +23,6 @@ public class FinderController extends AppController {
         return csvFileDto;
     }
 
-    // finderService 메서드
     private Path executeFindFolder() {
         view.showPromptFolder();
 

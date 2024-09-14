@@ -26,21 +26,25 @@ public class QuestionController extends AppController {
         // 
         // this.appService = new QuestionServiceImpl(csvFileDto);
         this.appService = appService;
-        executeMainMenu();
     }
 
-    private void executeMainMenu() {
+    public void executeMainMenu() {
         view.showPromptMainMenu();
         view.showSelectMenu();
         int number = Integer.parseInt(scanner.nextLine());
 
         switch (number) {
             case 1 -> executeFindAll();
+            case 2 -> executeFindById();
             default -> executeMainMenu();
         }
     }
+    
+    private void executeFindAll() {
+        List<Question> list = appService.findAll();
+        view.showResultFindAll(list);
+    }
 
-    // QuestionService의 메서드 시작
     private void executeFindById() {
         view.showPromptFindById();
         int id = scanner.nextInt();
@@ -49,10 +53,6 @@ public class QuestionController extends AppController {
         view.showResultFindById(conceptById);
     }
 
-    private void executeFindAll() {
-        List<Question> list = appService.findAll();
-        view.showResultFindAll(list);
-    }
 
 
 
