@@ -15,8 +15,6 @@ public class QuestionDataConverter implements DataConverter<Question> {
 
 	public QuestionDataConverter(CsvFileDto csvFileDto) {
 		this.csvFileReader = new QuestionCsvFileReader();
-		
-		// this.dataOfCsvFile = csvFileReader.readCsvFile(csvFileDto.fileName()); //  추후 수정
 		this.dataOfCsvFile = csvFileReader.readCsvFile(csvFileDto); //  추후 수정
 	}
 

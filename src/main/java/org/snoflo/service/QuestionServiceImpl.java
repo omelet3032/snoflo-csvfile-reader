@@ -12,14 +12,16 @@ import org.snoflo.repository.QuestionDataConverter;
 public class QuestionServiceImpl implements QuestionService {
 
     private DataConverter<Question> dataConverter;
-    // private CsvFileDto csvFileDto;
    
     public QuestionServiceImpl() {
     }
 
     public QuestionServiceImpl (CsvFileDto csvFileDto) {
-        // this.csvFileDto = csvFileDto;
         this.dataConverter = new QuestionDataConverter(csvFileDto);
+    }
+
+    public QuestionServiceImpl (DataConverter<Question> dataConverter) {
+        this.dataConverter = dataConverter;
     }
 
     // 추후 옵서녈 도입
@@ -37,9 +39,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     // CsvFilesFinder클래스가 제공하는 csv파일리스트 찾기 메서드를 실행하여 그 값을 반환한다.
     @Override
-    public List<String> findCsvFiles(Path selectedFolder) {
+    public List<Path> findFile(Path selectedFolder) {
         CsvFilesFinder csvFilesFinder = new CsvFilesFinder();
-        System.out.println("ServiceImpl path : " + selectedFolder.toString());
+        // System.out.println("ServiceImpl path : " + selectedFolder.toString());
         return csvFilesFinder.getFileNames(selectedFolder);
     }
 

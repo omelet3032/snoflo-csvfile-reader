@@ -1,4 +1,4 @@
-package org.snoflo.repository;
+package org.snoflo;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

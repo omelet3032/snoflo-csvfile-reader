@@ -34,7 +34,7 @@ public class AppView {
         System.out.println("---------------------------------");
     }
 
-    public void showSelectCsvFile(List<String> csvFileList) {
+    public void showSelectCsvFile(List<Path> csvFileList) {
         System.out.println("---------------------------------");
         for (int i = 0; i < csvFileList.size(); i++) {
             System.out.println(i + ". " + csvFileList.get(i));

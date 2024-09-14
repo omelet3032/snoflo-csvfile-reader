@@ -9,7 +9,7 @@ public interface QuestionService {
 
     Question findConceptById(int id);
 
-    List<String> findCsvFiles(Path selectedFolder);
+    List<Path> findFile(Path selectedFolder);
 
     List<Path> findFolder();
 
