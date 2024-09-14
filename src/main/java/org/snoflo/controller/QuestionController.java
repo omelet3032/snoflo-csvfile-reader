@@ -2,6 +2,7 @@ package org.snoflo.controller;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,8 +21,9 @@ public class QuestionController extends AppController {
     public QuestionController() {
         this.view = new AppView();
         this.scanner = new Scanner(System.in);
-
         this.appService = new QuestionServiceImpl();
+        CsvFileDto csvFileDto = setFolderAndFile();
+        this.appService = new QuestionServiceImpl(csvFileDto);
         executeMainMenu();
     }
 
@@ -31,38 +33,46 @@ public class QuestionController extends AppController {
         int number = Integer.parseInt(scanner.nextLine());
 
         switch (number) {
-            case 1 -> executeFindFolders();
-            case 2 -> executeFindById();
+            case 1 -> executeFindById();
             default -> executeMainMenu();
         }
     }
 
-    private void executeFindFolders() {
+    public CsvFileDto setFolderAndFile() {
+        List<Path> folderList = new ArrayList<>();
+        List<String> fileList = new ArrayList<>();
+
+        Path selectedFolder = executeFindFolders(folderList);
+        String selectedFile = executeFindCsvFiles(fileList, selectedFolder);
+
+        CsvFileDto csvFileDto = new CsvFileDto(selectedFolder, selectedFile);
+        return csvFileDto;
+    }
+
+    private Path executeFindFolders(List<Path> folderList) {
         view.showPromptFolder();
-        List<Path> folderList = appService.findFolder();
+        folderList = appService.findFolder();
         view.showSelectFolder(folderList);
         int number = scanner.nextInt();
         scanner.nextLine();
         Path selectedFolder = folderList.get(number);
-        appService.setCsvFile(selectedFolder,null);
-        executeFindCsvFiles();
+        // 이 부분에서 csv폴더명만이 아닌 전체 경로를 반환하기 때문에 이후 모든 클래스에 절대 경로를 전송한다,
+        // 그래서 csvFile을 찾을 수가 없다. 
+        // java.nio.file.NoSuchFileException: /home/omelet1/dev2/snoflo-csvfile-reader/home/omelet1/dev2/snoflo-csvfile-reader/csv
+        return selectedFolder;
     }
 
-    private void executeFindCsvFiles() {
+    private String executeFindCsvFiles(List<String> fileList, Path selectedFolder) {
         view.showPromptCsvFile();
-        List<String> csvFiles = appService.findCsvFiles();
-        view.showSelectCsvFile(csvFiles);
+        fileList = appService.findCsvFiles(selectedFolder);
+        System.out.println("controller path : " + fileList.toString());
+
+        view.showSelectCsvFile(fileList);
         int number = scanner.nextInt();
         scanner.nextLine();
-        String selectedFile = csvFiles.get(number);
-        System.out.println("선택한 파일 : " + selectedFile.toString());
-
-        appService.setCsvFile(null,selectedFile);
+        String selectedFile = fileList.get(number);
+        return selectedFile;
     }
-
-
-
-
 
     private void executeFindById() {
         view.showPromptFindById();

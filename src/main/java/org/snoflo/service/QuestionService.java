@@ -9,10 +9,8 @@ public interface QuestionService {
 
     Question findConceptById(int id);
 
-    List<String> findCsvFiles();
+    List<String> findCsvFiles(Path selectedFolder);
 
     List<Path> findFolder();
-
-    void setCsvFile(Path folder, String csvFile);
 
 }

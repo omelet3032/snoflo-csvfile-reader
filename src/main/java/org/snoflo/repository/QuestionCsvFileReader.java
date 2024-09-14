@@ -8,14 +8,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.snoflo.dto.CsvFileDto;
+
 public class QuestionCsvFileReader implements CsvFileReader {
 
 	@Override
-	public List<String[]> readCsvFile(String csvFile) {
+	public List<String[]> readCsvFile(CsvFileDto csvFileDto) {
 
-		String folderName = "csv";
-		Path dirPath = Paths.get(System.getProperty("user.dir"), folderName);
-		Path filePath = dirPath.resolve(csvFile);
+		// String folderName = "csv";
+		// Path dirPath = Paths.get(System.getProperty("user.dir"), csvFileDto.folderName().toString());
+		Path dirPath = Paths.get(csvFileDto.folderName().toString());
+		Path filePath = dirPath.resolve(csvFileDto.fileName());
 
 		List<String[]> list = new ArrayList<>();
 		

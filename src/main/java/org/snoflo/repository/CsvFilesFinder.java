@@ -25,10 +25,10 @@ public class CsvFilesFinder {
 
         try {
             folderList = Files.walk(dirPath, maxDepth)
-            .filter(Files::isDirectory)
-            .collect(Collectors.toList());
+                    .filter(Files::isDirectory)
+                    .collect(Collectors.toList());
             return folderList;
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -37,10 +37,10 @@ public class CsvFilesFinder {
 
     // 옵셔널 추가
     public List<String> getCsvFileNames(String selectFolder) {
-        
+
         try {
             Path dirPath = Paths.get(System.getProperty("user.dir"), selectFolder);
-            
+
             fileList = Files.list(dirPath)
                     .filter(file -> Files.isRegularFile(file))
                     .filter(path -> path.toString().endsWith(".csv"))
@@ -54,9 +54,23 @@ public class CsvFilesFinder {
         return fileList;
     }
 
-    public List<String> getFileNames() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFileNames'");
+    public List<String> getFileNames(Path selectedFolder) {
+        try {
+            // Path dirPath = Paths.get(System.getProperty("user.dir"), selectedFolder.toString());
+            Path dirPath = Paths.get(selectedFolder.toString());
+            System.out.println("finder path : " + selectedFolder.toString());
+
+            fileList = Files.list(dirPath)
+                    .filter(file -> Files.isRegularFile(file))
+                    .filter(path -> path.toString().endsWith(".csv"))
+                    .map(path -> path.getFileName().toString())
+                    .collect(Collectors.toList());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return fileList;
     }
 
 }
