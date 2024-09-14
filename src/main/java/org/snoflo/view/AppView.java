@@ -1,5 +1,6 @@
 package org.snoflo.view;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import org.snoflo.model.Question;
@@ -11,6 +12,21 @@ public class AppView {
         System.out.println("퀴즈 시작");
         System.out.println("---------------------------------");
     }
+
+    public void showPromptFolder() {
+        System.out.println("---------------------------------");
+        System.out.println("폴더 등록");
+        System.out.println("---------------------------------");
+    }
+
+    public void showSelectFolder(List<Path> folderList) {
+        System.out.println("---------------------------------");
+        for (int i = 0; i < folderList.size(); i++) {
+            System.out.println(i + ". " + folderList.get(i));
+        }
+        System.out.println("---------------------------------");
+    }
+
 
     public void showPromptCsvFile() {
         System.out.println("---------------------------------");

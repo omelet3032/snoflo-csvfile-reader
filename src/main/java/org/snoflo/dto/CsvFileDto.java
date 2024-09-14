@@ -1,26 +1,9 @@
 package org.snoflo.dto;
 
-import java.util.List;
+import java.nio.file.Path;
 
-public class CsvFileDto {
-
-    private String csvFileName;
-    private List<String> csvFileList;
-
-    public String getCsvFileName() {
-        return csvFileName;
-    }
-
-    public void setCsvFileName(String csvFileName) {
-        this.csvFileName = csvFileName;
-    }
-
-    public List<String> getCsvFileList() {
-        return csvFileList;
-    }
-
-    public void setCsvFileList(List<String> csvFileList) {
-        this.csvFileList = csvFileList;
-    }
-
+public record CsvFileDto(Path folderName, String fileName) {
 }
+
+// // record 적용
+// // csvFile은 고정이기 때문에 불변 객체s

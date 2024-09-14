@@ -1,8 +1,8 @@
 package org.snoflo.service;
 
+import java.nio.file.Path;
 import java.util.List;
 
-import org.snoflo.dto.CsvFileDto;
 import org.snoflo.model.Question;
 
 public interface QuestionService {
@@ -11,6 +11,8 @@ public interface QuestionService {
 
     List<String> findCsvFiles();
 
-    void setCsvFileDto(CsvFileDto csvFileDto);
+    List<Path> findFolder();
+
+    void setCsvFile(Path folder, String csvFile);
 
 }
