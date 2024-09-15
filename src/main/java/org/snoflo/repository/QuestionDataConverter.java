@@ -7,31 +7,32 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.snoflo.domain.Question;
-import org.snoflo.dto.CsvFileDto;
+import org.snoflo.dto.FileDto;
+import org.snoflo.service.FinderService;
 
-public class QuestionDataConverter implements DataConverter {
+public class QuestionDataConverter {
 
-	private List<String[]> dataOfCsvFile;
-	private List<Question> conversionData;
+	private List<String[]> rowList;
+	private List<Question> questionList;
+
 	private CsvFileReader csvFileReader;
 
-	public QuestionDataConverter(CsvFileReader csvFileReader, CsvFileDto csvFileDto) throws IOException {
-		this.csvFileReader = csvFileReader;
-		this.dataOfCsvFile = csvFileReader.readCsvFile(csvFileDto); // 추후 수정
-		convertData();
-	}
-
-	// @Override
-	// public List<Question> convertData() throws IOException {
-	// this.conversionData = dataOfCsvFile.stream().map(row -> new
-	// Question(Integer.parseInt(row[0]), row[1], row[2]))
-	// .collect(Collectors.toList());
-	// return conversionData;
+	// public QuestionDataConverter(CsvFileReader csvFileReader, FileDto fileDto) throws IOException {
+	// 	this.rowList = csvFileReader.readCsvFile(fileDto); // 추후 수정
+	// 	convertData(rowList);
 	// }
 
-	@Override
-	public List<Question> convertData() throws IOException {
-		this.conversionData = dataOfCsvFile.stream()
+	public QuestionDataConverter(CsvFileReader csvFileReader) throws IOException {
+		this.csvFileReader = csvFileReader;
+	}
+	
+	public void processDto (FileDto dto) {
+		this.rowList = csvFileReader.readCsvFile(dto); // 추후 수정
+		convertData(rowList);
+	}
+
+	private List<Question> convertData(List<String[]> rowList) {
+		this.questionList = this.rowList.stream()
 				.map(row -> {
 					try {
 						// 숫자로 변환 가능한지 확인
@@ -45,17 +46,16 @@ public class QuestionDataConverter implements DataConverter {
 						// 변환 실패하면 해당 행 무시
 						System.err.println("Invalid number format in row: " + Arrays.toString(row));
 						return null; // 잘못된 행을 null로 반환하여 나중에 필터링
-					}
+					} 
 				})
 				.filter(Objects::nonNull) // null로 반환된 행은 필터링
 				.collect(Collectors.toList());
 
-		return conversionData;
+		return this.questionList;
 	}
 
-	@Override
-	public List<Question> getData() {
-		return this.conversionData;
+	public List<Question> getQuestionList() {
+		return this.questionList;
 	}
 
 }

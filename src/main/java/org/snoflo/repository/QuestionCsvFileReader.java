@@ -8,12 +8,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.snoflo.dto.CsvFileDto;
+import org.snoflo.dto.FileDto;
 
 public class QuestionCsvFileReader implements CsvFileReader {
 
 	@Override
-	public List<String[]> readCsvFile(CsvFileDto csvFileDto) {
+	public List<String[]> readCsvFile(FileDto csvFileDto) {
 
 		Path filePath = csvFileDto.fileName();
 		

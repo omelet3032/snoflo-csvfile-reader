@@ -3,20 +3,28 @@ package org.snoflo.service;
 import java.util.List;
 
 import org.snoflo.domain.Question;
-import org.snoflo.repository.DataConverter;
+import org.snoflo.dto.FileDto;
+import org.snoflo.repository.QuestionDataConverter;
 
 public class QuestionServiceImpl implements QuestionService {
 
-    private DataConverter dataConverter;
+    private QuestionDataConverter dataConverter;
 
-    public QuestionServiceImpl (DataConverter dataConverter) {
+    public QuestionServiceImpl (QuestionDataConverter dataConverter) {
         this.dataConverter = dataConverter;
     }
 
-    // 추후 옵서녈 도입
+    
+    // @Override
+	// public void start(FileDto fileDto) {
+    //     dataConverter.processDto(fileDto);
+	// }
+
+
+	// 추후 옵서녈 도입
 	@Override
 	public Question findConceptById(int id) {
-        List<Question> list = dataConverter.getData();
+        List<Question> list = dataConverter.getQuestionList();
 
         for (Question concept : list) {
             if (concept.getId() == id) {
@@ -28,7 +36,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> findAll() {
-        List<Question> list = dataConverter.getData();
+        List<Question> list = dataConverter.getQuestionList();
         return list;
     }
 

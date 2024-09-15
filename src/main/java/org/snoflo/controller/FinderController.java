@@ -2,40 +2,44 @@ package org.snoflo.controller;
 
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Scanner;
 
-import org.snoflo.dto.CsvFileDto;
-import org.snoflo.service.CsvFilesFinderService;
-import org.snoflo.strategy.ViewStrategy;
-import org.snoflo.view.AppView;
+import org.snoflo.dto.FileDto;
+import org.snoflo.service.FinderService;
 import org.snoflo.view.FinderView;
-import org.snoflo.view.MainView;
 
 // csvFile을 세팅하는 도메인 컨트롤러
 public class FinderController extends AppController {
 
-    private CsvFilesFinderService finderService;
-    private FinderView view;
-    
-    public FinderController(CsvFilesFinderService finderService, FinderView view) {
+    private FinderService finderService;
+    private FinderView finderView;
+
+    public FinderController(FinderService finderService, FinderView finderView) {
         this.finderService = finderService;
-        this.view = view;
+        this.finderView = finderView;
+        sendDtoToService();
     }
 
-    public CsvFileDto setFolderAndFile() {
+    public void sendDtoToService () {
+        FileDto dto = selectFile();
+        finderService.sendDtoToRepository(dto);
+    }
+
+
+    public FileDto selectFile() {
         Path selectedFolder = executeFindFolder();
         Path selectedFile = executeFindCsvFile(selectedFolder);
 
-        CsvFileDto csvFileDto = new CsvFileDto(selectedFile);
-        return csvFileDto;
+        FileDto fileDto = new FileDto(selectedFile);
+
+        return fileDto;
     }
 
     private Path executeFindFolder() {
-        view.showPromptFolder();
+        finderView.showPromptFolder();
 
-        List<Path> folderList = finderService.getFolderNames();
+        List<Path> folderList = finderService.getFolderList();
 
-        view.showSelectFolder(folderList);
+        finderView.showSelectFolder(folderList);
         int number = scanner.nextInt();
         scanner.nextLine();
 
@@ -44,10 +48,10 @@ public class FinderController extends AppController {
     }
 
     private Path executeFindCsvFile(Path selectedFolder) {
-        view.showPromptCsvFile();
-        List<Path> fileList = finderService.getFileNames(selectedFolder);
+        finderView.showPromptCsvFile();
+        List<Path> fileList = finderService.getFileList(selectedFolder);
 
-        view.showSelectCsvFile(fileList);
+        finderView.showSelectCsvFile(fileList);
         int number = scanner.nextInt();
         scanner.nextLine();
         Path selectedFile = fileList.get(number);

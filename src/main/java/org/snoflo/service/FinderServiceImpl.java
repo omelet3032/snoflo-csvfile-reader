@@ -8,13 +8,27 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.snoflo.dto.FileDto;
+import org.snoflo.repository.QuestionDataConverter;
+
 /* 
  * 이 클래스가 관계를 맺어야 하는 클래스는 CsvFileDto와 AppView
  * 그리고 Service클래스 Controller 클래스
  */
-public class CsvFilesFinderService {
+public class FinderServiceImpl implements FinderService {
 
-    public List<Path> getFolderNames() {
+    private QuestionDataConverter dataConverter;
+
+    public FinderServiceImpl (QuestionDataConverter dataConverter) {
+        this.dataConverter = dataConverter;
+    }
+
+    // 전달받은 Path객체를 Dto에 삽입하는 비즈니스 로직은 서비스에서 정의해야 한다.
+
+
+    // 주입받은 dto를 반환하는 메서드 (dataceonverter 클래스로 보내기용)
+    @Override
+    public List<Path> getFolderList() {
         Path dirPath = Paths.get(System.getProperty("user.dir"));
         int maxDepth = 2;
 
@@ -27,7 +41,8 @@ public class CsvFilesFinderService {
         return Collections.emptyList();
     }
 
-    public List<Path> getFileNames(Path selectedFolder) {
+    @Override
+    public List<Path> getFileList(Path selectedFolder) {
 
         try {
             return Files.list(selectedFolder)
@@ -41,6 +56,11 @@ public class CsvFilesFinderService {
 
         return Collections.emptyList();
     }
+
+	@Override
+	public void sendDtoToRepository(FileDto dto) {
+        dataConverter.processDto(dto);
+	}
 
 
 }

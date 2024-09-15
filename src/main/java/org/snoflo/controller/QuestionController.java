@@ -9,12 +9,12 @@ import org.snoflo.view.QuestionView;
 
 public class QuestionController extends AppController {
 
-    private QuestionService appService;
+    private QuestionService quetionsService;
     private QuestionView questionView;
     private MainView mainView;
 
-    public QuestionController(QuestionService appService, QuestionView questionView, MainView mainView) {
-        this.appService = appService;
+    public QuestionController(QuestionService questionService, QuestionView questionView, MainView mainView) {
+        this.quetionsService = questionService;
         this.questionView = questionView;
         this.mainView = mainView;
         executeMainMenu();
@@ -33,7 +33,7 @@ public class QuestionController extends AppController {
     }
 
     private void executeFindAll() {
-        List<Question> list = appService.findAll();
+        List<Question> list = quetionsService.findAll();
         questionView.showResultFindAll(list);
     }
 
@@ -41,7 +41,7 @@ public class QuestionController extends AppController {
         questionView.showPromptFindById();
         int id = scanner.nextInt();
         scanner.nextLine();
-        Question conceptById = appService.findConceptById(id);
+        Question conceptById = quetionsService.findConceptById(id);
         questionView.showResultFindById(conceptById);
     }
 
