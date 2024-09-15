@@ -2,10 +2,8 @@ package org.snoflo.service;
 
 import java.util.List;
 
-import org.snoflo.dto.CsvFileDto;
-import org.snoflo.model.Question;
+import org.snoflo.domain.Question;
 import org.snoflo.repository.DataConverter;
-import org.snoflo.repository.QuestionDataConverter;
 
 public class QuestionServiceImpl implements QuestionService {
 
@@ -31,9 +29,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findAll() {
         List<Question> list = dataConverter.getData();
-
         return list;
-        
     }
 
 

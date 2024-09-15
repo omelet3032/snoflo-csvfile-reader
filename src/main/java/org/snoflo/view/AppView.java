@@ -3,7 +3,7 @@ package org.snoflo.view;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.snoflo.model.Question;
+import org.snoflo.domain.Question;
 
 public class AppView {
 

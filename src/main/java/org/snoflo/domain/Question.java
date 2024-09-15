@@ -1,4 +1,4 @@
-package org.snoflo.model;
+package org.snoflo.domain;
 
 public class Question {
 

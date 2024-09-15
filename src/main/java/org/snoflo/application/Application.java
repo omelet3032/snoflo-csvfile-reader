@@ -10,6 +10,7 @@ import org.snoflo.repository.QuestionCsvFileReader;
 import org.snoflo.repository.QuestionDataConverter;
 import org.snoflo.service.CsvFilesFinderService;
 import org.snoflo.service.QuestionServiceImpl;
+import org.snoflo.view.AppView;
 
 public class Application {
 
@@ -17,9 +18,9 @@ public class Application {
     private QuestionController questionController;
 
     public void start() throws IOException {
-        this.finderController = new FinderController(new CsvFilesFinderService());
+        this.finderController = new FinderController(new CsvFilesFinderService(), new AppView());
         CsvFileDto csvFileDto = finderController.setFolderAndFile();
-        this.questionController = new QuestionController(new QuestionServiceImpl(new QuestionDataConverter(new QuestionCsvFileReader(), csvFileDto)));
+        this.questionController = new QuestionController(new QuestionServiceImpl(new QuestionDataConverter(new QuestionCsvFileReader(), csvFileDto)), new AppView());
         questionController.executeMainMenu();
     }
   

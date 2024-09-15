@@ -2,7 +2,7 @@ package org.snoflo.service;
 
 import java.util.List;
 
-import org.snoflo.model.Question;
+import org.snoflo.domain.Question;
 
 public interface QuestionService {
 
