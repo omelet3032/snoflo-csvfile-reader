@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import org.snoflo.domain.Question;
 import org.snoflo.dto.FileDto;
-import org.snoflo.service.FinderService;
 
 public class QuestionDataConverter {
 
@@ -16,11 +15,6 @@ public class QuestionDataConverter {
 	private List<Question> questionList;
 
 	private CsvFileReader csvFileReader;
-
-	// public QuestionDataConverter(CsvFileReader csvFileReader, FileDto fileDto) throws IOException {
-	// 	this.rowList = csvFileReader.readCsvFile(fileDto); // 추후 수정
-	// 	convertData(rowList);
-	// }
 
 	public QuestionDataConverter(CsvFileReader csvFileReader) throws IOException {
 		this.csvFileReader = csvFileReader;

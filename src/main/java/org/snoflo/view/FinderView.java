@@ -3,20 +3,10 @@ package org.snoflo.view;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.snoflo.strategy.ViewStrategy;
-
-public class FinderView extends AppView implements ViewStrategy {
+public class FinderView extends AppView {
 
     private List<Path> folderList;
     private List<Path> fileList;
-
-    @Override
-    public void render() {
-        showPromptFolder();
-        showSelectFolder(folderList);
-        showPromptCsvFile();
-        showSelectCsvFile(fileList);
-    }
 
     public void showPromptFolder() {
         System.out.println("---------------------------------");

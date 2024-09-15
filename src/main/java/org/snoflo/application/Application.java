@@ -6,6 +6,7 @@ import org.snoflo.controller.AppController;
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
 import org.snoflo.dto.FileDto;
+import org.snoflo.function.FileFinder;
 import org.snoflo.repository.CsvFileReader;
 import org.snoflo.repository.QuestionCsvFileReader;
 import org.snoflo.repository.QuestionDataConverter;
@@ -21,6 +22,8 @@ public class Application {
 
     public void start() throws IOException {
 
+        FileFinder fileFinder = new FileFinder();
+
         CsvFileReader csvFileReader = new QuestionCsvFileReader();
         QuestionDataConverter dataConverter = new QuestionDataConverter(csvFileReader);
 
@@ -32,8 +35,8 @@ public class Application {
         QuestionView questionView = new QuestionView();
 
         // 시작
-        new FinderController(finderService, finderView);
-        new QuestionController(questionService, questionView, mainView);
+        new FinderController(fileFinder,finderService, finderView).sendDtoToService();
+        new QuestionController(questionService, questionView, mainView).executeMainMenu();
 
     }
 

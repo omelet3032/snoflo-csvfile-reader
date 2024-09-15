@@ -17,10 +17,10 @@ public class QuestionController extends AppController {
         this.quetionsService = questionService;
         this.questionView = questionView;
         this.mainView = mainView;
-        executeMainMenu();
+        // executeMainMenu();
     }
 
-    private void executeMainMenu() {
+    public void executeMainMenu() {
         mainView.showPromptMainMenu();
         mainView.showSelectMenu();
         int number = Integer.parseInt(scanner.nextLine());
