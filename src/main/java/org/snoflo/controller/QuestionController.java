@@ -4,20 +4,25 @@ import java.util.List;
 
 import org.snoflo.domain.Question;
 import org.snoflo.service.QuestionService;
-import org.snoflo.view.AppView;
+import org.snoflo.view.MainView;
+import org.snoflo.view.QuestionView;
 
 public class QuestionController extends AppController {
 
     private QuestionService appService;
+    private QuestionView questionView;
+    private MainView mainView;
 
-    public QuestionController(QuestionService appService, AppView view) {
-        super(view);
+    public QuestionController(QuestionService appService, QuestionView questionView, MainView mainView) {
         this.appService = appService;
+        this.questionView = questionView;
+        this.mainView = mainView;
+        executeMainMenu();
     }
 
-    public void executeMainMenu() {
-        view.showPromptMainMenu();
-        view.showSelectMenu();
+    private void executeMainMenu() {
+        mainView.showPromptMainMenu();
+        mainView.showSelectMenu();
         int number = Integer.parseInt(scanner.nextLine());
 
         switch (number) {
@@ -26,21 +31,18 @@ public class QuestionController extends AppController {
             default -> executeMainMenu();
         }
     }
-    
+
     private void executeFindAll() {
         List<Question> list = appService.findAll();
-        view.showResultFindAll(list);
+        questionView.showResultFindAll(list);
     }
 
     private void executeFindById() {
-        view.showPromptFindById();
+        questionView.showPromptFindById();
         int id = scanner.nextInt();
         scanner.nextLine();
         Question conceptById = appService.findConceptById(id);
-        view.showResultFindById(conceptById);
+        questionView.showResultFindById(conceptById);
     }
-
-
-
 
 }

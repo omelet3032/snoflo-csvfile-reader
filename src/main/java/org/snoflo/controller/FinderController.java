@@ -6,16 +6,20 @@ import java.util.Scanner;
 
 import org.snoflo.dto.CsvFileDto;
 import org.snoflo.service.CsvFilesFinderService;
+import org.snoflo.strategy.ViewStrategy;
 import org.snoflo.view.AppView;
+import org.snoflo.view.FinderView;
+import org.snoflo.view.MainView;
 
 // csvFile을 세팅하는 도메인 컨트롤러
 public class FinderController extends AppController {
 
     private CsvFilesFinderService finderService;
+    private FinderView view;
     
-    public FinderController(CsvFilesFinderService finderService, AppView view) {
-        super(view);
+    public FinderController(CsvFilesFinderService finderService, FinderView view) {
         this.finderService = finderService;
+        this.view = view;
     }
 
     public CsvFileDto setFolderAndFile() {

@@ -43,7 +43,7 @@ public class Question {
 
 	@Override
 	public String toString() {
-		return "Question [id=" + id + ", concept=" + concept + ", description=" + description + "]";
+		return "번호 : " + id + "    개념 : " + concept + "    설명 : " + description;
 	}
 
 	
