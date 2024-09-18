@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class QuestionCsvFileReader implements CsvFileReader {
+public class CsvFileReader {
 
-	@Override
 	public List<String[]> readCsvFile(Path selectedFile) {
 
 		List<String[]> list = new ArrayList<>();
