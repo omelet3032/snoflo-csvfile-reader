@@ -1,12 +1,15 @@
 package org.snoflo.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.snoflo.dto.FileDto;
 import org.snoflo.service.FinderService;
 import org.snoflo.view.FinderView;
-import org.snoflo.function.FileFinder;
 
 // csvFile을 세팅하는 도메인 컨트롤러
 public class FinderController extends AppController {
@@ -19,21 +22,26 @@ public class FinderController extends AppController {
         this.fileFinder = fileFinder;
         this.finderService = finderService;
         this.finderView = finderView;
-        // sendDtoToService();
+    }
+    
+    public FinderController(FinderService finderService, FinderView finderView) {
+        this.fileFinder = new FileFinder();
+        this.finderService = finderService;
+        this.finderView = finderView;
     }
 
-    public void sendDtoToService () {
-        FileDto dto = selectFile();
-        finderService.sendDtoToRepository(dto);
+    public void sendSelectedFileToService() {
+        Path selectedFile = selectFile();
+        finderService.sendSelectedFile(selectedFile);
     }
 
-    private FileDto selectFile() {
+    private Path selectFile() {
         Path selectedFolder = executeFindFolder();
         Path selectedFile = executeFindFile(selectedFolder);
 
-        FileDto fileDto = new FileDto(selectedFile);
+        // FileDto fileDto = new FileDto(selectedFile);
 
-        return fileDto;
+        return selectedFile;
     }
 
     private Path executeFindFolder() {
@@ -57,9 +65,40 @@ public class FinderController extends AppController {
         finderView.showSelectCsvFile(fileList);
         int number = scanner.nextInt();
         scanner.nextLine();
-        
+
         Path selectedFile = fileList.get(number);
         return selectedFile;
+    }
+
+    static class FileFinder {
+
+        public List<Path> getFolderList() {
+            Path dirPath = Paths.get(System.getProperty("user.dir"));
+            int maxDepth = 2;
+
+            try {
+                return Files.walk(dirPath, maxDepth).filter(Files::isDirectory).collect(Collectors.toList());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return Collections.emptyList();
+        }
+
+        public List<Path> getFileList(Path selectedFolder) {
+
+            try {
+                return Files.list(selectedFolder)
+                        .filter(file -> Files.isRegularFile(file))
+                        .filter(path -> path.toString().endsWith(".csv"))
+                        .collect(Collectors.toList());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return Collections.emptyList();
+        }
     }
 
 }

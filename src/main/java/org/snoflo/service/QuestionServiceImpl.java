@@ -3,7 +3,6 @@ package org.snoflo.service;
 import java.util.List;
 
 import org.snoflo.domain.Question;
-import org.snoflo.dto.FileDto;
 import org.snoflo.repository.QuestionDataConverter;
 
 public class QuestionServiceImpl implements QuestionService {

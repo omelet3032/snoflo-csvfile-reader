@@ -8,18 +8,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.snoflo.dto.FileDto;
 
 public class QuestionCsvFileReader implements CsvFileReader {
 
 	@Override
-	public List<String[]> readCsvFile(FileDto csvFileDto) {
+	public List<String[]> readCsvFile(Path selectedFile) {
 
-		Path filePath = csvFileDto.fileName();
-		
 		List<String[]> list = new ArrayList<>();
 		
-		try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 			String line;
 			reader.readLine(); // 첫 줄 없애기
 

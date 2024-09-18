@@ -1,5 +1,7 @@
 package org.snoflo.domain;
 
+import java.util.List;
+
 public class Question {
 
     int id;
@@ -8,7 +10,17 @@ public class Question {
 
     String description;
 
-    public Question() {
+	List<Question> questionList;
+
+    public List<Question> getQuestionList() {
+		return questionList;
+	}
+
+	public void setQuestionList(List<Question> questionList) {
+		this.questionList = questionList;
+	}
+
+	public Question() {
     }
 
     public Question(int id, String concept, String description) {

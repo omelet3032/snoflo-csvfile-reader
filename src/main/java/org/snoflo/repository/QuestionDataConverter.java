@@ -1,17 +1,18 @@
 package org.snoflo.repository;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.snoflo.domain.Question;
-import org.snoflo.dto.FileDto;
 
 public class QuestionDataConverter {
 
-	private List<String[]> rowList;
+	private Question question;
+
 	private List<Question> questionList;
 
 	private CsvFileReader csvFileReader;
@@ -20,13 +21,14 @@ public class QuestionDataConverter {
 		this.csvFileReader = csvFileReader;
 	}
 	
-	public void processDto (FileDto dto) {
-		this.rowList = csvFileReader.readCsvFile(dto); // 추후 수정
-		convertData(rowList);
+	public List<Question> convertDataForDomain (Path selectedFile) {
+		List<String[]> rowList = this.csvFileReader.readCsvFile(selectedFile); // 추후 수정
+		this.questionList = this.convertData(rowList);
+		return this.questionList;
 	}
 
 	private List<Question> convertData(List<String[]> rowList) {
-		this.questionList = this.rowList.stream()
+		this.questionList = rowList.stream()
 				.map(row -> {
 					try {
 						// 숫자로 변환 가능한지 확인

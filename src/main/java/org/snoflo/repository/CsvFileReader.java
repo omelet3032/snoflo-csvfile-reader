@@ -1,10 +1,10 @@
 package org.snoflo.repository;
 
+import java.nio.file.Path;
 import java.util.List;
 
-import org.snoflo.dto.FileDto;
 
 public interface CsvFileReader {
 
-    List<String[]> readCsvFile(FileDto csvFileDto);
+    List<String[]> readCsvFile(Path selectedFile);
 }
