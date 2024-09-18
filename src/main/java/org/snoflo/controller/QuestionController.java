@@ -17,7 +17,6 @@ public class QuestionController extends AppController {
         this.quetionsService = questionService;
         this.questionView = questionView;
         this.mainView = mainView;
-        // executeMainMenu();
     }
 
     public void executeMainMenu() {

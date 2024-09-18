@@ -1,4 +1,4 @@
-package org.snoflo.repository;
+package org.snoflo.db;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -9,25 +9,23 @@ import java.util.stream.Collectors;
 
 import org.snoflo.domain.Question;
 
-public class QuestionDataConverter {
-
-	private Question question;
+public class CsvFileConverter {
 
 	private List<Question> questionList;
 
 	private CsvFileReader csvFileReader;
 
-	public QuestionDataConverter(CsvFileReader csvFileReader) throws IOException {
-		this.csvFileReader = csvFileReader;
-	}
+	// public CsvFileConverter(CsvFileReader csvFileReader) throws IOException {
+	// 	this.csvFileReader = csvFileReader;
+	// }
 	
-	public List<Question> convertDataForDomain (Path selectedFile) {
-		List<String[]> rowList = this.csvFileReader.readCsvFile(selectedFile); // 추후 수정
-		this.questionList = this.convertData(rowList);
-		return this.questionList;
-	}
+	// public List<Question> convertDataForDomain (Path selectedFile) {
+	// 	List<String[]> rowList = this.csvFileReader.readCsvFile(selectedFile); // 추후 수정
+	// 	this.questionList = this.convertData(rowList);
+	// 	return this.questionList;
+	// }
 
-	private List<Question> convertData(List<String[]> rowList) {
+	public List<Question> convertData(List<String[]> rowList) {
 		this.questionList = rowList.stream()
 				.map(row -> {
 					try {

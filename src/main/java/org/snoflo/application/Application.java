@@ -5,11 +5,9 @@ import java.io.IOException;
 import org.snoflo.controller.AppController;
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
-import org.snoflo.repository.CsvFileReader;
-import org.snoflo.repository.QuestionCsvFileReader;
-import org.snoflo.repository.QuestionDataConverter;
-import org.snoflo.service.FinderService;
-import org.snoflo.service.FinderServiceImpl;
+import org.snoflo.db.CsvFileReader;
+import org.snoflo.db.CsvFileConverter;
+import org.snoflo.repository.QuestionRepository;
 import org.snoflo.service.QuestionService;
 import org.snoflo.service.QuestionServiceImpl;
 import org.snoflo.view.FinderView;
@@ -20,17 +18,13 @@ public class Application {
 
 	public void start() throws IOException {
 
-        // FileFinder fileFinder = new FileFinder();
         
-        CsvFileReader csvFileReader = new QuestionCsvFileReader();
-        QuestionDataConverter dataConverter = new QuestionDataConverter(csvFileReader);
-        
-        // FinderService
-        FinderService finderService = new FinderServiceImpl(dataConverter);
+        CsvFileConverter dataConverter = new CsvFileConverter();
         
         // --------------------
         // QuestionService
-        QuestionService questionService = new QuestionServiceImpl(dataConverter);
+        QuestionRepository questionRepository = new QuestionRepository(dataConverter);
+        QuestionService questionService = new QuestionServiceImpl(questionRepository);
         
         // --------------------
         // view
@@ -39,8 +33,7 @@ public class Application {
         QuestionView questionView = new QuestionView();
         
         // 시작
-        // new FinderController(fileFinder,finderService, finderView).sendSelectedFileToService();
-        new FinderController(finderService, finderView).sendSelectedFileToService();
+        new FinderController(dataConverter, finderView).sendSelectedFileToService();
         new QuestionController(questionService, questionView, mainView).executeMainMenu();
 
     }

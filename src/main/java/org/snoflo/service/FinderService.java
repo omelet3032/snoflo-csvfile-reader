@@ -1,10 +1,18 @@
 package org.snoflo.service;
 
 import java.nio.file.Path;
-import java.util.List;
 
+import org.snoflo.repository.FinderRepository;
 
-public interface FinderService {
-    
-    void sendSelectedFile(Path selectedFile);
+public class FinderService {
+
+    private FinderRepository finderRepository;
+
+    public FinderService (FinderRepository finderRepository) {
+        this.finderRepository = finderRepository;
+    }
+
+    public void saveFile(Path selectedFile) {
+        finderRepository.save(selectedFile);
+    };
 }
