@@ -4,6 +4,6 @@ CREATE TABLE file_data (
     concept VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     keyword1 VARCHAR(255),
-    keyword2 VARCHAR(255)
+    keyword2 VARCHAR(255),
     PRIMARY KEY(id)
-) ENGINE=InnoDB장
+) ENGINE=InnoDB;
