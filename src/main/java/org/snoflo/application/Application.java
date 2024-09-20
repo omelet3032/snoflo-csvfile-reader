@@ -6,6 +6,7 @@ import org.snoflo.controller.AppController;
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
 import org.snoflo.db.CsvFileReader;
+import org.snoflo.dbconnection.DBConnection;
 import org.snoflo.db.CsvFileConverter;
 import org.snoflo.db.CsvFileManager;
 import org.snoflo.repository.FinderRepository;
@@ -21,7 +22,9 @@ public class Application {
 
 	public void start() throws IOException {
 
-        
+        DBConnection connection = DBConnection.getInstance();
+        connection.connect();
+
         // CsvFileConverter dataConverter = new CsvFileConverter();
         CsvFileManager csvFileManager = new CsvFileManager(); 
         // --------------------

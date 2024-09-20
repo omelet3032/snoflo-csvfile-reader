@@ -1,4 +1,7 @@
 -- csv 파일 데이터를 db로 저장
+
+USE snoflo_file_reader;
+
 CREATE TABLE file_data (
     id INTEGER AUTO_INCREMENT,
     concept VARCHAR(255) NOT NULL,
