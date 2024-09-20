@@ -18,6 +18,13 @@ repositories {
 dependencies {
     // Use JUnit test framework.
     testImplementation libs.junit
+    implementation 'mysql:mysql-connector-java:9.01'
+
+    // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+    implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.5.2.Final'
+
+    // https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api
+    implementation group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
 
     // This dependency is used by the application.
     implementation libs.guava

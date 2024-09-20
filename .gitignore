@@ -10,5 +10,6 @@ out/
 # Ignore Gradle project-specific cache directory
 .gradle
 .csv
+test
 # Ignore Gradle build output directory
 # build
