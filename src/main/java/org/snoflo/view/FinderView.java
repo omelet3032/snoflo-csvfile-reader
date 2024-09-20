@@ -3,10 +3,7 @@ package org.snoflo.view;
 import java.nio.file.Path;
 import java.util.List;
 
-public class FinderView extends AppView {
-
-    private List<Path> folderList;
-    private List<Path> fileList;
+public class FinderView {
 
     public void showPromptFolder() {
         System.out.println("---------------------------------");

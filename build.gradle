@@ -18,7 +18,7 @@ repositories {
 dependencies {
     // Use JUnit test framework.
     testImplementation libs.junit
-    implementation 'mysql:mysql-connector-java:9.01'
+    implementation 'mysql:mysql-connector-java:8.0.33'
 
     // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
     implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.5.2.Final'

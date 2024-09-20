@@ -1,6 +1,6 @@
 package org.snoflo.view;
 
-public class MainView extends AppView {
+public class MainView {
 
     public void showPromptMainMenu() {
         System.out.println("---------------------------------");

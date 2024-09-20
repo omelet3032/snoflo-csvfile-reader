@@ -20,16 +20,15 @@ import org.snoflo.view.FinderView;
 public class FinderController extends AppController {
 
     private FinderView finderView;
-    private CsvFileConverter dataConverter;
+    private FinderService finderService;
 
-    public FinderController(CsvFileConverter dataConverter, FinderView finderView) {
-        this.dataConverter = dataConverter;
+    public FinderController(FinderService finderService, FinderView finderView) {
+        this.finderService = finderService;
         this.finderView = finderView;
     }
     
     public void sendSelectedFileToService() {
         Path selectedFile = selectFile();
-        FinderService finderService = new FinderService(new FinderRepository());
         finderService.saveFile(selectedFile);
         // dataConverter.convertDataForDomain(selectedFile);
         

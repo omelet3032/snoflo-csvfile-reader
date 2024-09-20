@@ -9,21 +9,20 @@ import org.snoflo.domain.Question;
 
 public class QuestionRepository {
     
-    private CsvFileConverter dataConverter;
+    private CsvFileManager csvFileManager;
 
-
-    public QuestionRepository(CsvFileConverter dataConverter) {
-        this.dataConverter = dataConverter;
+    public QuestionRepository(CsvFileManager csvFileManager) {
+        this.csvFileManager = csvFileManager;
     }
 
-    public void save(Path selectedFile) {
-        Question question = new Question();
-        question.addData(null);
-    }
+    // public void save(Path selectedFile) {
+    //     Question question = new Question();
+    //     question.addData(null);
+    // }
 
     // 추후 옵셔널 적용
 	public Question findConceptById(int id) {
-        List<Question> list = dataConverter.getQuestionList();
+        List<Question> list = csvFileManager.getQuestionList();
 
         for (Question concept : list) {
             if (concept.getId() == id) {
@@ -39,8 +38,7 @@ public class QuestionRepository {
     // }
 
      public List<Question> findAll() {
-        Question question = new Question();
-        List<Question> list = question.getQuestionList();
+        List<Question> list = csvFileManager.getQuestionList();
         return list;
     }
     
