@@ -1,12 +1,16 @@
 package org.snoflo.application;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.snoflo.controller.AppController;
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
 import org.snoflo.db.CsvFileReader;
-import org.snoflo.dbconnection.DBConnection;
+import org.snoflo.dbconnection.MySqlConfig;
+import org.snoflo.dbconnection.MysqlConnection;
 import org.snoflo.db.CsvFileConverter;
 import org.snoflo.db.CsvFileManager;
 import org.snoflo.repository.FinderRepository;
@@ -22,8 +26,22 @@ public class Application {
 
 	public void start() throws IOException {
 
-        DBConnection connection = DBConnection.getInstance();
+        MysqlConnection connection = MysqlConnection.getInstance();
         connection.connect();
+
+        // try (Statement stmt = connection.getConnection().createStatement()) {
+        //     String query = "select version()";
+        //     ResultSet rs = stmt.executeQuery(query);
+        //     while (rs.next()) {
+                
+        //         String version = rs.getString("version()");
+        //         System.out.println(version);
+        //     }
+
+        // } catch (SQLException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
 
         // CsvFileConverter dataConverter = new CsvFileConverter();
         CsvFileManager csvFileManager = new CsvFileManager(); 
@@ -43,8 +61,8 @@ public class Application {
         QuestionView questionView = new QuestionView();
         
         // 시작
-        new FinderController(finderService ,finderView).sendSelectedFileToService();
-        new QuestionController(questionService, questionView, mainView).executeMainMenu();
+        new FinderController(finderService ,finderView).start();
+        new QuestionController(questionService, questionView, mainView).start();
 
     }
 

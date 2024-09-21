@@ -27,19 +27,9 @@ public class FinderController extends AppController {
         this.finderView = finderView;
     }
     
-    public void sendSelectedFileToService() {
+    public void start() {
         Path selectedFile = selectFile();
         finderService.saveFile(selectedFile);
-        // dataConverter.convertDataForDomain(selectedFile);
-        
-        // CsvFileReader csvFileReader = new CsvFileReader();
-        // CsvFileReader csvFileReader = CsvFileReader.getInstance();
-        // csvFileReader.readCsvFile(selectedFile);
-
-
-
-        //QuestionRepository repository = repository.save(selectedFile);
-
     }
 
     private Path selectFile() {

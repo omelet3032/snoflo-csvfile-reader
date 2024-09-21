@@ -19,7 +19,7 @@ public class QuestionController extends AppController {
         this.mainView = mainView;
     }
 
-    public void executeMainMenu() {
+    public void start() {
         mainView.showPromptMainMenu();
         mainView.showSelectMenu();
         int number = Integer.parseInt(scanner.nextLine());
@@ -27,7 +27,7 @@ public class QuestionController extends AppController {
         switch (number) {
             case 1 -> executeFindAll();
             case 2 -> executeFindById();
-            default -> executeMainMenu();
+            default -> start();
         }
     }
 

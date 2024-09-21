@@ -3,23 +3,28 @@ package org.snoflo.db;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.snoflo.dbconnection.MysqlConnection;
 import org.snoflo.domain.Question;
 
 public class CsvFileManager {
 
-    private CsvFileReader csvFileReader;
-    private CsvFileConverter csvFileConverter;
+    private static CsvFileReader csvFileReader;
+    private static CsvFileConverter csvFileConverter;
 
-    private List<Question> questionList;
-
+    private static List<Question> questionList;
     
-    
-    public void saveToDb(Path selectedFile) {
+    public static void saveToDb(Path selectedFile) {
         csvFileReader = new CsvFileReader();
+        csvFileConverter = new CsvFileConverter();        
         List<String[]> rowList = csvFileReader.readCsvFile(selectedFile);
+        questionList = csvFileConverter.convertData(rowList); 
         
         // 1. rowList 추출
         // 2. 쿼리 작성 "insert into "
+
+        MysqlConnection.getInstance();
+        
+        
     }
     
     
