@@ -16,12 +16,14 @@ public class QuestionServiceImpl implements QuestionService {
     // 추후 옵서녈 도입
     @Override
     public Question findConceptById(int id) {
-        return this.questionRepository.findConceptById(id);
+        // return this.questionRepository.findConceptById(id);
+        return null;
     }
 
     @Override
     public List<Question> findAll() {
-        return this.questionRepository.findAll();
+        // return this.questionRepository.findAll();
+        return null;
     }
 
 }

@@ -8,10 +8,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.snoflo.db.CsvFileReader;
+import org.snoflo.domain.Question;
+import org.snoflo.function.CsvFileFinder;
+import org.snoflo.function.CsvFileReader;
 import org.snoflo.repository.FinderRepository;
 import org.snoflo.service.FinderService;
-import org.snoflo.db.CsvFileConverter;
 import org.snoflo.view.FinderView;
 
 // csvFile을 세팅하는 도메인 컨트롤러
@@ -19,17 +20,27 @@ import org.snoflo.view.FinderView;
 
 public class FinderController extends AppController {
 
+    private CsvFileReader csvFileReader;
+    private CsvFileFinder csvFileFinder;
+
     private FinderView finderView;
+
     private FinderService finderService;
 
-    public FinderController(FinderService finderService, FinderView finderView) {
+    public FinderController(CsvFileReader csvFileReader, CsvFileFinder csvFileFinder, FinderService finderService,
+            FinderView finderView) {
+        this.csvFileReader = csvFileReader;
+        this.csvFileFinder = csvFileFinder;
         this.finderService = finderService;
         this.finderView = finderView;
     }
-    
+
     public void start() {
         Path selectedFile = selectFile();
-        finderService.saveFile(selectedFile);
+
+        List<String[]> csvRowList = csvFileReader.readCsvFile(selectedFile);
+
+        finderService.saveCsvFile(csvRowList);
     }
 
     private Path selectFile() {
@@ -42,7 +53,7 @@ public class FinderController extends AppController {
     private Path executeFindFolder() {
         finderView.showPromptFolder();
 
-        List<Path> folderList = getFolderList();
+        List<Path> folderList = csvFileFinder.getFolderList();
 
         finderView.showSelectFolder(folderList);
 
@@ -56,7 +67,7 @@ public class FinderController extends AppController {
     private Path executeFindFile(Path selectedFolder) {
         finderView.showPromptCsvFile();
 
-        List<Path> fileList = getFileList(selectedFolder);
+        List<Path> fileList = csvFileFinder.getFileList(selectedFolder);
 
         finderView.showSelectCsvFile(fileList);
         int number = scanner.nextInt();
@@ -64,35 +75,6 @@ public class FinderController extends AppController {
 
         Path selectedFile = fileList.get(number);
         return selectedFile;
-    }
-
-    // 파일, 폴더 검색 기능
-    private List<Path> getFolderList() {
-        Path dirPath = Paths.get(System.getProperty("user.dir"));
-        int maxDepth = 2;
-
-        try {
-            return Files.walk(dirPath, maxDepth).filter(Files::isDirectory).collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return Collections.emptyList();
-    }
-
-    private List<Path> getFileList(Path selectedFolder) {
-
-        try {
-            return Files.list(selectedFolder)
-                    .filter(file -> Files.isRegularFile(file))
-                    .filter(path -> path.toString().endsWith(".csv"))
-                    .collect(Collectors.toList());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return Collections.emptyList();
     }
 
 }
