@@ -6,6 +6,20 @@ public class Question {
 
     String description;
 
+	public Question() {
+	}
+
+	
+	public Question(String concept) {
+		this.concept = concept;
+	}
+
+
+	public Question(String concept, String description) {
+		this.concept = concept;
+		this.description = description;
+	}
+
 	public String getConcept() {
 		return concept;
 	}
