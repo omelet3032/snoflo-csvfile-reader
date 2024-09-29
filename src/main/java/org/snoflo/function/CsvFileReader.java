@@ -17,28 +17,29 @@ public class CsvFileReader {
 
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 
-			String line;
-			line = reader.readLine();
+			// 첫 줄 제거
+			String line = reader.readLine();
 
 			String quote = "\"";
 
-			// StringBuilder conceptBuilder;
-			// StringBuilder descriptionBuilder;
-
 			Question question = null;
+
+			StringBuilder descriptionBuilder = new StringBuilder();
 
 			while ((line = reader.readLine()) != null) {
 
-				int quoteIndex = line.indexOf("\"");
+				int firstQuoteIndex = line.indexOf("\"");
 				int lastQuoteIndex = line.lastIndexOf("\"");
 
-				// conceptBuilder = new StringBuilder();
-				// descriptionBuilder = new StringBuilder();
+				descriptionBuilder.setLength(0);
 
 				if (!line.contains(quote)) {
 					String[] values = line.split(",");
 
-					question = new Question(values[0], values[1]);
+					String concept = values[0];
+					String description = values[1];
+
+					question = new Question(concept, description);
 
 					list.add(question);
 
@@ -48,15 +49,14 @@ public class CsvFileReader {
 				if (line.contains(quote)) {
 
 					// line에 따옴표(quote)가 2개 있는 경우
-					if (quoteIndex != lastQuoteIndex) {
+					if (firstQuoteIndex != lastQuoteIndex) {
 						line = line.replaceAll(quote, "");
 						String[] values = line.split(",");
-						// 프록시(Proxy),"실제 객체에 대한 대리 객체를 사용 → 메모리 용량↓, 정보은닉"
 
 						question = new Question();
 						question.setConcept(values[0]);
 
-						StringBuilder descriptionBuilder = new StringBuilder();
+						// StringBuilder descriptionBuilder = new StringBuilder();
 
 						for (int i = 1; i < values.length; i++) {
 							descriptionBuilder.append(values[i]);
@@ -71,13 +71,13 @@ public class CsvFileReader {
 						continue;
 					}
 					// 따옴표(quote)가 중간에 있는 경우
-					if (quoteIndex != 0 && quoteIndex != line.length() - 1) {
+					if (firstQuoteIndex != 0 && firstQuoteIndex != line.length() - 1) {
 						line = line.replaceAll(quote, "");
 						String[] values = line.split(",");
 
 						question = new Question();
 						question.setConcept(values[0]);
-						StringBuilder descriptionBuilder = new StringBuilder();
+						// StringBuilder descriptionBuilder = new StringBuilder();
 
 						if (values.length == 2) {
 							descriptionBuilder.append(values[1]);
@@ -91,23 +91,34 @@ public class CsvFileReader {
 							}
 							question.setDescription(descriptionBuilder.toString());
 						}
+						// 수정 코드
+						list.add(question);
 						continue;
 
-					// 따옴표(quote)가 마지막에 있는 경우
-					} else if (quoteIndex == line.length() - 1) {
+						// 따옴표(quote)가 마지막에 있는 경우
+					} else if (firstQuoteIndex == line.length() - 1) {
 						line = line.replaceAll(quote, "");
+						String[] values = line.split(",");
+						
+						question = list.getLast();
 
 						String description = question.getDescription();
 
-						StringBuilder descriptionBuilder = new StringBuilder()
-								.append(description)
-								.append(", ")
-								.append(line);
+						descriptionBuilder.append(description).append(", ");
+
+						for (int i = 0; i < values.length; i++) {
+							descriptionBuilder.append(values[i]);
+							if (i != values.length - 1) {
+								descriptionBuilder.append(",");
+							}
+						}
 
 						question.setDescription(descriptionBuilder.toString());
-						list.add(question);
+
+						list.set(list.size()-1, question);						
 
 						continue;
+
 					}
 
 				}
