@@ -82,7 +82,7 @@ public class CsvFileReader {
 			Question question,
 			StringBuilder descriptionBuilder,
 			String[] values) {
-				
+
 		String beforeDescription = question.getDescription();
 		descriptionBuilder = descriptionBuilder.append(beforeDescription).append(", ");
 
@@ -93,37 +93,20 @@ public class CsvFileReader {
 			StringBuilder descriptionBuilder,
 			String[] values) {
 
-		int beforeDescriptionLength = descriptionBuilder.length();
+		boolean startIndex = (descriptionBuilder.length() == 0);
 
-		if (beforeDescriptionLength == 0) {
+		for (int i = startIndex ? 1 : 0; i < values.length; i++) {
 
-			for (int i = 1; i < values.length; i++) {
-
-				if (values[i].contains("\"")) {
-					values[i] = values[i].replaceAll("\"", "");
-				}
-
-				descriptionBuilder.append(values[i]);
-
-				if (i != values.length - 1) {
-					descriptionBuilder.append(",");
-				}
-
+			if (values[i].contains("\"")) {
+				values[i] = values[i].replaceAll("\"", "");
 			}
-		} else {
-			for (int i = 0; i < values.length; i++) {
 
-				if (values[i].contains("\"")) {
-					values[i] = values[i].replaceAll("\"", "");
-				}
+			descriptionBuilder.append(values[i]);
 
-				descriptionBuilder.append(values[i]);
-
-				if (i != values.length - 1) {
-					descriptionBuilder.append(",");
-				}
-
+			if (i != values.length - 1) {
+				descriptionBuilder.append(",");
 			}
+
 		}
 
 		return descriptionBuilder.toString();
