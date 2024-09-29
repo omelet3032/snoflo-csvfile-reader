@@ -22,24 +22,33 @@ public class CsvFileReader {
 
 			String quote = "\"";
 
-			Question question = null;
+			// Question question = null;
 
 			StringBuilder descriptionBuilder = new StringBuilder();
+
+			// String[] values;
+
+			// String concept;
+			// String description;
 
 			while ((line = reader.readLine()) != null) {
 
 				int firstQuoteIndex = line.indexOf("\"");
 				int lastQuoteIndex = line.lastIndexOf("\"");
 
+				Question question = new Question();
+				String[] values = line.split(",");
+
 				descriptionBuilder.setLength(0);
 
 				if (!line.contains(quote)) {
-					String[] values = line.split(",");
+					// String[] values = line.split(",");
 
 					String concept = values[0];
 					String description = values[1];
 
-					question = new Question(concept, description);
+					question.setConcept(concept);
+					question.setDescription(description);
 
 					list.add(question);
 
@@ -51,14 +60,15 @@ public class CsvFileReader {
 					// line에 따옴표(quote)가 2개 있는 경우
 					if (firstQuoteIndex != lastQuoteIndex) {
 						line = line.replaceAll(quote, "");
-						String[] values = line.split(",");
+						// String[] values = line.split(",");
 
-						question = new Question();
-						question.setConcept(values[0]);
-
-						// StringBuilder descriptionBuilder = new StringBuilder();
+						String concept = values[0];
+						question.setConcept(concept);
 
 						for (int i = 1; i < values.length; i++) {
+							if (values[i].contains("\"")) {
+								values[i] = values[i].replaceAll(quote, "");
+							}
 							descriptionBuilder.append(values[i]);
 							if (i != values.length - 1) {
 								descriptionBuilder.append(",");
@@ -73,15 +83,21 @@ public class CsvFileReader {
 					// 따옴표(quote)가 중간에 있는 경우
 					if (firstQuoteIndex != 0 && firstQuoteIndex != line.length() - 1) {
 						line = line.replaceAll(quote, "");
-						String[] values = line.split(",");
+						// String[] values = line.split(",");
+						// if (values[i].contains("\"")) {
+						// values[i] = values[i].replaceAll(quote, "");
+						// }
 
 						question = new Question();
-						question.setConcept(values[0]);
+						String concept = values[0];
+						question.setConcept(concept);
+
 						// StringBuilder descriptionBuilder = new StringBuilder();
 
 						if (values.length == 2) {
-							descriptionBuilder.append(values[1]);
-							question.setDescription(descriptionBuilder.toString());
+							String description = values[1].replaceAll(quote, "");
+							// descriptionBuilder.append(description);
+							question.setDescription(description);
 						} else if (values.length > 2) {
 							for (int i = 1; i < values.length; i++) {
 								descriptionBuilder.append(values[i]);
@@ -98,8 +114,8 @@ public class CsvFileReader {
 						// 따옴표(quote)가 마지막에 있는 경우
 					} else if (firstQuoteIndex == line.length() - 1) {
 						line = line.replaceAll(quote, "");
-						String[] values = line.split(",");
-						
+						// String[] values = line.split(",");
+
 						question = list.getLast();
 
 						String description = question.getDescription();
@@ -107,6 +123,9 @@ public class CsvFileReader {
 						descriptionBuilder.append(description).append(", ");
 
 						for (int i = 0; i < values.length; i++) {
+							if (values[i].contains("\"")) {
+								values[i] = values[i].replaceAll(quote, "");
+							}
 							descriptionBuilder.append(values[i]);
 							if (i != values.length - 1) {
 								descriptionBuilder.append(",");
@@ -115,7 +134,7 @@ public class CsvFileReader {
 
 						question.setDescription(descriptionBuilder.toString());
 
-						list.set(list.size()-1, question);						
+						list.set(list.size() - 1, question);
 
 						continue;
 
