@@ -15,71 +15,57 @@ public class CsvFileReader {
 
 	public List<Question> readCsvFile(Path selectedFile) {
 
+		// boolean ignoreConceptColumn = true;
+
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 
 			// 첫 줄 제거
 			String line = reader.readLine();
-			String quote = "\"";
 
-			StringBuilder descriptionBuilder = new StringBuilder();
+			boolean isContainQuote = true;
 
 			while ((line = reader.readLine()) != null) {
 
 				String[] values = line.split(",");
 
-				descriptionBuilder.setLength(0);
-
 				Question question = new Question();
+				StringBuilder descriptionBuilder = new StringBuilder();
 
-				if (line.contains(quote)) {
+				if (isContainQuote) {
 
-					if (isLastQuoteIndex(line)) {
+					if (isQuoteMiddleIndex(line)) {
+
+						descriptionBuilder = createDescriptionBuilder(true, descriptionBuilder, values);
+
+						String concept = values[0];
+						String description = descriptionBuilder.toString();
+
+						question.setQuestion(concept, description);
+
+						list.add(question);
+						continue;
+
+					} else {
+
 						question = list.getLast();
+						int lastIndex = list.size() - 1;
 
-						String lastRowDescription = question.getDescription();
+						String beforeDescription = question.getDescription();
 
-						descriptionBuilder = createDescriptionBuilder(lastRowDescription, descriptionBuilder, values);
+						descriptionBuilder = createDescriptionBuilder(false, beforeDescription, descriptionBuilder, values);
 
-						// descriptionBuilder.append(description).append(", ");
+						String afterDescription = descriptionBuilder.toString();
 
-						// for (int i = 0; i < values.length; i++) {
-						// 	if (values[i].contains("\"")) {
-						// 		values[i] = values[i].replaceAll(quote, "");
-						// 	}
-						// 	descriptionBuilder.append(values[i]);
-						// 	if (i != values.length - 1) {
-						// 		descriptionBuilder.append(",");
-						// 	}
-						// }
+						question.setDescription(afterDescription);
 
-						question.setDescription(descriptionBuilder.toString());
-
-						list.set(list.size() - 1, question);
+						list.set(lastIndex, question);
 
 						continue;
 					}
 
-					descriptionBuilder = createDescriptionBuilder(descriptionBuilder, values);
-					// for (int i = 1; i < values.length; i++) {
-					// 	if (values[i].contains("\"")) {
-					// 		values[i] = values[i].replaceAll(quote, "");
-					// 	}
-					// 	descriptionBuilder.append(values[i]);
-					// 	if (i != values.length - 1) {
-					// 		descriptionBuilder.append(",");
-					// 	}
-					// }
-
-					String concept = values[0];
-					String description = descriptionBuilder.toString();
-
-					question.setQuestion(concept, description);
-
-					list.add(question);
-					continue;
 				}
 
-				if (!line.contains(quote)) {
+				if (!isContainQuote) {
 					String concept = values[0];
 					String description = values[1];
 
@@ -95,24 +81,27 @@ public class CsvFileReader {
 			e.printStackTrace();
 
 		}
+
 		return this.list;
 	}
 
-	private boolean isLastQuoteIndex(String line) {
+	private boolean isQuoteMiddleIndex(String line) {
 
 		int quoteIndex = line.indexOf("\"");
 		int lastLineIndex = line.length() - 1;
 
-		return quoteIndex == lastLineIndex ? true : false;
+		return quoteIndex != lastLineIndex ? true : false;
 	}
 
-	private StringBuilder createDescriptionBuilder(String lastRowDescription, StringBuilder descriptionBuilder, String[] values) {
+	private StringBuilder createDescriptionBuilder(
+			boolean ignoreFirstColumn,
+			String beforeDescription,
+			StringBuilder descriptionBuilder,
+			String[] values) {
 
-		int includeFirstIndex = 0;
-		
-		descriptionBuilder.append(lastRowDescription).append(", ");
-		
-		for (int i = includeFirstIndex; i < values.length; i++) {
+		descriptionBuilder.append(beforeDescription).append(", ");
+
+		for (int i = 0; i < values.length; i++) {
 
 			if (values[i].contains("\"")) {
 				values[i] = values[i].replaceAll("\"", "");
@@ -129,25 +118,24 @@ public class CsvFileReader {
 		return descriptionBuilder;
 	}
 
-	private StringBuilder createDescriptionBuilder(StringBuilder descriptionBuilder, String[] values) {
+	private StringBuilder createDescriptionBuilder(
+			boolean ignoreFirstColumn,
+			StringBuilder descriptionBuilder,
+			String[] values) {
 
-		// StringBuilder descriptionBuilder = new StringBuilder();
+		for (int i = 1; i < values.length; i++) {
 
-			int ignoreFirstIndex = 1;
-
-			for (int i = ignoreFirstIndex; i < values.length; i++) {
-
-				if (values[i].contains("\"")) {
-					values[i] = values[i].replaceAll("\"", "");
-				}
-
-				descriptionBuilder.append(values[i]);
-
-				if (i != values.length - 1) {
-					descriptionBuilder.append(",");
-				}
-
+			if (values[i].contains("\"")) {
+				values[i] = values[i].replaceAll("\"", "");
 			}
+
+			descriptionBuilder.append(values[i]);
+
+			if (i != values.length - 1) {
+				descriptionBuilder.append(",");
+			}
+
+		}
 
 		return descriptionBuilder;
 	}
