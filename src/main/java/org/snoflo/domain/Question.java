@@ -20,6 +20,11 @@ public class Question {
 		this.description = description;
 	}
 
+	public void setQuestion(String concept, String description) {
+		this.concept = concept;
+		this.description = description;
+	}
+
 	public String getConcept() {
 		return concept;
 	}
