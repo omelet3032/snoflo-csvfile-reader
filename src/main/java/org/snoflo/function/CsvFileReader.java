@@ -19,45 +19,44 @@ public class CsvFileReader {
 
 			// 첫 줄 제거
 			String line = reader.readLine();
-
+			
+			String concept = "";
+			String description = "";
 			StringBuilder descriptionBuilder = new StringBuilder();
+			
 			while ((line = reader.readLine()) != null) {
 
-				boolean isContainQuote = line.contains("\"");
 				String[] values = line.split(",");
 
-				Question question = new Question();
 				descriptionBuilder.setLength(0);
-
-				if (isContainQuote) {
+				
+				if (line.contains("\"")) {
 
 					if (isQuoteMiddleIndex(line)) {
 
-						String concept = values[0];
-						String description = appendDescriptionColumn(descriptionBuilder, values);
+						concept = values[0];
+						description = appendDescriptionColumn(descriptionBuilder, values);
 
-						question.setQuestion(concept, description);
-						list.add(question);
+						this.list = addQuestionList(concept, description);
 						continue;
 
 					} else {
-						question = list.getLast();
+						Question question = list.getLast();
 
-						String description = appendDescriptionColumn(question, descriptionBuilder, values);
+						description = appendDescriptionColumn(question, descriptionBuilder, values);
 
 						question.setDescription(description);
 
-						list.set(list.size() - 1, question);
+						this.list.set(list.size() - 1, question);
 
 						continue;
 					}
 
 				} else {
-					String concept = values[0];
-					String description = values[1];
+					concept = values[0];
+					description = values[1];
 
-					question.setQuestion(concept, description);
-					list.add(question);
+					this.list = addQuestionList(concept, description);
 					continue;
 				}
 			}
@@ -67,6 +66,12 @@ public class CsvFileReader {
 
 		}
 
+		return this.list;
+	}
+
+	private List<Question> addQuestionList(String concept, String description) {
+		Question question = new Question(concept, description);
+		this.list.add(question);
 		return this.list;
 	}
 
