@@ -19,17 +19,17 @@ public class CsvFileReader {
 
 			// 첫 줄 제거
 			String line = reader.readLine();
-			
+
 			String concept = "";
 			String description = "";
 			StringBuilder descriptionBuilder = new StringBuilder();
-			
+
 			while ((line = reader.readLine()) != null) {
 
 				String[] values = line.split(",");
 
 				descriptionBuilder.setLength(0);
-				
+
 				if (line.contains("\"")) {
 
 					if (isQuoteMiddleIndex(line)) {
@@ -37,10 +37,10 @@ public class CsvFileReader {
 						concept = values[0];
 						description = appendDescriptionColumn(descriptionBuilder, values);
 
-						this.list = addQuestionList(concept, description);
-						continue;
+						addQuestionList(concept, description);
 
 					} else {
+						
 						Question question = list.getLast();
 
 						description = appendDescriptionColumn(question, descriptionBuilder, values);
@@ -49,15 +49,13 @@ public class CsvFileReader {
 
 						this.list.set(list.size() - 1, question);
 
-						continue;
 					}
 
 				} else {
 					concept = values[0];
 					description = values[1];
 
-					this.list = addQuestionList(concept, description);
-					continue;
+					addQuestionList(concept, description);
 				}
 			}
 
@@ -69,14 +67,12 @@ public class CsvFileReader {
 		return this.list;
 	}
 
-	private List<Question> addQuestionList(String concept, String description) {
+	private void addQuestionList(String concept, String description) {
 		Question question = new Question(concept, description);
 		this.list.add(question);
-		return this.list;
 	}
 
 	private boolean isQuoteMiddleIndex(String line) {
-
 		int quoteIndex = line.indexOf("\"");
 		int lastIndex = line.length() - 1;
 
@@ -98,9 +94,9 @@ public class CsvFileReader {
 			StringBuilder descriptionBuilder,
 			String[] values) {
 
-		boolean startIndex = (descriptionBuilder.length() == 0);
+		int startIndex = (descriptionBuilder.length() == 0) ? 1 : 0;
 
-		for (int i = startIndex ? 1 : 0; i < values.length; i++) {
+		for (int i = startIndex; i < values.length; i++) {
 
 			if (values[i].contains("\"")) {
 				values[i] = values[i].replaceAll("\"", "");
