@@ -11,7 +11,12 @@ import org.snoflo.domain.Question;
 
 public class CsvFileReader {
 
-	private List<Question> list = new ArrayList<>();
+	// private List<Question> list = new ArrayList<>();
+	private List<Question> list;
+
+	public CsvFileReader(Question question) {
+		this.list = question.getList(); 
+	}
 
 	public List<Question> readCsvFile(Path selectedFile) {
 

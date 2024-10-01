@@ -1,8 +1,10 @@
 package org.snoflo;
 
+import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.snoflo.domain.Question;
@@ -15,9 +17,10 @@ import org.snoflo.function.RandomQuestion;
  *
  */
 public class App2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
+        Question question = new Question();
 
-        CsvFileReader csvFileReader = new CsvFileReader();
+        CsvFileReader csvFileReader = new CsvFileReader(question);
         CsvFileFinder csvFileFinder = new CsvFileFinder();
 
         List<Path> folderList = csvFileFinder.getFolderList();
@@ -27,39 +30,25 @@ public class App2 {
 
         List<Question> list = csvFileReader.readCsvFile(selectedFile);
 
-        // for (Question question : list) {
-        //     System.out.println(question.toString());
+        // for (Question question2 : list) {
+        //     System.out.println(question2.toString());
         //     System.out.println();
         // }
-        
+
+
         RandomQuestion randomQuestion = new RandomQuestion();
 
-        System.out.println();
-        System.out.println("playquiz 시작");
-        System.out.println();
-        System.out.println("while전 list : " + list.size());
-        System.out.println("wile전 list : " +"\n" + list + "\n");
-        
         randomQuestion.playRandomQuiz(list);
-        // while(!list.isEmpty()) {
+        // Question result = randomQuestion.getRandomElement(list);
 
-        //     Question question = randomQuestion.getRandomElement(list);
-        //     System.out.println("랜덤 출력된 question : " + question.toString());
-        //     System.out.println();
-        //     System.out.println("list의 size : " + list.size());
-        //     System.out.println();
-    
-        //     list = randomQuestion.removeQuestion(list, question);
-            
-        //     // for (Question question2 : list) {
-        //     //     System.out.println(question2.toString());
-        //     //     System.out.println();
-        //     // }
-        //     // System.out.println("랜덤 출력후 list size " + list.size());
-        // }
+        // Map<Object, Object> map = randomQuestion.getRandomField(result);
 
-        System.out.println("최종 list 사이즈 : " + list.size());
-        System.out.println("최종 list : " + list);
+        // for (Map.Entry<Object, Object> entry : map.entrySet()) {
+        //     System.out.println("질문 : " + entry.getKey());
+        //     System.out.println("정답 : " + entry.getValue());
+        // } 
+
+        
     }
 
     

@@ -15,7 +15,7 @@ import org.snoflo.function.CsvFileReader;
 public class App {
     public static void main(String[] args) {
 
-        CsvFileReader csvFileReader = new CsvFileReader();
+        CsvFileReader csvFileReader = new CsvFileReader(new Question());
         CsvFileFinder csvFileFinder = new CsvFileFinder();
 
         List<Path> folderList = csvFileFinder.getFolderList();
