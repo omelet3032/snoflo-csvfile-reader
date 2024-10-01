@@ -75,22 +75,6 @@ public class RandomQuestion {
         return list;
     }
 
-    /*
-     * quesion의 concept 랜덤 출력
-     */
-    public String getRandomConcept(List<Question> list) {
-        Question element = getRandomElement(list);
-
-        return element.getConcept();
-    }
-
-    public String getRandomDescription(List<Question> list) {
-        Question element = getRandomElement(list);
-
-        return element.getDescription();
-    }
-
-    // public List<Question> playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
     public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
 
         Scanner scanner = new Scanner(System.in);
