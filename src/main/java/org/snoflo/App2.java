@@ -8,6 +8,7 @@ import java.util.Random;
 import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileReader;
+import org.snoflo.function.RandomQuestion;
 
 /**
  * Hello world!
@@ -31,18 +32,35 @@ public class App2 {
         //     System.out.println();
         // }
         
-        Question question = getRandomElement(list);
+        RandomQuestion randomQuestion = new RandomQuestion();
 
-        System.out.println("random question : " + question.toString());
+        System.out.println();
+        System.out.println("playquiz 시작");
+        System.out.println();
+        System.out.println("while전 list : " + list.size());
+        System.out.println("wile전 list : " +"\n" + list + "\n");
+        
+        randomQuestion.playRandomQuiz(list);
+        // while(!list.isEmpty()) {
 
-        
-        
+        //     Question question = randomQuestion.getRandomElement(list);
+        //     System.out.println("랜덤 출력된 question : " + question.toString());
+        //     System.out.println();
+        //     System.out.println("list의 size : " + list.size());
+        //     System.out.println();
+    
+        //     list = randomQuestion.removeQuestion(list, question);
+            
+        //     // for (Question question2 : list) {
+        //     //     System.out.println(question2.toString());
+        //     //     System.out.println();
+        //     // }
+        //     // System.out.println("랜덤 출력후 list size " + list.size());
+        // }
+
+        System.out.println("최종 list 사이즈 : " + list.size());
+        System.out.println("최종 list : " + list);
     }
 
-    public static <T> T getRandomElement(List<T> list) {
-        Random random = new Random();
-        int randomElement = random.nextInt(list.size());
-
-        return list.get(randomElement);
-    }
+    
 }
