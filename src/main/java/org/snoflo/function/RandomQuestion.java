@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 
 import org.snoflo.domain.Question;
 
 public class RandomQuestion {
+
+    private Random random = new Random();
 
     public Map<Object, Object> getRandomField(Object obj) throws IllegalArgumentException, IllegalAccessException {
 
@@ -58,7 +61,7 @@ public class RandomQuestion {
 
     }
 
-    public Question getRandomElement(List<Question> list) {
+    private Question getRandomElement(List<Question> list) {
         Random random = new Random();
         int randomElement = random.nextInt(list.size());
         Question element = list.get(randomElement);
@@ -66,7 +69,7 @@ public class RandomQuestion {
         return element;
     }
 
-    public List<Question> removeQuestion(List<Question> list, Question element) {
+    private List<Question> removeQuestion(List<Question> list, Question element) {
 
         list.remove(element);
         return list;
@@ -87,43 +90,33 @@ public class RandomQuestion {
         return element.getDescription();
     }
 
-    public List<Question> playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
+    // public List<Question> playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
+    public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
 
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("퀴즈를 시작합니다.");
+        System.out.println();
+        scanner.nextLine();
         while (!list.isEmpty()) {
 
             Question question = getRandomElement(list);
             Map<Object, Object> map = getRandomField(question);
-            // System.out.println("랜덤 출력된 question : " + question.toString());
-            // System.out.println();
-            // System.out.println("list의 size : " + list.size());
-            // System.out.println();
-
+        
             for (Map.Entry<Object, Object> entry : map.entrySet()) {
                 System.out.println("질문 : " + entry.getKey());
+                scanner.nextLine();
                 System.out.println("정답 : " + entry.getValue());
+                scanner.nextLine();
+
             }
             
             list = removeQuestion(list, question);
 
         }
 
-        return list;
+        // return list;
     }
 
-    // public List<Question> playRandomQuiz(List<Question> list) {
-
-    // while (!list.isEmpty()) {
-
-    // Question question = getRandomElement(list);
-    // System.out.println("랜덤 출력된 question : " + question.toString());
-    // System.out.println();
-    // System.out.println("list의 size : " + list.size());
-    // System.out.println();
-
-    // list = removeQuestion(list, question);
-
-    // }
-
-    // return list;
-    // }
+   
 }
