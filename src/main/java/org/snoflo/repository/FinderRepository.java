@@ -17,7 +17,7 @@ public class FinderRepository {
 
     public FinderRepository(HikariDataSource dataSource) {
         this.dataSource = dataSource;
-        createTable();
+        // createTable();
     }
 
     public void save(List<Question> list) {

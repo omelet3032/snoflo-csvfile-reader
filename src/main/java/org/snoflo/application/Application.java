@@ -29,7 +29,8 @@ public class Application {
         CsvFileReader csvFileReader = new CsvFileReader();
         CsvFileFinder csvFileFinder = new CsvFileFinder();
 
-        HikariConfig config = new HikariConfig("/application-hsqldb.properties");
+        // HikariConfig config = new HikariConfig("/application-hsqldb.properties");
+        HikariConfig config = new HikariConfig("/application-h2.properties");
         HikariDataSource dataSource = new HikariDataSource(config);
     
     

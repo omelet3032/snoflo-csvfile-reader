@@ -18,17 +18,17 @@ public class FinderRepositoryTest {
     private FinderRepository finderRepository;
     private HikariDataSource dataSource;
 
-    @BeforeEach
-    public void setup() {
-        System.out.println("테스트 setup 메서드");
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:h2:mem:question");
-        config.setUsername("sa");
-        config.setPassword("");
-        dataSource = new HikariDataSource(config);
+    // @BeforeEach
+    // public void setup() {
+    //     System.out.println("테스트 setup 메서드");
+    //     HikariConfig config = new HikariConfig();
+    //     config.setJdbcUrl("jdbc:h2:mem:question");
+    //     config.setUsername("sa");
+    //     config.setPassword("");
+    //     dataSource = new HikariDataSource(config);
 
-        finderRepository = new FinderRepository(dataSource);
-    }
+    //     finderRepository = new FinderRepository(dataSource);
+    // }
 
     @Test
     public void testSave() {
