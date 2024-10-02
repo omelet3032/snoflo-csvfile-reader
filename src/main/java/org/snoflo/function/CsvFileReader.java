@@ -13,11 +13,9 @@ public class CsvFileReader {
 
 	private List<Question> list;
 
-	public CsvFileReader(Question question) {
-		this.list = question.getQuestionList();
-	}
-
 	public List<Question> readCsvFile(Path selectedFile) {
+
+		this.list = new ArrayList<>();
 
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 			String line = reader.readLine();
@@ -27,9 +25,6 @@ public class CsvFileReader {
 			StringBuilder descriptionBuilder = new StringBuilder();
 
 			while ((line = reader.readLine()) != null) {
-				System.out.println("line : " + line);
-				System.out.println();
-				System.out.println("이게 실행되는가?");
 				String[] values = line.split(",");
 
 				descriptionBuilder.setLength(0);
@@ -55,7 +50,6 @@ public class CsvFileReader {
 					}
 
 				} else {
-					System.out.println("빌더?");
 					concept = values[0];
 					description = values[1];
 

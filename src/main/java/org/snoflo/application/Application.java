@@ -24,9 +24,9 @@ public class Application {
 
     public void start() throws IOException {
 
-        Question question = new Question();
+        // Question question = new Question();
         // CsvFileConverter dataConverter = new CsvFileConverter();
-        CsvFileReader csvFileReader = new CsvFileReader(question);
+        CsvFileReader csvFileReader = new CsvFileReader();
         CsvFileFinder csvFileFinder = new CsvFileFinder();
 
         HikariConfig config = new HikariConfig("/application-hsqldb.properties");
