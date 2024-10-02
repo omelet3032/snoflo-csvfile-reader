@@ -40,10 +40,10 @@ public class CsvFileReader {
 
 					if (isQuoteMiddleIndex(line)) {
 
-						concept = values[0];
+						// concept = values[0];
 						description = appendDescriptionColumn(descriptionBuilder, values);
 
-						addQuestionList(concept, description);
+						// addQuestionList(concept, description);
 
 					} else {
 						
@@ -54,15 +54,20 @@ public class CsvFileReader {
 						question.setDescription(description);
 
 						this.list.set(list.size() - 1, question);
+						continue;
 
 					}
 
 				} else {
-					concept = values[0];
+					// concept = values[0];
 					description = values[1];
-
-					addQuestionList(concept, description);
+					
+					// addQuestionList(concept, description);
 				}
+				concept = values[0];
+				
+				addQuestionList(concept, description);
+
 			}
 
 		} catch (IOException e) {
