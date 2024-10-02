@@ -11,8 +11,6 @@ public class Question {
 
 	private List<Question> list = new ArrayList<>();
 	
-
-	
 	public List<Question> getList() {
 		return list;
 	}
