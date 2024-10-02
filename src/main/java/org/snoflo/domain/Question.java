@@ -7,19 +7,21 @@ import java.util.stream.Collectors;
 
 public class Question {
 
-	int id;
+    private String concept;
 
-	String concept;
+    private String description;
 
-	String description;
+	
+	private List<Question> questionList;
 
-	List<Question> questionList;
+
+	
+
 
 	public Question() {
 	}
 
-	public Question(int id, String concept, String description) {
-		this.id = id;
+	public Question(String concept, String description) {
 		this.concept = concept;
 		this.description = description;
 	}
@@ -57,13 +59,6 @@ public class Question {
 		this.questionList = questionList;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getConcept() {
 		return concept;
@@ -83,7 +78,7 @@ public class Question {
 
 	@Override
 	public String toString() {
-		return "번호 : " + id + "    개념 : " + concept + "    설명 : " + description;
+		return "concept : " + concept + "\ndescription : " + description + "";
 	}
 
 }

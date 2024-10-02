@@ -27,12 +27,13 @@ public class FinderService {
 				.map(row -> {
 					try {
 						// 숫자로 변환 가능한지 확인
-						int id = Integer.parseInt(row[0]);
+						// int id = Integer.parseInt(row[0]);
 						String concept = row[1];
 						String description = row[2];
 
 						// 변환 성공하면 Question 객체 반환
-						return new Question(id, concept, description);
+						// return new Question(id, concept, description);
+						return new Question(concept, description);
 					} catch (NumberFormatException e) {
 						// 변환 실패하면 해당 행 무시
 						System.err.println("Invalid number format in row: " + Arrays.toString(row));
