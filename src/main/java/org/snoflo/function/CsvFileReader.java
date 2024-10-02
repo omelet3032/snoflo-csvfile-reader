@@ -18,7 +18,7 @@ public class CsvFileReader {
 	}
 
 	public List<Question> readCsvFile(Path selectedFile) {
-		
+
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 			String line = reader.readLine();
 
@@ -39,8 +39,6 @@ public class CsvFileReader {
 						concept = values[0];
 						description = appendDescriptionColumn(descriptionBuilder, values);
 
-						addQuestionList(concept, description);
-
 					} else {
 
 						Question question = list.getLast();
@@ -50,16 +48,17 @@ public class CsvFileReader {
 						question.setDescription(description);
 
 						this.list.set(list.size() - 1, question);
+						continue;
 
 					}
 
 				} else {
+					
 					concept = values[0];
 					description = values[1];
 
-					addQuestionList(concept, description);
 				}
-
+				addQuestionList(concept, description);
 			}
 
 		} catch (IOException e) {
