@@ -11,13 +11,14 @@ import org.snoflo.domain.Question;
 
 public class CsvFileReader {
 
-	private List<Question> list;
-
 	public List<Question> readCsvFile(Path selectedFile) {
 
-		this.list = new ArrayList<>();
+		Question question = new Question();
+
+		List<Question> questionList = question.getQuestionList();
 
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
+
 			String line = reader.readLine();
 
 			String concept = "";
@@ -38,23 +39,25 @@ public class CsvFileReader {
 
 					} else {
 
-						Question question = list.getLast();
+						question = questionList.getLast();
 
 						description = appendDescriptionColumn(question, descriptionBuilder, values);
 
 						question.setDescription(description);
 
-						this.list.set(list.size() - 1, question);
+						questionList.set(questionList.size() - 1, question);
 						continue;
 
 					}
 
 				} else {
+
 					concept = values[0];
 					description = values[1];
 
 				}
-				addQuestionList(concept, description);
+
+				question.addQuestionList(concept, description);
 			}
 
 		} catch (IOException e) {
@@ -62,12 +65,7 @@ public class CsvFileReader {
 
 		}
 
-		return this.list;
-	}
-
-	private void addQuestionList(String concept, String description) {
-		Question question = new Question(concept, description);
-		this.list.add(question);
+		return questionList;
 	}
 
 	private boolean isQuoteMiddleIndex(String line) {

@@ -7,6 +7,7 @@ practice/
 library-management.iml
 out/
 *.class
+.class
 # Ignore Gradle project-specific cache directory
 .gradle
 .csv
@@ -14,3 +15,4 @@ test
 # Ignore Gradle build output directory
 # build
 /build/
+bin/

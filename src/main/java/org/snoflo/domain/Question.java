@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 
 public class Question {
 
-    private String concept;
+	private String concept;
 
-    private String description;
-	
+	private String description;
+
 	private List<Question> questionList;
 
 	public Question() {
@@ -25,11 +25,14 @@ public class Question {
 		return this.questionList;
 	}
 
-	
-	public void setQuestionList(List<Question> questionList) {
-		this.questionList = questionList;
+	public void addQuestionList(String concept, String description) {
+		Question question = new Question(concept, description);
+		this.questionList.add(question);
 	}
 
+	// public void setQuestionList(List<Question> questionList) {
+	// 	this.questionList = questionList;
+	// }
 
 	public String getConcept() {
 		return concept;
