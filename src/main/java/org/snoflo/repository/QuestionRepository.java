@@ -9,7 +9,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class QuestionRepository {
     
-
     private HikariDataSource dataSource;
 
     public QuestionRepository(HikariDataSource dataSource) {

@@ -7,16 +7,18 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.snoflo.domain.Question;
+
 public class CsvFileReader {
 
 	private List<Question> list;
 
 	public CsvFileReader(Question question) {
-		this.list = question.getList(); 
+		this.list = question.getQuestionList();
 	}
 
 	public List<Question> readCsvFile(Path selectedFile) {
-
+		
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 			String line = reader.readLine();
 
@@ -40,7 +42,7 @@ public class CsvFileReader {
 						addQuestionList(concept, description);
 
 					} else {
-						
+
 						Question question = list.getLast();
 
 						description = appendDescriptionColumn(question, descriptionBuilder, values);

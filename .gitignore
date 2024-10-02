@@ -1,5 +1,3 @@
-
-
 src/library.csv
 resources/csv/*.csv
 !src/csv
@@ -8,7 +6,7 @@ practice/
 .idea/
 library-management.iml
 out/
-.class
+*.class
 # Ignore Gradle project-specific cache directory
 .gradle
 .csv

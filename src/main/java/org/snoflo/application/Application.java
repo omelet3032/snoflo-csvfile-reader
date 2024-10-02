@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
+import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileReader;
 import org.snoflo.repository.FinderRepository;
@@ -23,8 +24,9 @@ public class Application {
 
     public void start() throws IOException {
 
+        Question question = new Question();
         // CsvFileConverter dataConverter = new CsvFileConverter();
-        CsvFileReader csvFileReader = new CsvFileReader();
+        CsvFileReader csvFileReader = new CsvFileReader(question);
         CsvFileFinder csvFileFinder = new CsvFileFinder();
 
         HikariConfig config = new HikariConfig("/application-hsqldb.properties");

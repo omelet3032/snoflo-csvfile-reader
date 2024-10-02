@@ -19,9 +19,9 @@ public class FinderRepository {
         this.dataSource = dataSource;
     }
 
-    // public void save(List<Question> list) {
-
-    // }
+    public void save(List<Question> list) {
+        
+    }
 
     // public void save(Path selectFile) {
 
