@@ -1,1 +1,17 @@
+src/library.csv
+resources/csv/*.csv
+!src/csv
+memo/
+practice/
+.idea/
+library-management.iml
+out/
 *.class
+# Ignore Gradle project-specific cache directory
+.gradle
+.csv
+test
+# Ignore Gradle build output directory
+# build
+/build/
+/target/
