@@ -1,6 +1,7 @@
 package org.snoflo.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -24,8 +25,6 @@ public class QuestionDatabase {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            Statement stmt = connection.createStatement();
-
             String createTableSql = """
                     CREATE TABLE IF NOT EXISTS question (
                         id INTEGER IDENTITY,
@@ -34,15 +33,15 @@ public class QuestionDatabase {
                         keyword1 VARCHAR(255),
                         keyword2 VARCHAR(255),
                         PRIMARY KEY (id)
-                    )
-                    """;
+                        )
+                        """;
+            PreparedStatement stmt = connection.prepareStatement(createTableSql);
 
             stmt.execute(createTableSql);
 
             System.out.println("테이블 생성 완료");
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

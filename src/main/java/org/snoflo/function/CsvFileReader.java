@@ -27,7 +27,9 @@ public class CsvFileReader {
 			StringBuilder descriptionBuilder = new StringBuilder();
 
 			while ((line = reader.readLine()) != null) {
-
+				System.out.println("line : " + line);
+				System.out.println();
+				System.out.println("이게 실행되는가?");
 				String[] values = line.split(",");
 
 				descriptionBuilder.setLength(0);
@@ -53,7 +55,7 @@ public class CsvFileReader {
 					}
 
 				} else {
-					
+					System.out.println("빌더?");
 					concept = values[0];
 					description = values[1];
 

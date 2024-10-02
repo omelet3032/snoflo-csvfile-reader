@@ -17,73 +17,63 @@ public class FinderRepository {
 
     public FinderRepository(HikariDataSource dataSource) {
         this.dataSource = dataSource;
+        createTable();
     }
 
     public void save(List<Question> list) {
-        
+        String insertSql = """
+                INSERT INTO question (concept, description)
+                VALUES (?, ?)
+                """;
+
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+
+            for (Question question : list) {
+                String concept = question.getConcept();
+                String description = question.getDescription();
+
+                preparedStatement.setString(1, concept);
+                preparedStatement.setString(2, description);
+
+                preparedStatement.addBatch();
+
+            }
+            
+            preparedStatement.executeBatch();
+           
+            // preparedStatement.executeQuery();
+            System.out.println("저장 완료");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    // public void save(Path selectFile) {
+    private void createTable() {
 
-    //     // List<Question> list = this.csvFileManager.generateData();
+        try (Connection connection = dataSource.getConnection()) {
 
-    //     // System.out.println(list.get(0).toString());
-    //     try (Connection connection = dataSource.getConnection();) {
+            String createTableSql = """
+                    CREATE TABLE IF NOT EXISTS question (
+                        id INTEGER IDENTITY,
+                        concept VARCHAR(255) NOT NULL,
+                        description VARCHAR(255) NOT NULL,
+                        keyword1 VARCHAR(255),
+                        keyword2 VARCHAR(255),
+                        PRIMARY KEY (id)
+                        )
+                        """;
+            PreparedStatement stmt = connection.prepareStatement(createTableSql);
 
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    //     // list 추출
-    //     // 쿼리 작성 insert into ~
+            stmt.execute();
 
-    // }
+            System.out.println("테이블 생성 완료");
 
-    // public void createH2Table() {
-        
-    //     String sql = """
-    //             CREATE TABLE IF NOT EXISTS question (
-    //                 id INTEGER IDENTITY,
-    //                 concept VARCHAR(255) NOT NULL,
-    //                 description VARCHAR(255) NOT NULL,
-    //                 keyword1 VARCHAR(255),
-    //                 keyword2 VARCHAR(255),
-    //                 PRIMARY KEY(id)
-    //             )
-    //             """;
-
-    //     try (Connection connection = dataSource.getConnection()) {
-
-    //         PreparedStatement statement = connection.prepareStatement(sql);
-    //         statement.execute(sql);
-
-
-    //     } catch (SQLException e) {
-    //         // TODO Auto-generated catch block
-    //         e.printStackTrace();
-
-    //     }
-    // }
-
-    // public FinderRepository(CsvFileManager csvFileManager, MysqlConnection
-    // dbConnection) {
-    // this.csvFileManager = csvFileManager;
-    // this.dbConnection = dbConnection;
-    // dbConnection.connect();
-    // }
-
-    // public void save(Path selectedFile) {
-    // this.selectedFile = selectedFile;
-    // this.csvFileManager.generateData(selectedFile);
-    // }
-
-    // public void save2(Path selectedFile) {
-    // Connection connection = dbConnection.getConnection();
-
-    // try (Statement statement = connection.createStatement()) {
-
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-    // }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

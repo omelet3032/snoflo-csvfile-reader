@@ -22,7 +22,7 @@ public class Question {
 	}
 
 	public List<Question> getQuestionList() {
-		return questionList;
+		return this.questionList;
 	}
 
 	
