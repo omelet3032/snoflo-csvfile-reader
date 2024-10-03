@@ -11,7 +11,7 @@ public class Question {
 
 	private String description;
 
-	private List<Question> questionList;
+	// private List<Question> questionList;
 
 	public Question() {
 	}
@@ -21,17 +21,13 @@ public class Question {
 		this.description = description;
 	}
 
-	public List<Question> getQuestionList() {
-		return this.questionList;
-	}
+	// public List<Question> getQuestionList() {
+	// 	return this.questionList;
+	// }
 
-	public void addQuestionList(String concept, String description) {
-		Question question = new Question(concept, description);
-		this.questionList.add(question);
-	}
-
-	// public void setQuestionList(List<Question> questionList) {
-	// 	this.questionList = questionList;
+	// public void addQuestionList(String concept, String description) {
+	// 	Question question = new Question(concept, description);
+	// 	this.questionList.add(question);
 	// }
 
 	public String getConcept() {

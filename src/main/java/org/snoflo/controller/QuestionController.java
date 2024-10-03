@@ -32,7 +32,7 @@ public class QuestionController extends AppController {
     }
 
     private void executeFindAll() {
-        List<Question> list = quetionsService.findAll();
+        List<Question> list = quetionsService.findAllQuestion();
         questionView.showResultFindAll(list);
     }
 

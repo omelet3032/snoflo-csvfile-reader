@@ -5,17 +5,25 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.snoflo.domain.Question;
 
 public class CsvFileReader {
 
+	// private Question question;
+
+	private List<Question> questionList;
+
+	// public CsvFileReader(List<Question> quetionList) {
+	// // this.question = question;
+	// // this.questionList = quetionList;
+	// }
+
 	public List<Question> readCsvFile(Path selectedFile) {
 
-		Question question = new Question();
-
-		List<Question> questionList = question.getQuestionList();
+		questionList = new ArrayList<>();
 
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 
@@ -26,6 +34,9 @@ public class CsvFileReader {
 			StringBuilder descriptionBuilder = new StringBuilder();
 
 			while ((line = reader.readLine()) != null) {
+
+				Question question = new Question();
+
 				String[] values = line.split(",");
 
 				descriptionBuilder.setLength(0);
@@ -40,9 +51,7 @@ public class CsvFileReader {
 					} else {
 
 						question = questionList.getLast();
-
 						description = appendDescriptionColumn(question, descriptionBuilder, values);
-
 						question.setDescription(description);
 
 						questionList.set(questionList.size() - 1, question);
@@ -57,9 +66,12 @@ public class CsvFileReader {
 
 				}
 
-				question.addQuestionList(concept, description);
-			}
+				question.setConcept(concept);
+				question.setDescription(description);
 
+				questionList.add(question);
+
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 

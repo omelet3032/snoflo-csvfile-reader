@@ -8,6 +8,7 @@ public class QuestionView {
 
     public void showResultFindAll(List<Question> list) {
         System.out.println("--------------------------------");
+        System.out.println();
         for (Question question : list) {
             System.out.println(question.toString());
         }

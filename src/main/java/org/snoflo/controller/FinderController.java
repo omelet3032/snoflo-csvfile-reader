@@ -39,7 +39,6 @@ public class FinderController extends AppController {
         Path selectedFile = selectFile();
 
         List<Question> csvRowList = csvFileReader.readCsvFile(selectedFile);
-
         finderService.saveQuestionList(csvRowList);
     }
 

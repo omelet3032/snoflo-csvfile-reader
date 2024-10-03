@@ -21,9 +21,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> findAll() {
-        // return this.questionRepository.findAll();
-        return null;
+    public List<Question> findAllQuestion() {
+        return this.questionRepository.findAll();
+        // return null;
     }
 
 }

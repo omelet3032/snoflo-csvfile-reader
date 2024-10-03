@@ -8,6 +8,6 @@ public interface QuestionService {
 
     Question findConceptById(int id);
 
-    List<Question> findAll();
+    List<Question> findAllQuestion();
 
 }
