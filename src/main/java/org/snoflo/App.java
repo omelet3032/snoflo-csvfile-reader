@@ -17,7 +17,7 @@ import org.snoflo.function.RandomQuestion;
  *
  */
 public class App {
-    public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
+    public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
        
         Question question = new Question();
 
@@ -31,6 +31,7 @@ public class App {
 
         List<Question> list = csvFileReader.readCsvFile(selectedFile);
 
+        
         // for (Question question2 : list) {
         //     System.out.println(question2.toString());
         //     System.out.println();

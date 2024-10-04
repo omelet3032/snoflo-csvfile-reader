@@ -16,7 +16,8 @@ public class CsvFileReader {
 	private List<Question> list;
 
 	public CsvFileReader(Question question) {
-		this.list = question.getList(); 
+		// this.list = question.getList(); 
+		this.list = new ArrayList<>(); 
 	}
 
 	public List<Question> readCsvFile(Path selectedFile) {

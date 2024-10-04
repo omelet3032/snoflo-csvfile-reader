@@ -13,42 +13,63 @@ import org.snoflo.domain.Question;
 //cherry pick
 public class RandomQuestion {
 
-    private Map<Object, Object> getRandomField(Object obj) throws IllegalArgumentException, IllegalAccessException {
+    private Random random;
 
-        Field[] fields = obj.getClass().getDeclaredFields();
+    public RandomQuestion() {
+        this.random = new Random();
+    }
 
-        List<Field> filteredFields = new ArrayList<>();
+    // private Map<Object, Object> getRandomField(Object obj)
+    private Map<Question, Question> getRandomField(Question obj)
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 
-        for (Field field : fields) {
-            field.setAccessible(true);
-            if (!field.getName().equals("list")) {
-                filteredFields.add(field);
-            }
-        }
+        // Field[] fields = obj.getClass().getDeclaredFields();
+        
+        // List<Field> filteredFields = new ArrayList<>();
+        
+        // for (Field field : fields) {
+        //     if (field.getName().equals("concept") || field.getName().equals("description")) {
+        //         field.setAccessible(true);
+        //         filteredFields.add(field);
+        //     }
+        // }
+        
+        Field concept = obj.getClass().getDeclaredField("concept");
+        concept.setAccessible(true);
+        Field description = obj.getClass().getDeclaredField("description");
+        description.setAccessible(true);
+        
+        Field[] filteredFields = new Field[]{concept, description};
 
-        Random random = new Random();
-        Map<Object, Object> map = new HashMap<>();
+        // Map<Object, Object> map = new HashMap<>();
+        Map<Question, Question> map = new HashMap<>();
 
-        int randomIndex = random.nextInt(filteredFields.size());
+        // int randomIndex = random.nextInt(filteredFields.size());
+        int randomIndex = random.nextInt(filteredFields.length);
 
-        Field selectedField = filteredFields.get(randomIndex); // 필드 이름
+        // Field selectedField = filteredFields.get(randomIndex); // 필드 이름
+        Field selectedField = filteredFields[randomIndex]; // 필드 이름
+       
         String fieldName = selectedField.getName();
         System.out.println();
 
-        System.out.println();
-        Object value = selectedField.get(obj); // 필드의 실제 값
+        // Object value = selectedField.get(obj); // 필드의 실제 값
+        Question value = (Question) selectedField.get(obj); // 필드의 실제 값
+
 
         if (fieldName.equals("concept")) {
             for (Field field : filteredFields) {
                 if (field.getName().equals("description")) {
-                    Object descriptionValue = field.get(obj);
+                    // Object descriptionValue = field.get(obj);
+                    Question descriptionValue = (Question) field.get(obj);
                     map.put(value, descriptionValue);
                 }
             }
         } else if (fieldName.equals("description")) {
             for (Field field : filteredFields) {
                 if (field.getName().equals("concept")) {
-                    Object conceptValue = field.get(obj);
+                    // Object conceptValue = field.get(obj);
+                    Question conceptValue = (Question) field.get(obj);
                     map.put(value, conceptValue);
                 }
             }
@@ -59,14 +80,13 @@ public class RandomQuestion {
     }
 
     private Question getRandomElement(List<Question> list) {
-        Random random = new Random();
         int randomElement = random.nextInt(list.size());
         Question element = list.get(randomElement);
 
         return element;
     }
 
-    public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
+    public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -77,17 +97,19 @@ public class RandomQuestion {
         while (!list.isEmpty()) {
 
             Question question = getRandomElement(list);
-            Map<Object, Object> map = getRandomField(question);
-        
-            for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            // Map<Object, Object> map = getRandomField(question);
+            Map<Question, Question> map = getRandomField(question);
+
+            // for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            for (Map.Entry<Question, Question> entry : map.entrySet()) {
                 System.out.println("질문 : " + entry.getKey());
                 scanner.nextLine();
                 System.out.println("정답 : " + entry.getValue());
                 scanner.nextLine();
 
             }
+
             list.remove(question);
-            // list = removeQuestion(list, question);
 
         }
 
@@ -95,5 +117,4 @@ public class RandomQuestion {
         scanner.close();
     }
 
-   
 }
