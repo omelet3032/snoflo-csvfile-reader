@@ -1,7 +1,6 @@
 package org.snoflo.function;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,53 +14,47 @@ public class RandomQuestion {
 
     private Random random;
 
+    private Map<String, String> map;
+
     public RandomQuestion() {
         this.random = new Random();
+        this.map = new HashMap<>();
     }
 
     private Map<String, String> getRandomField(Question obj)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 
-        Field concept = obj.getClass().getDeclaredField("concept");
-        concept.setAccessible(true);
-        Field description = obj.getClass().getDeclaredField("description");
-        description.setAccessible(true);
-        
-        Field[] filteredFields = new Field[]{concept, description};
+        Field[] fields = obj.getClass().getDeclaredFields();
 
-        Map<String, String> map = new HashMap<>();
+        Field[] filteredFields = new Field[2];
+
+        for (Field field : fields) {
+            if (field.getName().equals("concept")) {
+                filteredFields[0] = field;
+            } else if (field.getName().equals("description")) {
+                filteredFields[1] = field;
+            }
+        }
+
+        for (Field field : filteredFields) {
+            field.setAccessible(true);
+        }
+
+        Field concept = filteredFields[0];
+        Field description = filteredFields[1];
+
+        String conceptValue = (String) concept.get(obj);
+        String descriptionValue = (String) description.get(obj);
 
         int randomIndex = random.nextInt(filteredFields.length);
 
-        Field selectedField = filteredFields[randomIndex]; // 필드 이름
-       
-        String fieldName = selectedField.getName();
-        System.out.println();
-
-        Object value1 = selectedField.get(obj); // 필드의 실제 값
-        String value = null;
-        if (value1 instanceof String ) {
-            value = (String) value1;
-        }
-
-        if (fieldName.equals("concept")) {
-            for (Field field : filteredFields) {
-                if (field.getName().equals("description")) {
-                    String descriptionValue = (String) field.get(obj);
-                    map.put(value, descriptionValue);
-                }
-            }
-        } else if (fieldName.equals("description")) {
-            for (Field field : filteredFields) {
-                if (field.getName().equals("concept")) {
-                    String conceptValue = (String) field.get(obj);
-                    map.put(value, conceptValue);
-                }
-            }
+        if (randomIndex == 0) {
+            map.put(conceptValue, descriptionValue);
+        } else if (randomIndex == 1) {
+            map.put(descriptionValue, conceptValue);
         }
 
         return map;
-
     }
 
     private Question getRandomElement(List<Question> list) {
@@ -71,7 +64,8 @@ public class RandomQuestion {
         return element;
     }
 
-    public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+    public void playRandomQuiz(List<Question> list)
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -82,15 +76,30 @@ public class RandomQuestion {
         while (!list.isEmpty()) {
 
             Question question = getRandomElement(list);
-            Map<String, String> map = getRandomField(question);
 
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                System.out.println("질문 : " + entry.getKey());
-                scanner.nextLine();
-                System.out.println("정답 : " + entry.getValue());
-                scanner.nextLine();
+            int randomIndex = random.nextInt(2);
 
+            if (randomIndex == 0) {
+                System.out.println("질문 : " + question.getConcept());
+                scanner.nextLine();
+                System.out.println("정답 : " + question.getDescription());
+                scanner.nextLine();
+            } else {
+                System.out.println("질문 : " + question.getDescription());
+                scanner.nextLine();
+                System.out.println("정답 : " + question.getConcept());
+                scanner.nextLine();
             }
+
+            // map = getRandomField(question);
+
+            // for (Map.Entry<String, String> entry : map.entrySet()) {
+            //     System.out.println("질문 : " + entry.getKey());
+            //     scanner.nextLine();
+            //     System.out.println("정답 : " + entry.getValue());
+            //     scanner.nextLine();
+
+            // }
 
             list.remove(question);
 

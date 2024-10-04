@@ -9,22 +9,9 @@ public class Question {
 
     private String description;
 
-	// private List<Question> list = new ArrayList<>();
-	
-	// public List<Question> getList() {
-	// 	return list;
-	// }
-
-
-	// public void setList(List<Question> list) {
-	// 	this.list = list;
-	// }
-
-
 	public Question() {
 	}
 
-	
 	public Question(String concept) {
 		this.concept = concept;
 	}
@@ -33,6 +20,10 @@ public class Question {
 	public Question(String concept, String description) {
 		this.concept = concept;
 		this.description = description;
+	}
+
+	public QuestionDto toDto(Question question)	{
+		return new QuestionDto(this.concept, this.description);
 	}
 
 	public void setQuestion(String concept, String description) {
