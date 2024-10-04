@@ -9,16 +9,13 @@ import java.util.Random;
 import java.util.Scanner;
 
 import org.snoflo.domain.Question;
+
 //cherry pick
 public class RandomQuestion {
 
-    private Random random = new Random();
-
-    public Map<Object, Object> getRandomField(Object obj) throws IllegalArgumentException, IllegalAccessException {
+    private Map<Object, Object> getRandomField(Object obj) throws IllegalArgumentException, IllegalAccessException {
 
         Field[] fields = obj.getClass().getDeclaredFields();
-
-        Question question = new Question();
 
         List<Field> filteredFields = new ArrayList<>();
 
@@ -69,12 +66,6 @@ public class RandomQuestion {
         return element;
     }
 
-    private List<Question> removeQuestion(List<Question> list, Question element) {
-
-        list.remove(element);
-        return list;
-    }
-
     public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
 
         Scanner scanner = new Scanner(System.in);
@@ -82,6 +73,7 @@ public class RandomQuestion {
         System.out.println("퀴즈를 시작합니다.");
         System.out.println();
         scanner.nextLine();
+
         while (!list.isEmpty()) {
 
             Question question = getRandomElement(list);
@@ -94,12 +86,13 @@ public class RandomQuestion {
                 scanner.nextLine();
 
             }
-            
-            list = removeQuestion(list, question);
+            list.remove(question);
+            // list = removeQuestion(list, question);
 
         }
 
-        // return list;
+        System.out.println("퀴즈를 종료합니다.");
+        scanner.close();
     }
 
    
