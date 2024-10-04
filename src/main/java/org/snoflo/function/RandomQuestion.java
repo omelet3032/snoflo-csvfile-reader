@@ -12,13 +12,9 @@ import org.snoflo.domain.Question;
 //cherry pick
 public class RandomQuestion {
 
-    private Random random = new Random();
-
     public Map<Object, Object> getRandomField(Object obj) throws IllegalArgumentException, IllegalAccessException {
 
         Field[] fields = obj.getClass().getDeclaredFields();
-
-        Question question = new Question();
 
         List<Field> filteredFields = new ArrayList<>();
 
