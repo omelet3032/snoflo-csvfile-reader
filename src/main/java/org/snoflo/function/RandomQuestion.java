@@ -14,91 +14,58 @@ public class RandomQuestion {
 
     private Random random;
 
-    private Map<String, String> map;
-
     public RandomQuestion() {
         this.random = new Random();
-        this.map = new HashMap<>();
-    }
-
-    private Map<String, String> getRandomField(Question obj)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-
-        Field[] fields = obj.getClass().getDeclaredFields();
-
-        Field[] filteredFields = new Field[2];
-
-        for (Field field : fields) {
-            if (field.getName().equals("concept")) {
-                filteredFields[0] = field;
-            } else if (field.getName().equals("description")) {
-                filteredFields[1] = field;
-            }
-        }
-
-        for (Field field : filteredFields) {
-            field.setAccessible(true);
-        }
-
-        Field concept = filteredFields[0];
-        Field description = filteredFields[1];
-
-        String conceptValue = (String) concept.get(obj);
-        String descriptionValue = (String) description.get(obj);
-
-        int randomIndex = random.nextInt(filteredFields.length);
-
-        if (randomIndex == 0) {
-            map.put(conceptValue, descriptionValue);
-        } else if (randomIndex == 1) {
-            map.put(descriptionValue, conceptValue);
-        }
-
-        return map;
     }
 
     private Question getRandomElement(List<Question> list) {
         int randomElement = random.nextInt(list.size());
         Question element = list.get(randomElement);
-
         return element;
     }
 
-    public void playRandomQuiz(List<Question> list)
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+    public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
 
         Scanner scanner = new Scanner(System.in);
-
+        
         System.out.println("퀴즈를 시작합니다.");
         System.out.println();
         scanner.nextLine();
-
+    
+        
         while (!list.isEmpty()) {
 
+    
             Question question = getRandomElement(list);
+            Field[] fields = Question.class.getDeclaredFields();
+            int randomIndex = random.nextInt(fields.length);
+    
+            fields[randomIndex].setAccessible(true);
+            Object questionField = fields[randomIndex].get(question);
+    
+            int otherIndex = (randomIndex + 1) % fields.length;
+            fields[otherIndex].setAccessible(true);
+            Object otherField = fields[otherIndex].get(question);
+    
+            System.out.println("질문 : " + questionField);
+            scanner.nextLine();
+            System.out.println("정답 : " + otherField);
+            scanner.nextLine();
 
-            int randomIndex = random.nextInt(2);
 
-            if (randomIndex == 0) {
-                System.out.println("질문 : " + question.getConcept());
-                scanner.nextLine();
-                System.out.println("정답 : " + question.getDescription());
-                scanner.nextLine();
-            } else {
-                System.out.println("질문 : " + question.getDescription());
-                scanner.nextLine();
-                System.out.println("정답 : " + question.getConcept());
-                scanner.nextLine();
-            }
 
-            // map = getRandomField(question);
+            // int randomIndex = random.nextInt(2);
 
-            // for (Map.Entry<String, String> entry : map.entrySet()) {
-            //     System.out.println("질문 : " + entry.getKey());
+            // if (randomIndex == 0) {
+            //     System.out.println("질문 : " + question.getConcept());
             //     scanner.nextLine();
-            //     System.out.println("정답 : " + entry.getValue());
+            //     System.out.println("정답 : " + question.getDescription());
             //     scanner.nextLine();
-
+            // } else {
+            //     System.out.println("질문 : " + question.getDescription());
+            //     scanner.nextLine();
+            //     System.out.println("정답 : " + question.getConcept());
+            //     scanner.nextLine();
             // }
 
             list.remove(question);
