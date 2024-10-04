@@ -19,21 +19,9 @@ public class RandomQuestion {
         this.random = new Random();
     }
 
-    // private Map<Object, Object> getRandomField(Object obj)
-    private Map<Question, Question> getRandomField(Question obj)
+    private Map<String, String> getRandomField(Question obj)
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 
-        // Field[] fields = obj.getClass().getDeclaredFields();
-        
-        // List<Field> filteredFields = new ArrayList<>();
-        
-        // for (Field field : fields) {
-        //     if (field.getName().equals("concept") || field.getName().equals("description")) {
-        //         field.setAccessible(true);
-        //         filteredFields.add(field);
-        //     }
-        // }
-        
         Field concept = obj.getClass().getDeclaredField("concept");
         concept.setAccessible(true);
         Field description = obj.getClass().getDeclaredField("description");
@@ -41,35 +29,32 @@ public class RandomQuestion {
         
         Field[] filteredFields = new Field[]{concept, description};
 
-        // Map<Object, Object> map = new HashMap<>();
-        Map<Question, Question> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
-        // int randomIndex = random.nextInt(filteredFields.size());
         int randomIndex = random.nextInt(filteredFields.length);
 
-        // Field selectedField = filteredFields.get(randomIndex); // 필드 이름
         Field selectedField = filteredFields[randomIndex]; // 필드 이름
        
         String fieldName = selectedField.getName();
         System.out.println();
 
-        // Object value = selectedField.get(obj); // 필드의 실제 값
-        Question value = (Question) selectedField.get(obj); // 필드의 실제 값
-
+        Object value1 = selectedField.get(obj); // 필드의 실제 값
+        String value = null;
+        if (value1 instanceof String ) {
+            value = (String) value1;
+        }
 
         if (fieldName.equals("concept")) {
             for (Field field : filteredFields) {
                 if (field.getName().equals("description")) {
-                    // Object descriptionValue = field.get(obj);
-                    Question descriptionValue = (Question) field.get(obj);
+                    String descriptionValue = (String) field.get(obj);
                     map.put(value, descriptionValue);
                 }
             }
         } else if (fieldName.equals("description")) {
             for (Field field : filteredFields) {
                 if (field.getName().equals("concept")) {
-                    // Object conceptValue = field.get(obj);
-                    Question conceptValue = (Question) field.get(obj);
+                    String conceptValue = (String) field.get(obj);
                     map.put(value, conceptValue);
                 }
             }
@@ -97,11 +82,9 @@ public class RandomQuestion {
         while (!list.isEmpty()) {
 
             Question question = getRandomElement(list);
-            // Map<Object, Object> map = getRandomField(question);
-            Map<Question, Question> map = getRandomField(question);
+            Map<String, String> map = getRandomField(question);
 
-            // for (Map.Entry<Object, Object> entry : map.entrySet()) {
-            for (Map.Entry<Question, Question> entry : map.entrySet()) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
                 System.out.println("질문 : " + entry.getKey());
                 scanner.nextLine();
                 System.out.println("정답 : " + entry.getValue());
