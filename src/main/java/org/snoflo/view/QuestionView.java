@@ -24,4 +24,19 @@ public class QuestionView {
         System.out.println();
         System.out.println("conceptById : " + concept);
     }
+
+    public void showPromptRandomQuestion() {
+        System.out.println("-----------------------------");
+        System.out.println("----- 랜덤 퀴즈 시작 -----");
+        System.out.println("-----------------------------");
+    }
+
+    public void showResultQuestionField(Object questionField) {
+        System.out.println("질문 : " + questionField);
+    }
+
+    public void showResultAnswerField(Object answerField) {
+        System.out.println("정답 : " + answerField);
+    }
+
 }

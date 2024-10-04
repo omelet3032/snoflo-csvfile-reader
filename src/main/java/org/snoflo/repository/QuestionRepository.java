@@ -22,8 +22,6 @@ public class QuestionRepository {
 
     public List<Question> findAll() {
 
-        // Question question = new Question();
-
         List<Question> list = new ArrayList<>();
 
         try (Connection conection = dataSource.getConnection()) {

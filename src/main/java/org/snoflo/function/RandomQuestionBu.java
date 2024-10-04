@@ -1,25 +1,34 @@
 package org.snoflo.function;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
 import org.snoflo.domain.Question;
 
-public class RandomQuestion {
+//cherry pick
+public class RandomQuestionBu {
 
     private Random random;
 
-    public RandomQuestion() {
+    public RandomQuestionBu() {
         this.random = new Random();
     }
 
-    
-    public Object getResultQuestion(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
+    public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
 
-       /* field를 QuestionDto로 변환해보자
-        */ 
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("퀴즈를 시작합니다.");
+        System.out.println();
+        scanner.nextLine();
+
+        while (!list.isEmpty()) {
+
             Question question = getRandomElement(list);
             Field[] fields = Question.class.getDeclaredFields();
             int randomIndex = random.nextInt(fields.length);
@@ -31,14 +40,22 @@ public class RandomQuestion {
             fields[otherIndex].setAccessible(true);
             Object otherField = fields[otherIndex].get(question);
 
-        return null;
+            System.out.println("질문 : " + questionField);
+            scanner.nextLine();
+            System.out.println("정답 : " + otherField);
+            scanner.nextLine();
 
+            list.remove(question);
+
+        }
+
+        System.out.println("퀴즈를 종료합니다.");
+        scanner.close();
     }
 
     private Question getRandomElement(List<Question> list) {
         int randomElement = random.nextInt(list.size());
         Question element = list.get(randomElement);
-        list.remove(element);
         return element;
     }
 
