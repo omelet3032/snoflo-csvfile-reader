@@ -12,91 +12,68 @@ import org.snoflo.domain.Question;
 //cherry pick
 public class RandomQuestion {
 
-    public Map<Object, Object> getRandomField(Object obj) throws IllegalArgumentException, IllegalAccessException {
+    private Random random;
 
-        Field[] fields = obj.getClass().getDeclaredFields();
-
-        List<Field> filteredFields = new ArrayList<>();
-
-        for (Field field : fields) {
-            field.setAccessible(true);
-            if (!field.getName().equals("list")) {
-                filteredFields.add(field);
-            }
-        }
-
-        Random random = new Random();
-        Map<Object, Object> map = new HashMap<>();
-
-        int randomIndex = random.nextInt(filteredFields.size());
-
-        Field selectedField = filteredFields.get(randomIndex); // 필드 이름
-        String fieldName = selectedField.getName();
-        System.out.println();
-
-        System.out.println();
-        Object value = selectedField.get(obj); // 필드의 실제 값
-
-        if (fieldName.equals("concept")) {
-            for (Field field : filteredFields) {
-                if (field.getName().equals("description")) {
-                    Object descriptionValue = field.get(obj);
-                    map.put(value, descriptionValue);
-                }
-            }
-        } else if (fieldName.equals("description")) {
-            for (Field field : filteredFields) {
-                if (field.getName().equals("concept")) {
-                    Object conceptValue = field.get(obj);
-                    map.put(value, conceptValue);
-                }
-            }
-        }
-
-        return map;
-
+    public RandomQuestion() {
+        this.random = new Random();
     }
 
     private Question getRandomElement(List<Question> list) {
-        Random random = new Random();
         int randomElement = random.nextInt(list.size());
         Question element = list.get(randomElement);
-
         return element;
-    }
-
-    private List<Question> removeQuestion(List<Question> list, Question element) {
-
-        list.remove(element);
-        return list;
     }
 
     public void playRandomQuiz(List<Question> list) throws IllegalArgumentException, IllegalAccessException {
 
         Scanner scanner = new Scanner(System.in);
-
+        
         System.out.println("퀴즈를 시작합니다.");
         System.out.println();
         scanner.nextLine();
+    
+        
         while (!list.isEmpty()) {
 
+    
             Question question = getRandomElement(list);
-            Map<Object, Object> map = getRandomField(question);
-        
-            for (Map.Entry<Object, Object> entry : map.entrySet()) {
-                System.out.println("질문 : " + entry.getKey());
-                scanner.nextLine();
-                System.out.println("정답 : " + entry.getValue());
-                scanner.nextLine();
+            Field[] fields = Question.class.getDeclaredFields();
+            int randomIndex = random.nextInt(fields.length);
+    
+            fields[randomIndex].setAccessible(true);
+            Object questionField = fields[randomIndex].get(question);
+    
+            int otherIndex = (randomIndex + 1) % fields.length;
+            fields[otherIndex].setAccessible(true);
+            Object otherField = fields[otherIndex].get(question);
+    
+            System.out.println("질문 : " + questionField);
+            scanner.nextLine();
+            System.out.println("정답 : " + otherField);
+            scanner.nextLine();
 
-            }
-            
-            list = removeQuestion(list, question);
+
+
+            // int randomIndex = random.nextInt(2);
+
+            // if (randomIndex == 0) {
+            //     System.out.println("질문 : " + question.getConcept());
+            //     scanner.nextLine();
+            //     System.out.println("정답 : " + question.getDescription());
+            //     scanner.nextLine();
+            // } else {
+            //     System.out.println("질문 : " + question.getDescription());
+            //     scanner.nextLine();
+            //     System.out.println("정답 : " + question.getConcept());
+            //     scanner.nextLine();
+            // }
+
+            list.remove(question);
 
         }
 
-        // return list;
+        System.out.println("퀴즈를 종료합니다.");
+        scanner.close();
     }
 
-   
 }
