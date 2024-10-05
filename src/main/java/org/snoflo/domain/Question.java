@@ -22,12 +22,11 @@ public class Question {
 		this.description = description;
 	}
 
-	// public QuestionDto toDto(Question question) {
-	// 	return new QuestionDto(question.getConcept(), question.getDescription());
-	// }
+	public QuestionDto toDto(Question question) {
+		return new QuestionDto(question.getConcept(), question.getDescription());
+	}
 
-
-	public RandomQuestionDto toDto(String question, String answer) {
+	public RandomQuestionDto toRandomQuestionDto(String question, String answer) {
 		return new RandomQuestionDto(question, answer);
 	}
 

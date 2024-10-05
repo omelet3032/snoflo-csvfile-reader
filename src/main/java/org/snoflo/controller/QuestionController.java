@@ -32,19 +32,13 @@ public class QuestionController extends AppController {
         int number = Integer.parseInt(scanner.nextLine());
 
         switch (number) {
-            case 1 -> executeFindAll();
-            case 2 -> executeFindById();
-            case 3 -> executeRandomQuestion();
+            case 1 -> executeRandomQuestion();
+            case 2 -> executeFindAll();
             default -> start();
         }
     }
 
     private void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
-        /*
-         * QuestionView에 퀴즈 시작합니다 화면 출력
-         * findbyALl로 db에서 list 가져오기
-         * 
-         */
 
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
