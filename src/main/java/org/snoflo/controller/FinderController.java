@@ -45,7 +45,7 @@ public class FinderController extends AppController {
     private Path selectFile() {
         Path selectedFolder = executeFindFolder();
         Path selectedFile = executeFindFile(selectedFolder);
-
+        
         return selectedFile;
     }
 
@@ -58,7 +58,7 @@ public class FinderController extends AppController {
 
         int number = scanner.nextInt();
         scanner.nextLine();
-
+        
         Path selectedFolder = folderList.get(number);
         return selectedFolder;
     }
@@ -71,6 +71,7 @@ public class FinderController extends AppController {
         finderView.showSelectCsvFile(fileList);
         int number = scanner.nextInt();
         scanner.nextLine();
+
 
         Path selectedFile = fileList.get(number);
         return selectedFile;

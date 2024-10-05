@@ -13,8 +13,7 @@ public class MainView {
         System.out.println("메뉴 선택");
         System.out.println("1. 전체 출력");
         System.out.println("2. id로 검색");
-        System.out.println("3. 이름으로 검색");
-        System.out.println("4. 랜덤 출력");
+        System.out.println("3. 랜덤 출력");
         System.out.println("5. 나가기");
         System.out.println("---------------------------------");
     }

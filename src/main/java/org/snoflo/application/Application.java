@@ -25,8 +25,9 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class Application {
 
-    public void start() throws IOException {
+    private Server webServer = new Server();
 
+    public void start() throws IOException, IllegalArgumentException, IllegalAccessException {
 
         connect();
 
@@ -60,17 +61,24 @@ public class Application {
         new FinderController(csvFileReader, csvFileFinder, finderService, finderView).start();
         new QuestionController(questionService, questionView, mainView).start();
 
+        stop();
     }
 
     private void connect() {
         try {
-			Server webServer = Server.createWebServer("-webAllowOthers", "-webPort", "8082").start();
-            Server tcpServer = Server.createTcpServer("-tcpAllowOthers", "-tcpPort", "9092").start();
+			webServer = Server.createWebServer("-webAllowOthers", "-webPort", "8082").start();
+            // Server tcpServer = Server.createTcpServer("-tcpAllowOthers", "-tcpPort", "9092").start();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
     }
+
+    private void stop() {
+        webServer.stop();
+    }
+
 
 }
