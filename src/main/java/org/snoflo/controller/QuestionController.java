@@ -65,7 +65,6 @@ public class QuestionController extends AppController {
 
         }
 
-
         while(true) {
             questionView.showPromptAskExit();
             String input = scanner.nextLine();

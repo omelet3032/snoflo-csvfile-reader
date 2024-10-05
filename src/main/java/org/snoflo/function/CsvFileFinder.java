@@ -12,7 +12,7 @@ public class CsvFileFinder {
 
     public List<Path> getFolderList() {
         Path dirPath = Paths.get(System.getProperty("user.dir"));
-        int maxDepth = 2;
+        int maxDepth = 1;
 
         try {
             return Files.walk(dirPath, maxDepth).filter(Files::isDirectory).collect(Collectors.toList());
