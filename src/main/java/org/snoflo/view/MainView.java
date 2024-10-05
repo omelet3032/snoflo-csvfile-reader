@@ -11,10 +11,9 @@ public class MainView {
     public void showSelectMenu() {
         System.out.println("--------------------------------");
         System.out.println("메뉴 선택");
-        System.out.println("1. 전체 출력");
-        System.out.println("2. id로 검색");
-        System.out.println("3. 랜덤 출력");
-        System.out.println("5. 나가기");
+        System.out.println("1. 퀴즈 시작");
+        System.out.println("2. 전체 출력");
+        System.out.println("3. 종료");
         System.out.println("---------------------------------");
     }
 

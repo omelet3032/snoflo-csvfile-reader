@@ -34,6 +34,7 @@ public class QuestionController extends AppController {
         switch (number) {
             case 1 -> executeRandomQuestion();
             case 2 -> executeFindAll();
+            case 3 -> exitApp();
             default -> start();
         }
     }
@@ -60,10 +61,21 @@ public class QuestionController extends AppController {
                 scanner.nextLine();
             }
 
-
-
             list.remove(question);
 
+        }
+
+
+        while(true) {
+            questionView.showPromptAskExit();
+            String input = scanner.nextLine();
+            
+            if (input.equals("Y")) {
+                exitApp();
+            } else if (input.equalsIgnoreCase("n")) {
+                start();
+            } 
+            
         }
 
     }
@@ -79,6 +91,10 @@ public class QuestionController extends AppController {
         scanner.nextLine();
         Question conceptById = quetionsService.findConceptById(id);
         questionView.showResultFindById(conceptById);
+    }
+
+    private void exitApp() {
+        System.exit(0);
     }
 
 }

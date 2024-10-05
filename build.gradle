@@ -59,7 +59,6 @@ dependencies {
 }
 
 shadowJar {
-    // archiveFileName = 'library-management-all.jar'  // 의존성이 포함된 JAR 이름
     archiveFileName = 'snoflo-randomquiz.jar'  // 의존성이 포함된 JAR 이름
 }
 
@@ -75,11 +74,15 @@ application {
     mainClass = 'org.snoflo.App'
 }
 
-
+tasks.named('run') {
+    standardInput = System.in  // 표준 입력 활성화
+}
 
 jar {
     manifest {
 	attributes (
+        'title' : 'snoflo-randomquiz',
+        'version' : 'v1.0.0 -beta',
 	    'Main-Class' : 'org.snoflo.App'
 	)
     }

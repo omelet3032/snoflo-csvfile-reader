@@ -39,4 +39,11 @@ public class QuestionView {
         System.out.println("정답 : " + answerField);
     }
 
+    public void showPromptAskExit() {
+        System.out.println("-----------------------------");
+        System.out.println("----- 앱을 종료하시겠습니까? -----");
+        System.out.println("-----------------------------");
+        System.out.println("Y/n");
+    }
+
 }
