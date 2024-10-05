@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.snoflo.domain.Question;
+import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.function.RandomQuestion;
 import org.snoflo.service.QuestionService;
 import org.snoflo.view.MainView;
@@ -52,32 +53,22 @@ public class QuestionController extends AppController {
         RandomQuestion randomQuestion = new RandomQuestion();
 
         while (!list.isEmpty()) {
-                // System.out.println("순회 시작");
-                // Map<String, String> map = randomQuestion.getRandomQuestion(list);
-                Map<Question, List<String>> map = randomQuestion.getRandomQuestion(list);
+            // Map<Question, List<String>> map = randomQuestion.getRandomQuestion(list);
+            Map<Question, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
 
-                // for (Map.Entry<String, String> entry : map.entrySet()) {
-                // for (Map.Entry<Question, List<String>> entry : map.entrySet()) {
-                //     questionView.showResultQuestionField(entry.getKey());
-                //     scanner.nextLine();
-                //     questionView.showResultAnswerField(entry.getValue());
-                //     scanner.nextLine();
-                // }
+            Set<Question> key = map.keySet();
+            Question question = key.iterator().next();
 
-                Set<Question> key = map.keySet();
-                Question question = key.iterator().next();
+            for (RandomQuestionDto dto : map.values()) {
+                questionView.showResultQuestionField(dto.question());
+                scanner.nextLine();
+                questionView.showResultAnswerField(dto.answer());
+                scanner.nextLine();
+            }
 
-                for (List<String> value : map.values()) {
-                    questionView.showResultQuestionField(value.getFirst());
-                    scanner.nextLine();
-                    questionView.showResultAnswerField(value.getLast());
-                    scanner.nextLine();
-                }
 
-                list.remove(question);
 
-            // System.out.println("순회 끝");
-            // System.out.println("list.size() : " + list.size());
+            list.remove(question);
 
         }
 
