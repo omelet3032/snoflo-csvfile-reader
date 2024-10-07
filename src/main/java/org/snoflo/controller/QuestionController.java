@@ -14,7 +14,7 @@ import org.snoflo.service.QuestionService;
 import org.snoflo.view.MainView;
 import org.snoflo.view.QuestionView;
 
-public class QuestionController extends AppController {
+public class QuestionController extends AppController implements MainController {
 
     private QuestionService quetionsService;
     private QuestionView questionView;
@@ -90,10 +90,6 @@ public class QuestionController extends AppController {
         scanner.nextLine();
         Question conceptById = quetionsService.findConceptById(id);
         questionView.showResultFindById(conceptById);
-    }
-
-    private void exitApp() {
-        System.exit(0);
     }
 
 }

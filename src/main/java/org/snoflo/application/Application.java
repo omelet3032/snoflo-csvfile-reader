@@ -8,6 +8,7 @@ import java.util.List;
 import org.h2.tools.Server;
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
+import org.snoflo.controller.StartController;
 import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileReader;
@@ -31,15 +32,10 @@ public class Application {
 
         connect();
 
-        Question question = new Question();
-        // CsvFileReader csvFileReader = new CsvFileReader(question);
-        List<Question> list = new ArrayList<>();
-        // CsvFileReader csvFileReader = new CsvFileReader(list);
         CsvFileReader csvFileReader = new CsvFileReader();
         CsvFileFinder csvFileFinder = new CsvFileFinder();
 
         HikariConfig config = new HikariConfig("/application-h2.properties");
-        // HikariConfig config = new HikariConfig("db/h2/application-h2.properties");
         HikariDataSource dataSource = new HikariDataSource(config);
 
         // --------------------
@@ -58,8 +54,11 @@ public class Application {
         QuestionView questionView = new QuestionView();
 
         // 시작
-        new FinderController(csvFileReader, csvFileFinder, finderService, finderView).start();
-        new QuestionController(questionService, questionView, mainView).start();
+        FinderController finderController = new FinderController(csvFileReader, csvFileFinder, finderService, finderView);
+        QuestionController questionController = new QuestionController(questionService, questionView, mainView);
+        StartController startController = new StartController(mainView, finderController, questionController);
+
+        startController.start();
 
         stop();
     }

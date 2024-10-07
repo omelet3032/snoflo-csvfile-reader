@@ -46,7 +46,6 @@ public class FinderRepository {
             
             // preparedStatement.executeBatch();
 
-            System.out.println("저장 완료");
 
         } catch (SQLException e) {
             e.printStackTrace();
