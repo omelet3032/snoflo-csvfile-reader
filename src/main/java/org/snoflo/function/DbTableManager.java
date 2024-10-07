@@ -1,4 +1,4 @@
-package org.snoflo.db;
+package org.snoflo.function;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -12,11 +12,11 @@ import org.h2.jdbc.JdbcSQLSyntaxErrorException;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class TableCreator {
+public class DbTableManager {
 
     private HikariDataSource dataSource = new HikariDataSource();
 
-    public TableCreator(HikariDataSource dataSource) {
+    public DbTableManager(HikariDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -70,13 +70,12 @@ public class TableCreator {
     }
 
     public List<String> getTable() {
-        
+
         List<String> list = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             DatabaseMetaData meta = conn.getMetaData();
             ResultSet tables = meta.getTables(null, "PUBLIC", "%", new String[] { "TABLE" });
             // ResultSet tables = meta.getTables(null, null, "%", new String[] { "TABLE" });
-
 
             while (tables.next()) {
                 String tableName = tables.getString("TABLE_NAME");

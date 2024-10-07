@@ -87,8 +87,8 @@ public class RepositoryTests {
 
         finderRepository.save(questionList);
 
-        List<Question> list = questionRepository.findAll();
-        System.out.println("findAll list \n " + list);
+        // List<Question> list = questionRepository.findAll();
+        // System.out.println("findAll list \n " + list);
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.snoflo.domain.Question;
 
-public class CsvFileReader {
+public class CsvFileParser {
 
 	// private Question question;
 

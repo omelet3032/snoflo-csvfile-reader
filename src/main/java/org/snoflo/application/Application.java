@@ -11,7 +11,8 @@ import org.snoflo.controller.QuestionController;
 import org.snoflo.controller.StartController;
 import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
-import org.snoflo.function.CsvFileReader;
+import org.snoflo.function.CsvFileParser;
+import org.snoflo.function.DbTableManager;
 import org.snoflo.repository.FinderRepository;
 import org.snoflo.repository.QuestionRepository;
 import org.snoflo.service.FinderService;
@@ -31,12 +32,14 @@ public class Application {
     public void start() throws IOException, IllegalArgumentException, IllegalAccessException {
 
         connect();
-
-        CsvFileReader csvFileReader = new CsvFileReader();
-        CsvFileFinder csvFileFinder = new CsvFileFinder();
-
         HikariConfig config = new HikariConfig("/application-h2.properties");
         HikariDataSource dataSource = new HikariDataSource(config);
+
+        CsvFileParser csvFileReader = new CsvFileParser();
+        CsvFileFinder csvFileFinder = new CsvFileFinder();
+        
+        DbTableManager tableManager = new DbTableManager(dataSource);
+
 
         // --------------------
         // FinderService
@@ -54,8 +57,8 @@ public class Application {
         QuestionView questionView = new QuestionView();
 
         // 시작
-        FinderController finderController = new FinderController(csvFileReader, csvFileFinder, finderService, finderView);
-        QuestionController questionController = new QuestionController(questionService, questionView, mainView);
+        FinderController finderController = new FinderController(tableManager, csvFileReader, csvFileFinder, finderService, finderView);
+        QuestionController questionController = new QuestionController(questionService, questionView);
         StartController startController = new StartController(mainView, finderController, questionController);
 
         startController.start();

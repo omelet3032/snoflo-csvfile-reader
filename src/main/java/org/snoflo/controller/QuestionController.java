@@ -14,21 +14,18 @@ import org.snoflo.service.QuestionService;
 import org.snoflo.view.MainView;
 import org.snoflo.view.QuestionView;
 
-public class QuestionController extends AppController implements MainController {
+public class QuestionController extends AppController implements CommonControllerInterface {
 
     private QuestionService quetionsService;
     private QuestionView questionView;
-    private MainView mainView;
 
-    public QuestionController(QuestionService questionService, QuestionView questionView, MainView mainView) {
+    public QuestionController(QuestionService questionService, QuestionView questionView) {
         this.quetionsService = questionService;
         this.questionView = questionView;
-        this.mainView = mainView;
     }
 
     public void start() throws IllegalArgumentException, IllegalAccessException {
-        mainView.showPromptMainMenu();
-        mainView.showSelectMenu();
+        questionView.showSelectMenu();
         int number = Integer.parseInt(scanner.nextLine());
 
         switch (number) {

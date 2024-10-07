@@ -14,6 +14,15 @@ public class QuestionView {
         }
     }
 
+    public void showSelectMenu() {
+        System.out.println("--------------------------------");
+        System.out.println("메뉴 선택");
+        System.out.println("1. 퀴즈 시작");
+        System.out.println("2. 전체 출력");
+        System.out.println("3. 종료");
+        System.out.println("---------------------------------");
+    }
+
     public void showPromptFindById() {
         System.out.println("-----------------------------");
         System.out.println("----- id로 검색하기 -----");

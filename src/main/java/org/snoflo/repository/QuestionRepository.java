@@ -32,10 +32,8 @@ public class QuestionRepository {
             //         """;
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT concept, description ")
-            .append("FROM " + selectedFile.toLowerCase());
+            .append("FROM " + selectedFile);
             
-            
-
             // PreparedStatement statement = conection.prepareStatement(sql);
             PreparedStatement statement = conection.prepareStatement(sql.toString());
 

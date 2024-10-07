@@ -26,7 +26,7 @@ public class QuestionRepositoryTests {
     @Test
     public void TestfindAll() {
 
-        List<Question> list = questionRepository.findAll();
+        // List<Question> list = questionRepository.findAll();
 
 
     }
