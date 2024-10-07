@@ -21,5 +21,9 @@ public class FinderService {
 		finderRepository.save(csvRowList);
 	}
 
+	public void saveDynamicList(List<Question> csvRowList, String fileName) {
+		finderRepository.saveDynamic(csvRowList, fileName);
+	}
+
 	
 }

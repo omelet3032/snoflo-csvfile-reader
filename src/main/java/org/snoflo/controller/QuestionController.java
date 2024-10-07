@@ -32,19 +32,25 @@ public class QuestionController extends AppController implements MainController 
         int number = Integer.parseInt(scanner.nextLine());
 
         switch (number) {
-            case 1 -> executeRandomQuestion();
-            case 2 -> executeFindAll();
+            // case 1 -> executeRandomQuestion();
+            // case 2 -> executeFindAll();
             case 3 -> exitApp();
             default -> start();
         }
     }
 
-    private void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
+    // private void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
+    public void executeRandomQuestion(String selectedFile) throws IllegalArgumentException, IllegalAccessException {
+
+        /* 
+         * 여기서 테이블 확인
+         */
 
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
 
-        List<Question> list = quetionsService.findAllQuestion();
+        // List<Question> list = quetionsService.findAllQuestion();
+        List<Question> list = quetionsService.findAllQuestion(selectedFile);
         RandomQuestion randomQuestion = new RandomQuestion();
 
         while (!list.isEmpty()) {
@@ -79,10 +85,10 @@ public class QuestionController extends AppController implements MainController 
 
     }
 
-    private void executeFindAll() {
-        List<Question> list = quetionsService.findAllQuestion();
-        questionView.showResultFindAll(list);
-    }
+    // private void executeFindAll() {
+    //     List<Question> list = quetionsService.findAllQuestion();
+    //     questionView.showResultFindAll(list);
+    // }
 
     private void executeFindById() {
         questionView.showPromptFindById();

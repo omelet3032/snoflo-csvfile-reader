@@ -2,6 +2,7 @@ package org.snoflo.repository;
 
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,9 +44,8 @@ public class FinderRepository {
                 preparedStatement.execute();
 
             }
-            
-            // preparedStatement.executeBatch();
 
+            // preparedStatement.executeBatch();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,4 +53,38 @@ public class FinderRepository {
 
     }
 
+    public void saveDynamic(List<Question> list, String fileName) {
+        // QuestionDatabase db = new QuestionDatabase(dataSource);
+
+        // String insertSql = """
+        // INSERT INTO question (concept, description)
+        // VALUES (?, ?)
+        // """;
+        String insertSql = "INSERT INTO " + fileName + " (concept, description)" +
+                " VALUES (?, ?)";
+
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+
+            for (Question question : list) {
+                String concept = question.getConcept();
+                String description = question.getDescription();
+
+                preparedStatement.setString(1, concept);
+                preparedStatement.setString(2, description);
+
+                // preparedStatement.addBatch();
+                preparedStatement.execute();
+
+            }
+
+            // preparedStatement.executeBatch();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+   
 }

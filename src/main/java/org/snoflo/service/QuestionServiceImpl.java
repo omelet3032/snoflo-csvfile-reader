@@ -20,9 +20,15 @@ public class QuestionServiceImpl implements QuestionService {
         return null;
     }
 
+    // @Override
+    // public List<Question> findAllQuestion() {
+    //     return this.questionRepository.findAll();
+    //     // return null;
+    // }
+
     @Override
-    public List<Question> findAllQuestion() {
-        return this.questionRepository.findAll();
+    public List<Question> findAllQuestion(String selectedFile) {
+        return this.questionRepository.findAll(selectedFile);
         // return null;
     }
 

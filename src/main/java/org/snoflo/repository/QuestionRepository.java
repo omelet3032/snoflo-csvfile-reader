@@ -20,18 +20,24 @@ public class QuestionRepository {
         this.dataSource = dataSource;
     }
 
-    public List<Question> findAll() {
+    public List<Question> findAll(String selectedFile) {
 
         List<Question> list = new ArrayList<>();
 
         try (Connection conection = dataSource.getConnection()) {
 
-            String sql = """
-                    SELECT concept, description
-                    FROM question
-                    """;
+            // String sql = """
+            //         SELECT concept, description
+            //         FROM question
+            //         """;
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT concept, description ")
+            .append("FROM " + selectedFile.toLowerCase());
+            
+            
 
-            PreparedStatement statement = conection.prepareStatement(sql);
+            // PreparedStatement statement = conection.prepareStatement(sql);
+            PreparedStatement statement = conection.prepareStatement(sql.toString());
 
             ResultSet rs = statement.executeQuery();
             
@@ -52,6 +58,39 @@ public class QuestionRepository {
         // System.out.println("QR에서 반환한 list \n" + list.toString());
         return list;
     }
+
+    // public List<Question> findAll() {
+
+    //     List<Question> list = new ArrayList<>();
+
+    //     try (Connection conection = dataSource.getConnection()) {
+
+    //         String sql = """
+    //                 SELECT concept, description
+    //                 FROM question
+    //                 """;
+
+    //         PreparedStatement statement = conection.prepareStatement(sql);
+
+    //         ResultSet rs = statement.executeQuery();
+            
+    //         while (rs.next()) {
+    //             String concept = rs.getString("concept");
+    //             String description = rs.getString("description");
+    //             // System.out.println("rs con des : " + concept + " " + description);
+    //             // Question question = new Question(concept, description);
+    //             // System.out.println("rs에서 반환하는 question \n" + question.toString());
+
+    //             list.add(new Question(concept,description));
+    //             // list.add(question);
+    //         }
+
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    //     // System.out.println("QR에서 반환한 list \n" + list.toString());
+    //     return list;
+    // }
 
     // public void save(Path selectedFile) {
     // Question question = new Question();

@@ -8,6 +8,7 @@ public interface QuestionService {
 
     Question findConceptById(int id);
 
-    List<Question> findAllQuestion();
+    // List<Question> findAllQuestion();
+    List<Question> findAllQuestion(String selectedFile);
 
 }
