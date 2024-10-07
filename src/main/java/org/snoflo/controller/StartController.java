@@ -2,7 +2,7 @@ package org.snoflo.controller;
 
 import java.util.List;
 
-import org.snoflo.function.DbTableManager;
+import org.snoflo.function.TableManager;
 import org.snoflo.view.MainView;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -22,42 +22,43 @@ public class StartController extends AppController implements CommonControllerIn
     }
 
     public void start() throws IllegalArgumentException, IllegalAccessException {
-        mainView.showSelectStartMenu();
-        int number = Integer.parseInt(scanner.nextLine());
+       
+        while(true) {
 
-        switch (number) {
-            // case 1 -> questionController.start();
-            case 1 -> start1();
-            case 2 -> finderController.start();
-            case 3 -> exitApp();
+            mainView.showSelectStartMenu();
+            int number = Integer.parseInt(scanner.nextLine());
+    
+            switch (number) {
+                // case 1 -> questionController.start();
+                case 1 -> startQuestionController();
+                case 2 -> startFinderController();
+                case 3 -> exitApp();
+            }
         }
     }
 
-    public void start1() throws IllegalArgumentException, IllegalAccessException {
-        mainView.showSelectRegisterdFileMenu(checkTable());
-        
-        if (checkTable().isEmpty()) {
-            System.out.println("등록된 파일이 없습니다.");
-            start();
-        }
-        
-        int number = scanner.nextInt();
-        scanner.nextLine();
 
-        String selectedTable = checkTable().get(number-1);
-        
-
-        questionController.executeRandomQuestion(selectedTable.toLowerCase());
-
-        // questionController.start();
+    public void startFinderController() {
+        finderController.start();
     }
 
-    public List<String> checkTable() {
-        HikariConfig config = new HikariConfig("/application-h2.properties");
-        HikariDataSource dataSource = new HikariDataSource(config);
-
-        DbTableManager tableCreator = new DbTableManager(dataSource);
-        return tableCreator.getTable();
+    public void startQuestionController() throws IllegalArgumentException, IllegalAccessException {
+        
+        // if (checkTable().isEmpty()) {
+        //     System.out.println("등록된 파일이 없습니다.");
+        //     start();
+        // }
+        
+        questionController.executeRandomQuestion();
 
     }
+
+    // public List<String> checkTable() {
+    //     HikariConfig config = new HikariConfig("/application-h2.properties");
+    //     HikariDataSource dataSource = new HikariDataSource(config);
+
+    //     TableManager tableCreator = new TableManager(dataSource);
+    //     return tableCreator.getTable();
+
+    // }
 }

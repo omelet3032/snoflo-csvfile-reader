@@ -12,11 +12,11 @@ import org.h2.jdbc.JdbcSQLSyntaxErrorException;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class DbTableManager {
+public class TableManager {
 
     private HikariDataSource dataSource = new HikariDataSource();
 
-    public DbTableManager(HikariDataSource dataSource) {
+    public TableManager(HikariDataSource dataSource) {
         this.dataSource = dataSource;
     }
 

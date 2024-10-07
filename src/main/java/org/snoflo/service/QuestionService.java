@@ -11,4 +11,6 @@ public interface QuestionService {
     // List<Question> findAllQuestion();
     List<Question> findAllQuestion(String selectedFile);
 
+    List<String> findRegisterdTable();
+
 }

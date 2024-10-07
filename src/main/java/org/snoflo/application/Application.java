@@ -12,8 +12,8 @@ import org.snoflo.controller.StartController;
 import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
-import org.snoflo.function.DbTableManager;
-import org.snoflo.repository.FinderRepository;
+import org.snoflo.function.TableManager;
+import org.snoflo.repository.FinderRepositoryImpl;
 import org.snoflo.repository.QuestionRepository;
 import org.snoflo.service.FinderService;
 import org.snoflo.service.QuestionService;
@@ -38,12 +38,12 @@ public class Application {
         CsvFileParser csvFileReader = new CsvFileParser();
         CsvFileFinder csvFileFinder = new CsvFileFinder();
         
-        DbTableManager tableManager = new DbTableManager(dataSource);
+        // TableManager tableManager = new TableManager(dataSource);
 
 
         // --------------------
         // FinderService
-        FinderRepository finderRepository = new FinderRepository(dataSource);
+        FinderRepositoryImpl finderRepository = new FinderRepositoryImpl(dataSource);
         FinderService finderService = new FinderService(finderRepository);
 
         // QuestionService
@@ -57,7 +57,7 @@ public class Application {
         QuestionView questionView = new QuestionView();
 
         // 시작
-        FinderController finderController = new FinderController(tableManager, csvFileReader, csvFileFinder, finderService, finderView);
+        FinderController finderController = new FinderController(csvFileReader, csvFileFinder, finderService, finderView);
         QuestionController questionController = new QuestionController(questionService, questionView);
         StartController startController = new StartController(mainView, finderController, questionController);
 

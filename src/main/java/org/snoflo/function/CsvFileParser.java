@@ -1,6 +1,7 @@
 package org.snoflo.function;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,8 +25,9 @@ public class CsvFileParser {
 	public List<Question> readCsvFile(Path selectedFile) {
 
 		questionList = new ArrayList<>();
-
+		// String fileName = "csv/test10.csv";
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
+		// try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 
 			String line = reader.readLine();
 

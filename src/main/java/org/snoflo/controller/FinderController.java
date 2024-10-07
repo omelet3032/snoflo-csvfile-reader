@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
-import org.snoflo.function.DbTableManager;
-import org.snoflo.repository.FinderRepository;
+import org.snoflo.function.TableManager;
+import org.snoflo.repository.FinderRepositoryImpl;
 import org.snoflo.service.FinderService;
 import org.snoflo.view.FinderView;
 import org.snoflo.view.MainView;
@@ -27,20 +27,23 @@ public class FinderController extends AppController implements CommonControllerI
 
     private CsvFileParser csvFileReader;
     private CsvFileFinder csvFileFinder;
-    private DbTableManager tableManager;
+    // private TableManager tableManager;
 
     private FinderView finderView;
 
     private FinderService finderService;
 
-    public FinderController(DbTableManager tableManager, CsvFileParser csvFileReader, CsvFileFinder csvFileFinder, FinderService finderService,
+    public FinderController(CsvFileParser csvFileReader, CsvFileFinder csvFileFinder, FinderService finderService,
             FinderView finderView) {
         this.csvFileReader = csvFileReader;
         this.csvFileFinder = csvFileFinder;
         this.finderService = finderService;
         this.finderView = finderView;
-        this.tableManager = tableManager;
+        // this.tableManager = tableManager;
     }
+    /* 
+     * finderController가 전해줘야 할 것은 String csvFileName
+     */
 
     public void start() {
         Path selectedFile = selectFile();
@@ -49,13 +52,27 @@ public class FinderController extends AppController implements CommonControllerI
         fileName = fileName.toLowerCase();
 
         List<Question> csvRowList = csvFileReader.readCsvFile(selectedFile);
-        // finderService.saveQuestionList(csvRowList);
+
+        String tableName = finderService.checkQuestionTable(selectedFile);
+
+        if (tableName.isBlank()) {
+            finderService.createQuestionTable(selectedFile);
+        } else {
+            System.out.println("파일을 덮어씌우시겠습니까?");
+            finderService.truncateQuestionTable(selectedFile);
+        }
+        finderService.saveQuestionList(csvRowList, selectedFile);
 
         // 새 파일 등록시
-        tableManager.createTable(fileName);
-        finderService.saveDynamicList(csvRowList, fileName);
+        // tableManager.createTable(fileName);
 
-
+        /* 
+         * 파일 등록하기 로직
+         *  1. 사용자가 등록한 csv파일을 일단 List<Question>으로 변환
+         *  2. 기존에 등록한 파일인지 확인
+         *      등록한 파일이면? truncate -> save
+         *      처음 등록한 파일이면? create
+         */
     }
 
     private Path selectFile() {

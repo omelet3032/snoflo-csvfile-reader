@@ -36,18 +36,28 @@ public class QuestionController extends AppController implements CommonControlle
         }
     }
 
-    // private void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
-    public void executeRandomQuestion(String selectedFile) throws IllegalArgumentException, IllegalAccessException {
+    // private void executeRandomQuestion() throws IllegalArgumentException,
+    // IllegalAccessException {
+    public void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
 
-        /* 
-         * 여기서 테이블 확인
-         */
+        List<String> tableList = quetionsService.findRegisterdTable();
+
+        if (tableList.isEmpty()) {
+            System.out.println("등록된 파일이 없습니다.");
+            start();
+        }
+
+        questionView.showSelectRegisterdFileMenu(tableList);
+        int number = scanner.nextInt();
+        scanner.nextLine();
+
+        String selectedTable = tableList.get(number-1);
 
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
 
         // List<Question> list = quetionsService.findAllQuestion();
-        List<Question> list = quetionsService.findAllQuestion(selectedFile);
+        List<Question> list = quetionsService.findAllQuestion(selectedTable);
         RandomQuestion randomQuestion = new RandomQuestion();
 
         while (!list.isEmpty()) {
@@ -68,23 +78,23 @@ public class QuestionController extends AppController implements CommonControlle
 
         }
 
-        while(true) {
+        while (true) {
             questionView.showPromptAskExit();
             String input = scanner.nextLine();
-            
+
             if (input.equals("Y")) {
                 exitApp();
             } else if (input.equalsIgnoreCase("n")) {
                 start();
-            } 
-            
+            }
+
         }
 
     }
 
     // private void executeFindAll() {
-    //     List<Question> list = quetionsService.findAllQuestion();
-    //     questionView.showResultFindAll(list);
+    // List<Question> list = quetionsService.findAllQuestion();
+    // questionView.showResultFindAll(list);
     // }
 
     private void executeFindById() {
