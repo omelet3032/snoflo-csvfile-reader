@@ -6,11 +6,8 @@ import org.snoflo.domain.Question;
 
 public interface QuestionService {
 
-    Question findConceptById(int id);
-
-    // List<Question> findAllQuestion();
     List<Question> findAllQuestion(String selectedFile);
 
-    List<String> findRegisterdTable();
+    List<String> findQuestionTable();
 
 }

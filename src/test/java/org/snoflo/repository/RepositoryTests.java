@@ -20,7 +20,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class RepositoryTests {
 
-    private QuestionRepository questionRepository;
+    private QuestionRepositoryImpl questionRepository;
     private FinderRepositoryImpl finderRepository;
     private HikariDataSource dataSource;
 
@@ -45,7 +45,7 @@ public class RepositoryTests {
 
         new TestDbCreator(dataSource);
         finderRepository = new FinderRepositoryImpl(dataSource);
-        questionRepository = new QuestionRepository(dataSource);
+        questionRepository = new QuestionRepositoryImpl(dataSource);
     }
 
     @Test

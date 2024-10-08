@@ -1,65 +1,44 @@
 package org.snoflo.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
 
 import org.snoflo.domain.Question;
 import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.function.RandomQuestion;
 import org.snoflo.service.QuestionService;
-import org.snoflo.view.MainView;
 import org.snoflo.view.QuestionView;
 
 public class QuestionController extends AppController implements CommonControllerInterface {
 
     private QuestionService quetionsService;
     private QuestionView questionView;
+    private RandomQuestion randomQuestion;
 
-    public QuestionController(QuestionService questionService, QuestionView questionView) {
+    public QuestionController(RandomQuestion randomQuestion, QuestionService questionService, QuestionView questionView) {
+        this.randomQuestion = randomQuestion;
         this.quetionsService = questionService;
         this.questionView = questionView;
     }
 
-    // public void start() throws IllegalArgumentException, IllegalAccessException {
-    //     questionView.showSelectMenu();
-    //     int number = Integer.parseInt(scanner.nextLine());
-
-    //     switch (number) {
-    //         // case 1 -> executeRandomQuestion();
-    //         // case 2 -> executeFindAll();
-    //         case 3 -> exitApp();
-    //         default -> start();
-    //     }
-    // }
-
     public void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
 
-        List<String> tableList = quetionsService.findRegisterdTable();
-
-        // if (tableList.isEmpty()) {
-        //     System.out.println("등록된 파일이 없습니다.");
-        //     start();
-        // }
+        List<String> tableList = quetionsService.findQuestionTable();
 
         questionView.showSelectRegisterdFileMenu(tableList);
         int number = scanner.nextInt();
         scanner.nextLine();
 
-        String selectedTable = tableList.get(number-1);
+        String selectedTable = tableList.get(--number);
 
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
 
-        // List<Question> list = quetionsService.findAllQuestion();
         List<Question> list = quetionsService.findAllQuestion(selectedTable);
-        RandomQuestion randomQuestion = new RandomQuestion();
 
         while (!list.isEmpty()) {
-            // Map<Question, List<String>> map = randomQuestion.getRandomQuestion(list);
             Map<Question, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
 
             Set<Question> key = map.keySet();
@@ -76,31 +55,8 @@ public class QuestionController extends AppController implements CommonControlle
 
         }
 
-        // while (true) {
-        //     questionView.showPromptAskExit();
-        //     String input = scanner.nextLine();
-
-        //     if (input.equals("Y")) {
-        //         exitApp();
-        //     } else if (input.equalsIgnoreCase("n")) {
-        //         start();
-        //     }
-
-        // }
 
     }
 
-    // private void executeFindAll() {
-    // List<Question> list = quetionsService.findAllQuestion();
-    // questionView.showResultFindAll(list);
-    // }
-
-    private void executeFindById() {
-        questionView.showPromptFindById();
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        Question conceptById = quetionsService.findConceptById(id);
-        questionView.showResultFindById(conceptById);
-    }
 
 }

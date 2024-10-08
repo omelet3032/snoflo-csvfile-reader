@@ -12,30 +12,15 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
-    
+
     @Override
     public List<Question> findAllQuestion(String selectedFile) {
         return this.questionRepository.findAll(selectedFile);
-        // return null;
     }
 
-    
     @Override
-	public List<String> findRegisterdTable() {
-		return this.questionRepository.findAllTable();
-	}
-
-	// 추후 옵서녈 도입
-    @Override
-    public Question findConceptById(int id) {
-        // return this.questionRepository.findConceptById(id);
-        return null;
+    public List<String> findQuestionTable() {
+        return this.questionRepository.findTableList();
     }
-
-    // @Override
-    // public List<Question> findAllQuestion() {
-    //     return this.questionRepository.findAll();
-    //     // return null;
-    // }
 
 }

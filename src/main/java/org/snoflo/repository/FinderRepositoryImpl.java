@@ -20,7 +20,7 @@ public class FinderRepositoryImpl implements FinderRepository {
 
     @Override
     public void save(List<Question> list, String fileName) {
-        
+
         String insertSql = "INSERT INTO " + fileName + " (concept, description)" +
                 " VALUES (?, ?)";
 
@@ -35,7 +35,6 @@ public class FinderRepositoryImpl implements FinderRepository {
                 preparedStatement.setString(2, description);
 
                 preparedStatement.addBatch();
-                // preparedStatement.execute();
 
             }
 
@@ -51,36 +50,5 @@ public class FinderRepositoryImpl implements FinderRepository {
     public HikariDataSource getDataSource() {
         return this.dataSource;
     }
-
-    // public void save(List<Question> list) {
-    // // QuestionDatabase db = new QuestionDatabase(dataSource);
-
-    // String insertSql = """
-    // INSERT INTO question (concept, description)
-    // VALUES (?, ?)
-    // """;
-
-    // try (Connection connection = dataSource.getConnection()) {
-    // PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
-
-    // for (Question question : list) {
-    // String concept = question.getConcept();
-    // String description = question.getDescription();
-
-    // preparedStatement.setString(1, concept);
-    // preparedStatement.setString(2, description);
-
-    // // preparedStatement.addBatch();
-    // preparedStatement.execute();
-
-    // }
-
-    // // preparedStatement.executeBatch();
-
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-
-    // }
 
 }

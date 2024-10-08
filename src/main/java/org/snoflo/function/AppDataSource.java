@@ -6,7 +6,6 @@ import com.zaxxer.hikari.HikariDataSource;
 public class AppDataSource {
 
     private AppDataSource() {
-      
     }
 
     private static class HikariDataSourceHolder {

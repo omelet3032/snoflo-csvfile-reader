@@ -7,14 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 public interface AppRepository {
 
     HikariDataSource getDataSource();
 
-    default List<String> getTableList() {
+    default List<String> findTableList() {
         List<String> list = new ArrayList<>();
 
         try (Connection conn = getDataSource().getConnection()) {

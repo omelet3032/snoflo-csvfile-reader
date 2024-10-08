@@ -14,7 +14,6 @@ public interface FinderRepository extends AppRepository {
     default void createTable(String fileName) throws SQLException {
 
         StringBuilder tableSql = new StringBuilder();
-        // tableSql.append(" CREATE TABLE IF NOT EXISTS ")
         tableSql.append(" CREATE TABLE ")
                 .append(fileName)
                 .append("(")
@@ -47,20 +46,5 @@ public interface FinderRepository extends AppRepository {
             e.printStackTrace();
         }
     }
-    // default void dropTable(String fileName) {
-
-    // StringBuilder sql = new StringBuilder();
-    // sql.append("DROP TABLE ")
-    // .append(fileName);
-
-    // try (Connection conn = getDataSource().getConnection()) {
-
-    // PreparedStatement stmt = conn.prepareStatement(sql.toString());
-    // stmt.execute();
-
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-    // }
 
 }

@@ -2,9 +2,7 @@ package org.snoflo.controller;
 
 import java.util.List;
 
-import org.snoflo.function.TableManager;
 import org.snoflo.view.MainView;
-
 
 public class StartController extends AppController implements CommonControllerInterface {
 
@@ -20,11 +18,12 @@ public class StartController extends AppController implements CommonControllerIn
     }
 
     public void start() throws IllegalArgumentException, IllegalAccessException {
-       
-        while(true) {
+
+      
+        while (true) {
             mainView.showSelectStartMenu();
             int number = Integer.parseInt(scanner.nextLine());
-    
+
             switch (number) {
                 case 1 -> startQuestionController();
                 case 2 -> startFinderController();
@@ -33,13 +32,12 @@ public class StartController extends AppController implements CommonControllerIn
         }
     }
 
-
     public void startFinderController() {
         finderController.start();
     }
 
     public void startQuestionController() throws IllegalArgumentException, IllegalAccessException {
-        
+
         questionController.executeRandomQuestion();
 
     }
