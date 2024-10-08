@@ -18,15 +18,13 @@ public class FinderRepositoryImpl implements FinderRepository {
         this.dataSource = dataSource;
     }
 
-    public void save(List<Question> list, Path selectedFilePath) {
-        String fileName = selectedFilePath.getFileName().toString();
-        fileName = fileName.replace(".csv", "");
-        fileName = fileName.toLowerCase();
-
+    @Override
+    public void save(List<Question> list, String fileName) {
+        
         String insertSql = "INSERT INTO " + fileName + " (concept, description)" +
                 " VALUES (?, ?)";
 
-        try (Connection connection = dataSource.getConnection()) {
+        try (Connection connection = getDataSource().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
 
             for (Question question : list) {

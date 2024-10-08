@@ -8,20 +8,19 @@ public class H2WebConsole {
 
     private Server webServer = new Server();
 
-    private void connect() {
+    public void connect() {
         try {
             webServer = Server.createWebServer("-webAllowOthers", "-webPort", "8082").start();
             // Server tcpServer = Server.createTcpServer("-tcpAllowOthers", "-tcpPort",
             // "9092").start();
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
 
-    private void stop() {
+    public void stop() {
         webServer.stop();
     }
 

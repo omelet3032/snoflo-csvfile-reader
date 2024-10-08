@@ -12,9 +12,9 @@ import org.snoflo.domain.Question;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class QuestionRepository {
+public class QuestionRepository implements AppRepository {
 
-    private HikariDataSource dataSource;
+	private HikariDataSource dataSource;
 
     public QuestionRepository(HikariDataSource dataSource) {
         this.dataSource = dataSource;
@@ -65,6 +65,12 @@ public class QuestionRepository {
         }
         return list;
     }
+
+	@Override
+	public HikariDataSource getDataSource() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getDataSource'");
+	}
 
 
 

@@ -27,7 +27,6 @@ public class FinderController extends AppController implements CommonControllerI
 
     private CsvFileParser csvFileReader;
     private CsvFileFinder csvFileFinder;
-    // private TableManager tableManager;
 
     private FinderView finderView;
 
@@ -41,45 +40,32 @@ public class FinderController extends AppController implements CommonControllerI
         this.finderView = finderView;
         // this.tableManager = tableManager;
     }
-    /* 
+    /*
      * finderController가 전해줘야 할 것은 String csvFileName
      */
 
     public void start() {
-        Path selectedFile = selectFile();
+
+        Path selectedFolder = executeFindFolder();
+
+        Path selectedFile = executeFindFile(selectedFolder);
+
         String fileName = selectedFile.getFileName().toString();
-        fileName = fileName.replace(".csv", "");
-        fileName = fileName.toLowerCase();
+        fileName = fileName.replace(".csv", "").toLowerCase();
 
         List<Question> csvRowList = csvFileReader.readCsvFile(selectedFile);
 
-        String tableName = finderService.checkQuestionTable(selectedFile);
+
+        String tableName = finderService.getQuestionTable(fileName);
 
         if (tableName.isBlank()) {
-            finderService.createQuestionTable(selectedFile);
+            finderService.createQuestionTable(fileName);
         } else {
-            System.out.println("파일을 덮어씌우시겠습니까?");
-            finderService.truncateQuestionTable(selectedFile);
+            finderService.truncateQuestionTable(fileName);
         }
-        finderService.saveQuestionList(csvRowList, selectedFile);
 
-        // 새 파일 등록시
-        // tableManager.createTable(fileName);
+        finderService.saveQuestionList(csvRowList, fileName);
 
-        /* 
-         * 파일 등록하기 로직
-         *  1. 사용자가 등록한 csv파일을 일단 List<Question>으로 변환
-         *  2. 기존에 등록한 파일인지 확인
-         *      등록한 파일이면? truncate -> save
-         *      처음 등록한 파일이면? create
-         */
-    }
-
-    private Path selectFile() {
-        Path selectedFolder = executeFindFolder();
-        Path selectedFile = executeFindFile(selectedFolder);
-
-        return selectedFile;
     }
 
     private Path executeFindFolder() {
@@ -88,7 +74,6 @@ public class FinderController extends AppController implements CommonControllerI
         List<Path> folderList = csvFileFinder.getFolderList();
 
         finderView.showSelectFolder(folderList);
-
         int number = scanner.nextInt();
         scanner.nextLine();
 

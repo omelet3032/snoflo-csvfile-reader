@@ -1,26 +1,17 @@
 package org.snoflo.repository;
 
-import java.nio.file.Path;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.h2.jdbc.JdbcSQLSyntaxErrorException;
+import org.snoflo.domain.Question;
 
-import com.zaxxer.hikari.HikariDataSource;
+public interface FinderRepository extends AppRepository {
 
-public interface FinderRepository {
+    public void save(List<Question> list, String fileName);
 
-    HikariDataSource getDataSource();
-
-    default void createTable(Path selectedFilePath) throws SQLException {
-        String fileName = selectedFilePath.getFileName().toString();
-        fileName = fileName.replace(".csv", "");
-        fileName = fileName.toLowerCase();
+    default void createTable(String fileName) throws SQLException {
 
         StringBuilder tableSql = new StringBuilder();
         // tableSql.append(" CREATE TABLE IF NOT EXISTS ")
@@ -41,29 +32,7 @@ public interface FinderRepository {
         }
     }
 
-    default void dropTable(Path selectedFilePath) {
-        String fileName = selectedFilePath.getFileName().toString();
-        fileName = fileName.replace(".csv", "");
-        fileName = fileName.toLowerCase();
-
-        StringBuilder sql = new StringBuilder();
-        sql.append("DROP TABLE ")
-                .append(fileName);
-
-        try (Connection conn = getDataSource().getConnection()) {
-
-            PreparedStatement stmt = conn.prepareStatement(sql.toString());
-            stmt.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-     default void truncateTable(Path selectedFilePath) {
-        String fileName = selectedFilePath.getFileName().toString();
-        fileName = fileName.replace(".csv", "");
-        fileName = fileName.toLowerCase();
+    default void truncateTable(String fileName) {
 
         StringBuilder sql = new StringBuilder();
         sql.append("TRUNCATE TABLE ")
@@ -78,22 +47,20 @@ public interface FinderRepository {
             e.printStackTrace();
         }
     }
+    // default void dropTable(String fileName) {
 
-    default List<String> getTableList() {
-        List<String> list = new ArrayList<>();
+    // StringBuilder sql = new StringBuilder();
+    // sql.append("DROP TABLE ")
+    // .append(fileName);
 
-        try (Connection conn = getDataSource().getConnection()) {
-            DatabaseMetaData meta = conn.getMetaData();
-            ResultSet tables = meta.getTables(null, "PUBLIC", "%", new String[] { "TABLE" });
+    // try (Connection conn = getDataSource().getConnection()) {
 
-            while (tables.next()) {
-                String tableName = tables.getString("TABLE_NAME");
-                list.add(tableName);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    // PreparedStatement stmt = conn.prepareStatement(sql.toString());
+    // stmt.execute();
+
+    // } catch (SQLException e) {
+    // e.printStackTrace();
+    // }
+    // }
 
 }

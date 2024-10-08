@@ -24,28 +24,26 @@ public class QuestionController extends AppController implements CommonControlle
         this.questionView = questionView;
     }
 
-    public void start() throws IllegalArgumentException, IllegalAccessException {
-        questionView.showSelectMenu();
-        int number = Integer.parseInt(scanner.nextLine());
+    // public void start() throws IllegalArgumentException, IllegalAccessException {
+    //     questionView.showSelectMenu();
+    //     int number = Integer.parseInt(scanner.nextLine());
 
-        switch (number) {
-            // case 1 -> executeRandomQuestion();
-            // case 2 -> executeFindAll();
-            case 3 -> exitApp();
-            default -> start();
-        }
-    }
+    //     switch (number) {
+    //         // case 1 -> executeRandomQuestion();
+    //         // case 2 -> executeFindAll();
+    //         case 3 -> exitApp();
+    //         default -> start();
+    //     }
+    // }
 
-    // private void executeRandomQuestion() throws IllegalArgumentException,
-    // IllegalAccessException {
     public void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
 
         List<String> tableList = quetionsService.findRegisterdTable();
 
-        if (tableList.isEmpty()) {
-            System.out.println("등록된 파일이 없습니다.");
-            start();
-        }
+        // if (tableList.isEmpty()) {
+        //     System.out.println("등록된 파일이 없습니다.");
+        //     start();
+        // }
 
         questionView.showSelectRegisterdFileMenu(tableList);
         int number = scanner.nextInt();
@@ -78,17 +76,17 @@ public class QuestionController extends AppController implements CommonControlle
 
         }
 
-        while (true) {
-            questionView.showPromptAskExit();
-            String input = scanner.nextLine();
+        // while (true) {
+        //     questionView.showPromptAskExit();
+        //     String input = scanner.nextLine();
 
-            if (input.equals("Y")) {
-                exitApp();
-            } else if (input.equalsIgnoreCase("n")) {
-                start();
-            }
+        //     if (input.equals("Y")) {
+        //         exitApp();
+        //     } else if (input.equalsIgnoreCase("n")) {
+        //         start();
+        //     }
 
-        }
+        // }
 
     }
 
