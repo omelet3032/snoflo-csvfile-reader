@@ -33,6 +33,8 @@ public class QuestionController extends AppController implements CommonControlle
 
         String selectedTable = tableList.get(--number);
 
+        
+
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
 

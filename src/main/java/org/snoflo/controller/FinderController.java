@@ -30,37 +30,49 @@ public class FinderController extends AppController implements CommonControllerI
     }
 
     public void start() {
+        Path registerdCsvFile = registerCsvFile();
+        toDatabase(registerdCsvFile);
+    }
 
-        Path selectedFolder = executeFindFolder();
+    private Path registerCsvFile() {
 
-        Path selectedFile = executeFindFile(selectedFolder);
+        Path selectedFile = searchCsvFile(searchFolder());
 
-        String fileName = selectedFile.getFileName().toString();
-        fileName = fileName.replace(".csv", "").toLowerCase();
+        return selectedFile;
+    }
 
+    private void toDatabase(Path selectedFile) {
 
-        String fileName2 = selectedFile.getFileName().toString();
+        String csvFileName = selectedFile.getFileName().toString();
+        csvFileName = csvFileName
+                .replace(".csv", "")
+                .toLowerCase();
 
-        String currentDir = System.getProperty("user.dir");
-        System.out.println("Current working directory: " + currentDir);
-        String csvFileName = currentDir + "/" + "csv" + "/" + fileName2;
-        System.out.println("csvFileName : " + csvFileName);
-        // List<Question> csvRowList = csvFileReader.readCsvFile(selectedFile);
-        List<Question> csvRowList = csvFileReader.readCsvFile(csvFileName);
-
-        String tableName = finderService.findRegisteredTable(fileName);
+        String tableName = finderService.findRegisteredTable(csvFileName);
 
         if (tableName.isBlank()) {
-            finderService.createQuestionTable(fileName);
+            finderView.showPromptRegisterFile(csvFileName);
+            finderService.createQuestionTable(csvFileName);
+
         } else {
-            finderService.truncateQuestionTable(fileName);
+            finderView.showSelectOverwriteFile(csvFileName);
+            String answer = scanner.nextLine();
+
+            if (answer.equals("Y")) {
+                finderService.truncateQuestionTable(csvFileName);
+
+            } else if (answer.equals("n")) {
+                System.out.println("메인 메뉴로 돌아갑니다.");
+                return;
+            }
         }
 
-        finderService.saveQuestionList(csvRowList, fileName);
+        List<Question> csvRowList = csvFileReader.readCsvFile(selectedFile);
+        finderService.saveQuestionList(csvRowList, csvFileName);
 
     }
 
-    private Path executeFindFolder() {
+    private Path searchFolder() {
         finderView.showPromptFolder();
 
         List<Path> folderList = csvFileFinder.getFolderList();
@@ -70,10 +82,11 @@ public class FinderController extends AppController implements CommonControllerI
         scanner.nextLine();
 
         Path selectedFolder = folderList.get(number);
+
         return selectedFolder;
     }
 
-    private Path executeFindFile(Path selectedFolder) {
+    private Path searchCsvFile(Path selectedFolder) {
         finderView.showPromptCsvFile();
 
         List<Path> fileList = csvFileFinder.getFileList(selectedFolder);
@@ -83,7 +96,9 @@ public class FinderController extends AppController implements CommonControllerI
         scanner.nextLine();
 
         Path selectedFile = fileList.get(number);
+
         return selectedFile;
+
     }
 
 }

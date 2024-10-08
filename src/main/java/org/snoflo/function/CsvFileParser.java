@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,8 @@ public class CsvFileParser {
 
 	// private List<Question> questionList;
 
-	public List<Question> readCsvFile(String fileName) {
+	// public List<Question> readCsvFile(String fileName) {
+	public List<Question> readCsvFile(Path selectedFile) {
 
 		List<Question> questionList = new ArrayList<>();
 		// String fileName = "csv/test10.csv";
@@ -24,8 +26,10 @@ public class CsvFileParser {
 		// System.out.println("Current working directory: " + currentDir);
 		// fileName = currentDir + "/" + "csv" + "/" + fileName;
 
-		// try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
-		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+		// Path selectedFile = Paths.get(fileName);
+		// System.out.println("Path 경로 : " + selectedFile.toString());
+		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
+		// try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 
 			String line = reader.readLine();
 

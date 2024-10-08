@@ -8,6 +8,7 @@ import org.snoflo.controller.StartController;
 import org.snoflo.function.AppDataSource;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
+import org.snoflo.function.H2WebConsole;
 import org.snoflo.function.RandomQuestion;
 import org.snoflo.repository.FinderRepositoryImpl;
 import org.snoflo.repository.FinderRepository;
@@ -25,6 +26,11 @@ import com.zaxxer.hikari.HikariDataSource;
 public class Application {
 
     public void start() throws IOException, IllegalArgumentException, IllegalAccessException {
+
+
+        H2WebConsole console = new H2WebConsole();
+
+        console.connect();
 
         CsvFileParser csvFileReader = new CsvFileParser();
         CsvFileFinder csvFileFinder = new CsvFileFinder();
@@ -54,6 +60,7 @@ public class Application {
         StartController startController = new StartController(mainView, finderController, questionController);
 
         startController.start();
+        console.stop();
 
     }
 
