@@ -25,7 +25,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
         List<Question> list = new ArrayList<>();
 
-        try (Connection conection = dataSource.getConnection()) {
+        try (Connection conection = getDataSource().getConnection()) {
 
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT concept, description ")
@@ -51,7 +51,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public List<String> findAllTable() {
         List<String> list = new ArrayList<>();
 
-        try (Connection conn = dataSource.getConnection()) {
+        try (Connection conn = getDataSource().getConnection()) {
             DatabaseMetaData meta = conn.getMetaData();
             ResultSet tables = meta.getTables(null, "PUBLIC", "%", new String[] { "TABLE" });
 

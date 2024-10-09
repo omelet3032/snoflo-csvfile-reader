@@ -2,43 +2,42 @@ package org.snoflo.controller;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Scanner;
 
 import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
-import org.snoflo.service.FinderServiceImpl;
+import org.snoflo.service.FinderService;
 import org.snoflo.view.FinderView;
 
 // csvFile을 세팅하는 도메인 컨트롤러
 // file 선택후 save 메서드로 db에 csvfile을 저장하는 책임
 
-public class FinderController extends AppController implements CommonControllerInterface {
+public class FinderController { 
 
     private CsvFileParser csvFileReader;
     private CsvFileFinder csvFileFinder;
 
     private FinderView finderView;
 
-    private FinderServiceImpl finderService;
+    private FinderService finderService;
 
-    public FinderController(CsvFileParser csvFileReader, CsvFileFinder csvFileFinder, FinderServiceImpl finderService,
+    private Scanner scanner;
+
+    public FinderController(Scanner scanner, CsvFileParser csvFileReader, CsvFileFinder csvFileFinder, FinderService finderService,
             FinderView finderView) {
         this.csvFileReader = csvFileReader;
         this.csvFileFinder = csvFileFinder;
         this.finderService = finderService;
         this.finderView = finderView;
+        this.scanner = scanner;
     }
 
     public void start() {
-        Path registerdCsvFile = registerCsvFile();
-        toDatabase(registerdCsvFile);
-    }
-
-    private Path registerCsvFile() {
-
-        Path selectedFile = searchCsvFile(searchFolder());
-
-        return selectedFile;
+        Path selectedFolder = searchFolder();
+        Path selectedCsvFile = searchCsvFile(selectedFolder);
+        
+        toDatabase(selectedCsvFile);
     }
 
     private void toDatabase(Path selectedFile) {

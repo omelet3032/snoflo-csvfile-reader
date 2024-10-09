@@ -6,7 +6,7 @@ public class MainView {
 
     public void showPromptMainMenu() {
         System.out.println("---------------------------------");
-        System.out.println("--- 자바로 구현하는 랜덤퀴즈 프로그램 시작 --- ");
+        System.out.println("--- 자바로 구현하는 랜덤퀴즈 프로그램 --- ");
         System.out.println("---------------------------------");
     }
 

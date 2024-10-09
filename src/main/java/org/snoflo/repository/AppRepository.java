@@ -13,7 +13,7 @@ public interface AppRepository {
 
     HikariDataSource getDataSource();
 
-    default List<String> findTableList() {
+    default List<String> findAllTable() {
         List<String> list = new ArrayList<>();
 
         try (Connection conn = getDataSource().getConnection()) {

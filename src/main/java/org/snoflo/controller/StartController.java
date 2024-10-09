@@ -1,26 +1,29 @@
 package org.snoflo.controller;
 
-import java.util.List;
+import java.util.Scanner;
 
 import org.snoflo.view.MainView;
 
-public class StartController extends AppController implements CommonControllerInterface {
+public class StartController {
 
     private MainView mainView;
     private FinderController finderController;
     private QuestionController questionController;
 
-    public StartController(MainView mainView, FinderController finderController,
+    private Scanner scanner;
+
+    public StartController(Scanner scanner, MainView mainView, FinderController finderController,
             QuestionController questionController) {
         this.mainView = mainView;
         this.finderController = finderController;
         this.questionController = questionController;
+        this.scanner = scanner;
     }
 
     public void start() throws IllegalArgumentException, IllegalAccessException {
 
-      
         while (true) {
+            mainView.showPromptMainMenu();
             mainView.showSelectStartMenu();
             int number = Integer.parseInt(scanner.nextLine());
 
@@ -32,14 +35,16 @@ public class StartController extends AppController implements CommonControllerIn
         }
     }
 
-    public void startFinderController() {
+    private void startFinderController() {
         finderController.start();
     }
 
-    public void startQuestionController() throws IllegalArgumentException, IllegalAccessException {
-
+    private void startQuestionController() throws IllegalArgumentException, IllegalAccessException {
         questionController.executeRandomQuestion();
+    }
 
+    private void exitApp() {
+        System.exit(0);
     }
 
 }

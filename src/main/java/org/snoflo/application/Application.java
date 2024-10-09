@@ -1,6 +1,7 @@
 package org.snoflo.application;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
@@ -15,6 +16,7 @@ import org.snoflo.repository.FinderRepository;
 import org.snoflo.repository.QuestionRepository;
 import org.snoflo.repository.QuestionRepositoryImpl;
 import org.snoflo.service.FinderServiceImpl;
+import org.snoflo.service.FinderService;
 import org.snoflo.service.QuestionService;
 import org.snoflo.service.QuestionServiceImpl;
 import org.snoflo.view.FinderView;
@@ -27,10 +29,11 @@ public class Application {
 
     public void start() throws IOException, IllegalArgumentException, IllegalAccessException {
 
-
         H2WebConsole console = new H2WebConsole();
 
         console.connect();
+
+        Scanner scanner = new Scanner(System.in);
 
         CsvFileParser csvFileReader = new CsvFileParser();
         CsvFileFinder csvFileFinder = new CsvFileFinder();
@@ -41,7 +44,7 @@ public class Application {
         // --------------------
         // FinderService
         FinderRepository finderRepository = new FinderRepositoryImpl(dataSource);
-        FinderServiceImpl finderService = new FinderServiceImpl(finderRepository);
+        FinderService finderService = new FinderServiceImpl(finderRepository);
 
         // QuestionService
         QuestionRepository questionRepository = new QuestionRepositoryImpl(dataSource);
@@ -54,12 +57,14 @@ public class Application {
         MainView mainView = new MainView();
 
         // 시작
-        FinderController finderController = new FinderController(csvFileReader, csvFileFinder, finderService,
+        FinderController finderController = new FinderController(scanner, csvFileReader, csvFileFinder, finderService,
                 finderView);
-        QuestionController questionController = new QuestionController(randomQuestion, questionService, questionView);
-        StartController startController = new StartController(mainView, finderController, questionController);
+        QuestionController questionController = new QuestionController(scanner, randomQuestion, questionService, questionView);
+        StartController startController = new StartController(scanner, mainView, finderController, questionController);
 
         startController.start();
+
+        scanner.close();
         console.stop();
 
     }

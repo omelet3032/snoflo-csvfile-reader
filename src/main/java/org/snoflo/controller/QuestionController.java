@@ -3,6 +3,7 @@ package org.snoflo.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.snoflo.domain.Question;
@@ -11,16 +12,20 @@ import org.snoflo.function.RandomQuestion;
 import org.snoflo.service.QuestionService;
 import org.snoflo.view.QuestionView;
 
-public class QuestionController extends AppController implements CommonControllerInterface {
+public class QuestionController { 
 
     private QuestionService quetionsService;
     private QuestionView questionView;
     private RandomQuestion randomQuestion;
 
-    public QuestionController(RandomQuestion randomQuestion, QuestionService questionService, QuestionView questionView) {
+    private Scanner scanner;
+
+    public QuestionController(Scanner scanner, RandomQuestion randomQuestion, QuestionService questionService,
+            QuestionView questionView) {
         this.randomQuestion = randomQuestion;
         this.quetionsService = questionService;
         this.questionView = questionView;
+        this.scanner = scanner;
     }
 
     public void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
@@ -33,13 +38,25 @@ public class QuestionController extends AppController implements CommonControlle
 
         String selectedTable = tableList.get(--number);
 
-        
-
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
 
         List<Question> list = quetionsService.findAllQuestion(selectedTable);
 
+        playRandomQuiz(list);
+
+        questionView.showPromptAskPlay();
+        String answer = scanner.nextLine();
+        if (answer.equals("Y")) {
+            executeRandomQuestion();
+        } else if (answer.equals("n")) {
+            return;
+        }
+
+    }
+
+    private void playRandomQuiz(List<Question> list) {
+        
         while (!list.isEmpty()) {
             Map<Question, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
 
@@ -56,9 +73,5 @@ public class QuestionController extends AppController implements CommonControlle
             list.remove(question);
 
         }
-
-
     }
-
-
 }

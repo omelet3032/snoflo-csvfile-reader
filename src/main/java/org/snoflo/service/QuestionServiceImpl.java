@@ -20,7 +20,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<String> findQuestionTable() {
-        return this.questionRepository.findTableList();
+        return this.questionRepository.findAllTable();
     }
 
 }

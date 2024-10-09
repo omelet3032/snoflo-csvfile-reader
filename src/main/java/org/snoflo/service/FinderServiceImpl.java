@@ -39,7 +39,7 @@ public class FinderServiceImpl implements FinderService {
 	@Override
 	public String findRegisteredTable(String fileName) {
 
-		List<String> tableList = finderRepository.findTableList();
+		List<String> tableList = finderRepository.findAllTable();
 
 		for (int i = 0; i < tableList.size(); i++) {
 			if (tableList.get(i).equalsIgnoreCase(fileName)) {
