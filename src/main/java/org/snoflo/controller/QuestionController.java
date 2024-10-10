@@ -2,17 +2,17 @@ package org.snoflo.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.snoflo.application.ApplicationStrategy;
 import org.snoflo.domain.Question;
 import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.function.RandomQuestion;
 import org.snoflo.service.QuestionService;
 import org.snoflo.view.QuestionView;
 
-public class QuestionController { 
+public class QuestionController implements ApplicationStrategy { 
 
     private QuestionService quetionsService;
     private QuestionView questionView;
@@ -28,7 +28,8 @@ public class QuestionController {
         this.scanner = scanner;
     }
 
-    public void executeRandomQuestion() throws IllegalArgumentException, IllegalAccessException {
+    @Override
+    public void start() {
 
         List<String> tableList = quetionsService.findQuestionTable();
 
@@ -48,7 +49,7 @@ public class QuestionController {
         questionView.showPromptAskPlay();
         String answer = scanner.nextLine();
         if (answer.equals("Y")) {
-            executeRandomQuestion();
+            start();
         } else if (answer.equals("n")) {
             return;
         }

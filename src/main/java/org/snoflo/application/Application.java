@@ -3,6 +3,8 @@ package org.snoflo.application;
 import java.io.IOException;
 import java.util.Scanner;
 
+// import org.snoflo.controller.ControllerContext;
+// import org.snoflo.controller.ControllerStrategy;
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
 import org.snoflo.controller.StartController;
@@ -27,46 +29,65 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class Application {
 
-    public void start() throws IOException, IllegalArgumentException, IllegalAccessException {
+    // app
+    private H2WebConsole h2Console = new H2WebConsole();
 
-        H2WebConsole console = new H2WebConsole();
+    // common
+    private Scanner scanner = new Scanner(System.in);
+    private HikariDataSource dataSource = AppDataSource.getInstance();
+    
+    // Finder finder = new Finder.Builder();
+    
+    // Finder
+    private CsvFileParser csvFileParser = new CsvFileParser();
+    private CsvFileFinder csvFileFinder = new CsvFileFinder();
+    
+    private FinderRepository finderRepository = new FinderRepositoryImpl(dataSource);
+    private FinderService finderService = new FinderServiceImpl(finderRepository);
+    private FinderView finderView = new FinderView();
+    
+    private FinderController finderController = new FinderController(scanner, csvFileParser, csvFileFinder,
+            finderService,
+            finderView);
+    // Question
+    private RandomQuestion randomQuestion = new RandomQuestion();
+    
+    private QuestionRepository questionRepository = new QuestionRepositoryImpl(dataSource);
+    private QuestionService questionService = new QuestionServiceImpl(questionRepository);
+    private QuestionView questionView = new QuestionView();
+    private QuestionController questionController = new QuestionController(scanner, randomQuestion, questionService,
+            questionView);
+    // --------------------
+    // FinderService
 
-        console.connect();
+    // QuestionService
 
-        Scanner scanner = new Scanner(System.in);
+    // --------------------
+    // view
+    private MainView mainView = new MainView();
+    
+    private StartController startController = new StartController(scanner, mainView, finderController,
+            questionController);
+    // 시작
+    // ----------------------------------------
 
-        CsvFileParser csvFileReader = new CsvFileParser();
-        CsvFileFinder csvFileFinder = new CsvFileFinder();
+    private ApplicationContext context = new ApplicationContext();
 
-        RandomQuestion randomQuestion = new RandomQuestion();
-        HikariDataSource dataSource = AppDataSource.getInstance();
+    public void start() {
 
-        // --------------------
-        // FinderService
-        FinderRepository finderRepository = new FinderRepositoryImpl(dataSource);
-        FinderService finderService = new FinderServiceImpl(finderRepository);
+        context.setConsole(h2Console);
+        context.setScanner(scanner);
+        context.setStrategy(startController);
 
-        // QuestionService
-        QuestionRepository questionRepository = new QuestionRepositoryImpl(dataSource);
-        QuestionService questionService = new QuestionServiceImpl(questionRepository);
+        context.connectH2WebConsole();
 
-        // --------------------
-        // view
-        FinderView finderView = new FinderView();
-        QuestionView questionView = new QuestionView();
-        MainView mainView = new MainView();
+        context.startController();
+        
 
-        // 시작
-        FinderController finderController = new FinderController(scanner, csvFileReader, csvFileFinder, finderService,
-                finderView);
-        QuestionController questionController = new QuestionController(scanner, randomQuestion, questionService, questionView);
-        StartController startController = new StartController(scanner, mainView, finderController, questionController);
-
-        startController.start();
-
+        dataSource.close();
         scanner.close();
-        console.stop();
-
+        context.stopH2WebConsole();
+        System.exit(0);
     }
 
 }

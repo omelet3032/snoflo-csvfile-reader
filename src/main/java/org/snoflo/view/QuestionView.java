@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.snoflo.domain.Question;
 
-public class QuestionView {
+public class QuestionView implements AppView {
 
     public void showResultFindAll(List<Question> list) {
         System.out.println("--------------------------------");

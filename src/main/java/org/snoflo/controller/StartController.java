@@ -2,9 +2,10 @@ package org.snoflo.controller;
 
 import java.util.Scanner;
 
+import org.snoflo.application.ApplicationStrategy;
 import org.snoflo.view.MainView;
 
-public class StartController {
+public class StartController implements ApplicationStrategy {
 
     private MainView mainView;
     private FinderController finderController;
@@ -20,30 +21,41 @@ public class StartController {
         this.scanner = scanner;
     }
 
-    public void start() throws IllegalArgumentException, IllegalAccessException {
-
-        while (true) {
+    @Override
+    public void start() {
+        
+        boolean isRunning = true;
+        while (isRunning) {
             mainView.showPromptMainMenu();
             mainView.showSelectStartMenu();
             int number = Integer.parseInt(scanner.nextLine());
-
+            
+            // switch (number) {
+            //     case 1 -> startQuestionController();
+            //     case 2 -> startFinderController();
+            //     // case 3 -> exitApp();
+            //     case 3 -> isRunning = false;
+            // }
+    
             switch (number) {
                 case 1 -> startQuestionController();
                 case 2 -> startFinderController();
-                case 3 -> exitApp();
+                // case 3 -> exitApp();
+                case 3 -> isRunning = false;
             }
         }
+        return;
     }
 
     private void startFinderController() {
         finderController.start();
     }
 
-    private void startQuestionController() throws IllegalArgumentException, IllegalAccessException {
-        questionController.executeRandomQuestion();
+    private void startQuestionController() {
+        questionController.start();
     }
 
-    private void exitApp() {
+    public void exitApp() {
         System.exit(0);
     }
 
