@@ -12,7 +12,7 @@ import org.snoflo.function.RandomQuestion;
 import org.snoflo.service.QuestionService;
 import org.snoflo.view.QuestionView;
 
-public class QuestionController implements ApplicationStrategy { 
+public class QuestionController implements ApplicationStrategy, AppController { 
 
     private QuestionService quetionsService;
     private QuestionView questionView;

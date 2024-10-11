@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.snoflo.domain.Question;
 
-public interface FinderService {
+public interface FinderService extends AppService {
 
 	public void saveQuestionList(List<Question> csvRowList, String fileName);
 

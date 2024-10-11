@@ -5,7 +5,7 @@ import java.util.Scanner;
 import org.snoflo.application.ApplicationStrategy;
 import org.snoflo.view.MainView;
 
-public class StartController implements ApplicationStrategy {
+public class StartController implements ApplicationStrategy, AppController {
 
     private MainView mainView;
     private FinderController finderController;

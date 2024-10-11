@@ -14,7 +14,7 @@ import org.snoflo.view.FinderView;
 // csvFile을 세팅하는 도메인 컨트롤러
 // file 선택후 save 메서드로 db에 csvfile을 저장하는 책임
 
-public class FinderController implements ApplicationStrategy { 
+public class FinderController implements ApplicationStrategy, AppController { 
 
     private CsvFileParser csvFileReader;
     private CsvFileFinder csvFileFinder;

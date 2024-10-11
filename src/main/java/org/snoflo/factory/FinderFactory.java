@@ -1,7 +1,9 @@
-package org.snoflo.application;
+package org.snoflo.factory;
 
 import java.util.Scanner;
 
+import org.snoflo.builder.FinderControllerBuilder;
+import org.snoflo.controller.FinderController;
 import org.snoflo.controller.FinderController;
 import org.snoflo.function.AppDataSource;
 import org.snoflo.function.CsvFileFinder;
@@ -29,14 +31,14 @@ public class FinderFactory implements AppFactory {
     private FinderController finderController;
 
     @Override
-    public AppFactory createComponent() {
+    public FinderFactory createComponent() {
 
         this.hikariDataSource = AppDataSource.getInstance();
         this.scanner = new Scanner(System.in);
         this.csvFileParser = new CsvFileParser();
         this.csvFileFinder = new CsvFileFinder();
 
-        this.finderRepository = new FinderRepositoryImpl(dataSource);
+        this.finderRepository = new FinderRepositoryImpl(hikariDataSource);
         this.finderService = new FinderServiceImpl(finderRepository);
         this.finderView = new FinderView();
         this.finderController = new FinderController(scanner, csvFileParser, csvFileFinder, finderService, finderView);
@@ -45,23 +47,23 @@ public class FinderFactory implements AppFactory {
     }
 
     @Override
-    public FinderBuilder createBuilder() {
+    public FinderControllerBuilder createBuilder() {
 
-        FinderBuilder finderBuilder = new FinderBuilder.Builder()
-        .dataSource(dataSource)
+        FinderControllerBuilder finderBuilder = new FinderControllerBuilder.Builder()
+        .dataSource(hikariDataSource) // 전역적으로 사용하는건데 builder로 넣어버리면 컨트롤러별로 다른 dataSource를 사용하는건가라는 생각을 할 수 있을 것 같다.
         .scanner(scanner)
         .csvFileParser(csvFileParser)
         .csvFileFinder(csvFileFinder)
-        .finderRepository(finderRepository)
-        .finderService(finderService)
-        .finderView(finderView)
-        .finderController(finderController)
+        .repository(finderRepository)
+        .service(finderService)
+        .view(finderView)
+        .controller(finderController)
         .build();
-
-        // FinderBuilder builder = new FinderBuilder.Builder(dataSource, scanner, csvFileParser, csvFileFinder, finderRepository, finderService, finderView, finderController).build();
-        // FinderBuilder builder = new FinderBuilder.Builder(createComponent()).build();
 
         return finderBuilder;
     }
 
+    public void finderContollerStart() {
+        finderController.start();
+    }
 }

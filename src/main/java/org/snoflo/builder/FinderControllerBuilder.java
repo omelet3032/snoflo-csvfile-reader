@@ -1,17 +1,21 @@
-package org.snoflo.application;
+package org.snoflo.builder;
 
 import java.util.Scanner;
 
 import org.snoflo.controller.FinderController;
+import org.snoflo.controller.FinderController;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
 import org.snoflo.repository.FinderRepository;
+import org.snoflo.repository.FinderRepository;
 import org.snoflo.service.FinderService;
+import org.snoflo.service.FinderService;
+import org.snoflo.view.FinderView;
 import org.snoflo.view.FinderView;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class FinderBuilder {
+public class FinderControllerBuilder implements AppControllerBuilder {
 
     private final HikariDataSource dataSource;
     private final Scanner scanner;
@@ -25,7 +29,7 @@ public class FinderBuilder {
 
     private final FinderController finderController;
 
-    private FinderBuilder(Builder builder) {
+    private FinderControllerBuilder(Builder builder) {
         this.dataSource = builder.dataSource;
         this.scanner = builder.scanner;
         this.csvFileParser = builder.csvFileParser;
@@ -34,6 +38,11 @@ public class FinderBuilder {
         this.finderService = builder.finderService;
         this.finderView = builder.finderView;
         this.finderController = builder.finderController;
+    }
+
+    @Override
+    public void start() {
+        finderController.start();
     }
 
     public static class Builder {
@@ -50,18 +59,6 @@ public class FinderBuilder {
 
         private FinderController finderController;
 
-        // public Builder(HikariDataSource dataSource, Scanner scanner,
-        //         CsvFileParser csvFileParser, CsvFileFinder csvFileFinder,
-        //         FinderRepository finderRepository, FinderService finderService,
-        //         FinderView finderView, FinderController finderController) {
-        //     this.dataSource = dataSource;
-        //     this.scanner = scanner;
-        //     this.csvFileParser = csvFileParser;
-        //     this.csvFileFinder = csvFileFinder;
-        //     this.finderRepository = finderRepository;
-        //     this.finderService = finderService;
-        //     this.finderController = finderController;
-        // }
 
         public Builder dataSource(HikariDataSource dataSource) {
             this.dataSource = dataSource;
@@ -83,29 +80,35 @@ public class FinderBuilder {
             return this;
         }
 
-        public Builder finderRepository(FinderRepository finderRepository) {
+        public Builder repository(FinderRepository finderRepository) {
             this.finderRepository = finderRepository;
             return this;
         }
 
-        public Builder finderService(FinderService finderService) {
+     
+        public Builder service(FinderService finderService) {
             this.finderService = finderService;
             return this;
         }
 
-        public Builder finderView(FinderView finderView) {
+      
+        public Builder view(FinderView finderView) {
             this.finderView = finderView;
             return this;
         }
 
-        public Builder finderController(FinderController finderController) {
+       
+        public Builder controller(FinderController finderController) {
             this.finderController = finderController;
             return this;
         }
 
-        public FinderBuilder build() {
-            return new FinderBuilder(this);
+        public FinderControllerBuilder build() {
+            return new FinderControllerBuilder(this);
         }
+
+
+		
     }
 
 }
