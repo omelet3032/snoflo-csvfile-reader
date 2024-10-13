@@ -16,21 +16,19 @@ import org.snoflo.service.QuestionService;
 import org.snoflo.service.QuestionServiceImpl;
 import com.zaxxer.hikari.HikariDataSource;
 
-public class QuestionControllerBuilder implements AppControllerBuilder {
-    
-    private Scanner scanner;
+public class QuestionSystemBuilder implements AppSystemBuilder {
+
     private HikariDataSource dataSource;
-    private RandomQuestion randomQuestion;
+    private Scanner scanner;
 
     private QuestionRepository questionRepository;
     private QuestionService questionService;
     private QuestionView questionView;
     private QuestionController questionController;
 
-    private QuestionControllerBuilder(Builder builder) {
-        this.scanner = builder.scanner;
+    private QuestionSystemBuilder(Builder builder) {
         this.dataSource = builder.dataSource;
-        this.randomQuestion = builder.randomQuestion;
+        this.scanner = builder.scanner;
         this.questionRepository = builder.questionRepository;
         this.questionService = builder.questionService;
         this.questionView = builder.questionView;
@@ -38,15 +36,14 @@ public class QuestionControllerBuilder implements AppControllerBuilder {
     }
 
     @Override
-    public void start() {
-        questionController.start();
+    public QuestionController getController() {
+        return this.questionController;
     }
 
     public static class Builder {
 
         private Scanner scanner;
         private HikariDataSource dataSource;
-        private RandomQuestion randomQuestion;
 
         private QuestionRepository questionRepository;
         private QuestionService questionService;
@@ -60,11 +57,6 @@ public class QuestionControllerBuilder implements AppControllerBuilder {
 
         public Builder scanner(Scanner scanner) {
             this.scanner = scanner;
-            return this;
-        }
-
-        public Builder randomQuestion(RandomQuestion randomQuestion) {
-            this.randomQuestion = randomQuestion;
             return this;
         }
 
@@ -88,9 +80,10 @@ public class QuestionControllerBuilder implements AppControllerBuilder {
             return this;
         }
 
-        public QuestionControllerBuilder build() {
-            return new QuestionControllerBuilder(this);
+        public QuestionSystemBuilder build() {
+            return new QuestionSystemBuilder(this);
         }
 
     }
+
 }

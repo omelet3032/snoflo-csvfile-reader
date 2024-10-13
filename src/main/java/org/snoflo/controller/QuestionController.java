@@ -20,12 +20,12 @@ public class QuestionController implements ApplicationStrategy, AppController {
 
     private Scanner scanner;
 
-    public QuestionController(Scanner scanner, RandomQuestion randomQuestion, QuestionService questionService,
+    public QuestionController(Scanner scanner, QuestionService questionService,
             QuestionView questionView) {
-        this.randomQuestion = randomQuestion;
+        this.randomQuestion = new RandomQuestion();
+        this.scanner = scanner;
         this.quetionsService = questionService;
         this.questionView = questionView;
-        this.scanner = scanner;
     }
 
     @Override

@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.snoflo.application.ApplicationStrategy;
+// import org.snoflo.application.ApplicationBuilder.AppBuilder;
+import org.snoflo.builder.AppSystemBuilder;
+import org.snoflo.builder.FinderSystemBuilder;
 import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
@@ -14,7 +17,7 @@ import org.snoflo.view.FinderView;
 // csvFile을 세팅하는 도메인 컨트롤러
 // file 선택후 save 메서드로 db에 csvfile을 저장하는 책임
 
-public class FinderController implements ApplicationStrategy, AppController { 
+public class FinderController implements ApplicationStrategy, AppController {
 
     private CsvFileParser csvFileReader;
     private CsvFileFinder csvFileFinder;
@@ -25,10 +28,10 @@ public class FinderController implements ApplicationStrategy, AppController {
 
     private Scanner scanner;
 
-    public FinderController(Scanner scanner, CsvFileParser csvFileReader, CsvFileFinder csvFileFinder, FinderService finderService,
+    public FinderController(Scanner scanner, FinderService finderService,
             FinderView finderView) {
-        this.csvFileReader = csvFileReader;
-        this.csvFileFinder = csvFileFinder;
+        this.csvFileReader = new CsvFileParser();
+        this.csvFileFinder = new CsvFileFinder();
         this.finderService = finderService;
         this.finderView = finderView;
         this.scanner = scanner;
@@ -38,7 +41,7 @@ public class FinderController implements ApplicationStrategy, AppController {
     public void start() {
         Path selectedFolder = searchFolder();
         Path selectedCsvFile = searchCsvFile(selectedFolder);
-        
+
         toDatabase(selectedCsvFile);
     }
 

@@ -51,7 +51,10 @@ public class ApplicationContext {
         console.stop();
     }
 
-    public void start() {
+    public void close() {
+        // this.scanner.close();
+        // this.dataSource.close();
+        this.console.stop();
+        System.exit(0);
     }
-
 }
