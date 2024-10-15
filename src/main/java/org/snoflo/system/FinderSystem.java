@@ -8,14 +8,22 @@ import org.snoflo.factory.FinderFactory;
 
 public class FinderSystem implements AppSystem {
 
-    private FinderController finderController;
+    private AppController finderController;
 
     public FinderSystem(FinderSystemBuilder builder) {
         this.finderController = builder.getController();
     }
 
+
+    
     @Override
     public void startSystem() {
         finderController.start();
     }
+
+
+
+	public AppController getFinderController() {
+		return this.finderController;
+	}
 }

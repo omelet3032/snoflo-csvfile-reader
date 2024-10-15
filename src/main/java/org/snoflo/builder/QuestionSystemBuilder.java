@@ -21,6 +21,8 @@ public class QuestionSystemBuilder implements AppSystemBuilder {
     private HikariDataSource dataSource;
     private Scanner scanner;
 
+    private RandomQuestion randomQuestion;
+
     private QuestionRepository questionRepository;
     private QuestionService questionService;
     private QuestionView questionView;
@@ -29,6 +31,7 @@ public class QuestionSystemBuilder implements AppSystemBuilder {
     private QuestionSystemBuilder(Builder builder) {
         this.dataSource = builder.dataSource;
         this.scanner = builder.scanner;
+        this.randomQuestion = builder.randomQuestion;
         this.questionRepository = builder.questionRepository;
         this.questionService = builder.questionService;
         this.questionView = builder.questionView;
@@ -45,6 +48,8 @@ public class QuestionSystemBuilder implements AppSystemBuilder {
         private Scanner scanner;
         private HikariDataSource dataSource;
 
+        private RandomQuestion randomQuestion;
+
         private QuestionRepository questionRepository;
         private QuestionService questionService;
         private QuestionView questionView;
@@ -55,8 +60,13 @@ public class QuestionSystemBuilder implements AppSystemBuilder {
             return this;
         }
 
-        public Builder scanner(Scanner scanner) {
+        public Builder input(Scanner scanner) {
             this.scanner = scanner;
+            return this;
+        }
+
+        public Builder functionWithController(RandomQuestion randomQuestion) {
+            this.randomQuestion = randomQuestion;
             return this;
         }
 

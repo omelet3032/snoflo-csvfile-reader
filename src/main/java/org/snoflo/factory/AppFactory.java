@@ -1,12 +1,19 @@
 package org.snoflo.factory;
 
-import org.snoflo.builder.CommonNestedBuilder;
-import org.snoflo.builder.AppSystemBuilder;
-import org.snoflo.builder.FinderSystemBuilder;
+
+import org.snoflo.entry.ResourceManager;
 import org.snoflo.system.AppSystem;
-import org.snoflo.system.FinderSystem;
 
-public interface AppFactory {
 
-    public AppSystem createSystem();
+public abstract class AppFactory {
+
+    public final AppSystem createOperation(ResourceManager resourceManager) {
+        AppSystem system = createProduct(resourceManager);
+         
+        return system;
+    }
+
+   abstract protected AppSystem createProduct(ResourceManager resourceManager);
+
+   abstract protected void initialize(ResourceManager resourceManager);
 }

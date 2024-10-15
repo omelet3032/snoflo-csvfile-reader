@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.snoflo.builder.AppSystemBuilder;
 import org.snoflo.builder.QuestionSystemBuilder;
 import org.snoflo.controller.QuestionController;
+import org.snoflo.entry.ResourceManager;
 import org.snoflo.function.AppDataSource;
 import org.snoflo.function.RandomQuestion;
 import org.snoflo.repository.QuestionRepository;
@@ -17,30 +18,47 @@ import org.snoflo.view.QuestionView;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class QuestionFactory implements AppFactory {
+public class QuestionFactory extends AppFactory {
+
+    private HikariDataSource hikariDataSource;
+    private Scanner scanner;
+
+    private RandomQuestion randomQuestion;
+
+    private QuestionRepository questionRepository;
+    private QuestionService questionService;
+    private QuestionView questionView;
+    private QuestionController questionController;
 
     @Override
-    public AppSystem createSystem() {
-        HikariDataSource hikariDataSource = AppDataSource.getInstance();
-        Scanner scanner = new Scanner(System.in);
-
-        QuestionRepository questionRepository = new QuestionRepositoryImpl(hikariDataSource);
-        QuestionService questionService = new QuestionServiceImpl(questionRepository);
-        QuestionView questionView = new QuestionView();
-        QuestionController questionController = new QuestionController(scanner, questionService, questionView);
+    protected AppSystem createProduct(ResourceManager resourceManager) {
+        initialize(resourceManager);
 
         QuestionSystemBuilder questionSystemBuilder = new QuestionSystemBuilder.Builder()
                 .dataSource(hikariDataSource)
-                .scanner(scanner)
+                .input(scanner)
+                .functionWithController(randomQuestion)
                 .repository(questionRepository)
                 .service(questionService)
                 .view(questionView)
                 .controller(questionController)
                 .build();
 
-        QuestionSystem finderSystem = new QuestionSystem(questionSystemBuilder);
-        
-        return finderSystem;
+        return new QuestionSystem(questionSystemBuilder);
+    }
+
+
+    @Override
+    protected void initialize(ResourceManager resourceManager) {
+        this.hikariDataSource = resourceManager.getDataSource();
+        this.scanner = resourceManager.getScanner();
+
+        this.randomQuestion = new RandomQuestion();
+
+        this.questionRepository = new QuestionRepositoryImpl(hikariDataSource);
+        this.questionService = new QuestionServiceImpl(questionRepository);
+        this.questionView = new QuestionView();
+        this.questionController = new QuestionController(scanner, randomQuestion, questionService, questionView);
     }
 
 }

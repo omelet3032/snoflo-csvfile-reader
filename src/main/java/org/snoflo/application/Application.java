@@ -6,11 +6,12 @@ import java.util.Scanner;
 import org.snoflo.builder.FinderSystemBuilder;
 import org.snoflo.builder.AppSystemBuilder;
 import org.snoflo.builder.QuestionSystemBuilder;
-import org.snoflo.controller.AppEntry;
 // import org.snoflo.controller.ControllerContext;
 // import org.snoflo.controller.ControllerStrategy;
 import org.snoflo.controller.FinderController;
 import org.snoflo.controller.QuestionController;
+import org.snoflo.entry.AppEntry;
+import org.snoflo.entry.CentralFactory;
 import org.snoflo.factory.AppFactory;
 import org.snoflo.factory.FinderFactory;
 import org.snoflo.factory.QuestionFactory;
@@ -38,40 +39,17 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class Application {
 
-    // app
-    
-    // common
-    
-    // --------------------
-    // view
-    
-    FinderFactory finderFactory = new FinderFactory();
-    QuestionFactory questionFactory = new QuestionFactory();
-    // ----------------------------------------
-    
-    
     public void start() {
-        H2WebConsole h2Console = new H2WebConsole();
-        Scanner scanner = new Scanner(System.in);
-        HikariDataSource dataSource = AppDataSource.getInstance();
+
         ApplicationContext context = new ApplicationContext();
-        
 
-
-        context.setConsole(h2Console);
-        context.connectH2WebConsole();
-        
-        
-        AppSystem finderSystem = new FinderFactory().createSystem();
-        AppSystem questionSystem = new QuestionFactory().createSystem();
-        
-        AppEntry entry = new AppEntry(scanner, finderSystem, questionSystem);
-        
+        AppEntry entry = new CentralFactory().createSystem();
         context.setStrategy(entry);
+       
         context.startController();
+
+        context.close();
         
-        
-        context.close();;
     }
 
 }

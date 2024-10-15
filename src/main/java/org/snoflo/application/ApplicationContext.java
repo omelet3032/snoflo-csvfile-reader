@@ -52,8 +52,6 @@ public class ApplicationContext {
     }
 
     public void close() {
-        // this.scanner.close();
-        // this.dataSource.close();
         this.console.stop();
         System.exit(0);
     }

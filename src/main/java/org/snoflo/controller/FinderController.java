@@ -19,7 +19,7 @@ import org.snoflo.view.FinderView;
 
 public class FinderController implements ApplicationStrategy, AppController {
 
-    private CsvFileParser csvFileReader;
+    // private CsvFileParser csvFileParser;
     private CsvFileFinder csvFileFinder;
 
     private FinderView finderView;
@@ -28,10 +28,10 @@ public class FinderController implements ApplicationStrategy, AppController {
 
     private Scanner scanner;
 
-    public FinderController(Scanner scanner, FinderService finderService,
+    public FinderController(Scanner scanner, CsvFileFinder csvFileFinder, FinderService finderService,
             FinderView finderView) {
-        this.csvFileReader = new CsvFileParser();
-        this.csvFileFinder = new CsvFileFinder();
+        // this.csvFileParser = csvFileParser;
+        this.csvFileFinder = csvFileFinder;
         this.finderService = finderService;
         this.finderView = finderView;
         this.scanner = scanner;
@@ -47,10 +47,7 @@ public class FinderController implements ApplicationStrategy, AppController {
 
     private void toDatabase(Path selectedFile) {
 
-        String csvFileName = selectedFile.getFileName().toString();
-        csvFileName = csvFileName
-                .replace(".csv", "")
-                .toLowerCase();
+        String csvFileName = convertPathToString(selectedFile);
 
         String tableName = finderService.findRegisteredTable(csvFileName);
 
@@ -71,10 +68,22 @@ public class FinderController implements ApplicationStrategy, AppController {
             }
         }
 
-        List<Question> csvRowList = csvFileReader.readCsvFile(selectedFile);
-        finderService.saveQuestionList(csvRowList, csvFileName);
+        // List<Question> csvRowList = csvFileParser.readCsvFile(selectedFile);
+        
+        // finderService.saveQuestionList(csvRowList, selectedFile);
+        finderService.saveQuestionList(selectedFile, csvFileName);
 
     }
+
+    private String convertPathToString(Path selectedFile) {
+		String csvFileName = selectedFile.getFileName().toString();
+		csvFileName = csvFileName
+				.replace(".csv", "")
+				.toLowerCase();
+
+		return csvFileName;
+
+	}
 
     private Path searchFolder() {
         finderView.showPromptFolder();

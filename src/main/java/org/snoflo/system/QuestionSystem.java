@@ -9,7 +9,7 @@ import org.snoflo.controller.QuestionController;
 
 public class QuestionSystem implements AppSystem {
 
-    private QuestionController questionController;
+    private AppController questionController;
 
     public QuestionSystem(QuestionSystemBuilder builder) {
         this.questionController = builder.getController();
@@ -19,4 +19,8 @@ public class QuestionSystem implements AppSystem {
     public void startSystem() {
         questionController.start();
     }
+
+	public AppController getQuestionController() {
+		return this.questionController;
+	}
 }
