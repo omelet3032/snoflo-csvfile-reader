@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.h2.jdbc.JdbcSQLSyntaxErrorException;
-import org.snoflo.domain.Question;
+import org.snoflo.domain.RandomFields;
 import org.snoflo.function.CsvFileParser;
 import org.snoflo.repository.FinderRepository;
 
@@ -23,7 +23,7 @@ public class FinderServiceImpl implements FinderService {
 	@Override
 	public void saveQuestionList(Path selectedFile, String fileName) {
 
-		List<Question> csvRowList = csvFileParser.readCsvFile(selectedFile);
+		List<RandomFields> csvRowList = csvFileParser.readCsvFile(selectedFile);
 		finderRepository.save(csvRowList, fileName);
 
 	}

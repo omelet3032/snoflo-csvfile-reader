@@ -1,30 +1,29 @@
 package org.snoflo.function;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
-import org.snoflo.domain.Question;
+import org.snoflo.domain.RandomFields;
 import org.snoflo.dto.RandomQuestionDto;
 
 public class RandomQuestion {
 
-    private Random random = new Random();
+    private Random random;
 
-    /*
-     * 메서드 책임 분리 필요
-     * 현재는 random + dto변환까지 책임이 2개
-     */
+    public RandomQuestion() {
+        this.random = new Random();
+    }
+    
+    public Map<RandomFields, RandomQuestionDto> getRandomQuestion(List<RandomFields> list) {
 
-    public Map<Question, RandomQuestionDto> getRandomQuestion(List<Question> list) {
+        RandomFields question = getRandomElement(list);
 
-        Question question = getRandomElement(list);
+        String concept = question.getConcept();
+        String description = question.getDescription();
 
-        String[] questionFields = new String[] { question.getConcept(), question.getDescription() };
+        String[] questionFields = new String[]{concept, description};
 
         int randomIndex = random.nextInt(questionFields.length);
         int otherIndex = (randomIndex + 1) % questionFields.length;
@@ -34,7 +33,7 @@ public class RandomQuestion {
 
         RandomQuestionDto questionDto = question.toRandomQuestionDto(questionValue, answerValue);
 
-        Map<Question, RandomQuestionDto> map = new HashMap<>();
+        Map<RandomFields, RandomQuestionDto> map = new HashMap<>();
 
         map.put(question, questionDto);
 
@@ -42,9 +41,9 @@ public class RandomQuestion {
 
     }
 
-    private Question getRandomElement(List<Question> list) {
+    private RandomFields getRandomElement(List<RandomFields> list) {
         int randomElement = random.nextInt(list.size());
-        Question element = list.get(randomElement);
+        RandomFields element = list.get(randomElement);
         return element;
     }
 

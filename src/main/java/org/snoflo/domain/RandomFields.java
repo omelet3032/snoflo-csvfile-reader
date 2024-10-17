@@ -1,28 +1,28 @@
 package org.snoflo.domain;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.Random;
 
 import org.snoflo.dto.QuestionDto;
 import org.snoflo.dto.RandomQuestionDto;
 
-public class Question {
+public class RandomFields {
 
 	private String concept;
 
 	private String description;
 
-	public Question() {
+	public RandomFields() {
 	}
 
-	public Question(String concept, String description) {
+	public RandomFields(String concept, String description) {
 		this.concept = concept;
 		this.description = description;
 	}
 
-	public QuestionDto toDto(Question question) {
+	public QuestionDto toDto(RandomFields question) {
 		return new QuestionDto(question.getConcept(), question.getDescription());
 	}
 
@@ -50,6 +50,5 @@ public class Question {
 	public String toString() {
 		return "concept : " + concept + "\ndescription : " + description + "";
 	}
-
-
+	
 }

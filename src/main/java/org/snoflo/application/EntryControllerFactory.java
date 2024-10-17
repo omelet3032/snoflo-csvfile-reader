@@ -8,6 +8,7 @@ import org.snoflo.controller.QuestionController;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
 import org.snoflo.function.RandomQuestion;
+import org.snoflo.function.RandomQuiz;
 import org.snoflo.repository.FinderRepository;
 import org.snoflo.repository.FinderRepositoryImpl;
 import org.snoflo.repository.QuestionRepository;
@@ -71,11 +72,12 @@ public class EntryControllerFactory {
 
         public QuestionController createQuestionController() {
 
+            RandomQuiz randomQuiz = new RandomQuiz();
             RandomQuestion randomQuestion = new RandomQuestion();
             QuestionRepository questionRepository = new QuestionRepositoryImpl(hikariDataSource);
             QuestionService questionService = new QuestionServiceImpl(questionRepository);
             QuestionView questionView = new QuestionView();
-            QuestionController questionController = new QuestionController(scanner, randomQuestion, questionService,
+            QuestionController questionController = new QuestionController(scanner, randomQuestion, randomQuiz, questionService,
                     questionView);
 
             return questionController;

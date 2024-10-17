@@ -6,9 +6,10 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import org.snoflo.domain.Question;
+import org.snoflo.domain.RandomFields;
 import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.function.RandomQuestion;
+import org.snoflo.function.RandomQuiz;
 import org.snoflo.service.QuestionService;
 import org.snoflo.view.QuestionView;
 
@@ -19,13 +20,16 @@ public class QuestionController {
     private RandomQuestion randomQuestion;
 
     private Scanner scanner;
+    
+    private RandomQuiz randomQuiz;
 
-    public QuestionController(Scanner scanner, RandomQuestion randomQuestion, QuestionService questionService,
+    public QuestionController(Scanner scanner, RandomQuestion randomQuestion, RandomQuiz randomQuiz, QuestionService questionService,
             QuestionView questionView) {
         this.randomQuestion = randomQuestion;
         this.scanner = scanner;
         this.quetionsService = questionService;
         this.questionView = questionView;
+        this.randomQuiz = randomQuiz;
     }
 
     public void start() {
@@ -37,11 +41,12 @@ public class QuestionController {
         scanner.nextLine();
 
         String selectedTable = tableList.get(--number);
-        List<Question> list = quetionsService.findAllQuestion(selectedTable);
+        List<RandomFields> list = quetionsService.findAllQuestion(selectedTable);
 
-        List<Question> cachedList = new ArrayList<>(list);
+        List<RandomFields> cachedList = new ArrayList<>(list);
 
         executeRandomQuiz(cachedList);
+        
         while (true) {
 
             questionView.showSelectAskPlay();
@@ -61,31 +66,31 @@ public class QuestionController {
 
     }
 
-    private void executeRandomQuiz(List<Question> cachedList) {
+    private void executeRandomQuiz(List<RandomFields> cachedList) {
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
-        playRandomQuiz(cachedList);
+        randomQuiz.playRandomQuiz(cachedList, questionView, scanner);
     }
 
-    private List<Question> playRandomQuiz(List<Question> list) {
+    // private List<RandomFields> playRandomQuiz(List<RandomFields> list) {
 
-        while (!list.isEmpty()) {
-            Map<Question, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
+    //     while (!list.isEmpty()) {
+    //         Map<RandomFields, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
 
-            Set<Question> key = map.keySet();
-            Question question = key.iterator().next();
+    //         Set<RandomFields> key = map.keySet();
+    //         RandomFields question = key.iterator().next();
 
-            for (RandomQuestionDto dto : map.values()) {
-                questionView.showResultQuestionField(dto.question());
-                scanner.nextLine();
-                questionView.showResultAnswerField(dto.answer());
-                scanner.nextLine();
-            }
+    //         for (RandomQuestionDto dto : map.values()) {
+    //             questionView.showResultQuestionField(dto.question());
+    //             scanner.nextLine();
+    //             questionView.showResultAnswerField(dto.answer());
+    //             scanner.nextLine();
+    //         }
 
-            list.remove(question);
+    //         list.remove(question);
 
-        }
+    //     }
 
-        return list;
-    }
+    //     return list;
+    // }
 }

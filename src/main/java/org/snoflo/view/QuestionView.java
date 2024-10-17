@@ -2,14 +2,14 @@ package org.snoflo.view;
 
 import java.util.List;
 
-import org.snoflo.domain.Question;
+import org.snoflo.domain.RandomFields;
 
 public class QuestionView implements AppView {
 
-    public void showResultFindAll(List<Question> list) {
+    public void showResultFindAll(List<RandomFields> list) {
         System.out.println("--------------------------------");
         System.out.println();
-        for (Question question : list) {
+        for (RandomFields question : list) {
             System.out.println(question.toString());
         }
     }
@@ -29,7 +29,7 @@ public class QuestionView implements AppView {
         System.out.println("-----------------------------");
     }
 
-    public void showResultFindById(Question concept) {
+    public void showResultFindById(RandomFields concept) {
         System.out.println();
         System.out.println("conceptById : " + concept);
     }
