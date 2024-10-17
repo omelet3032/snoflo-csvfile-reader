@@ -1,18 +1,18 @@
 package org.snoflo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import org.snoflo.application.ApplicationStrategy;
 import org.snoflo.domain.Question;
 import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.function.RandomQuestion;
 import org.snoflo.service.QuestionService;
 import org.snoflo.view.QuestionView;
 
-public class QuestionController implements ApplicationStrategy, AppController { 
+public class QuestionController implements AppController {
 
     private QuestionService quetionsService;
     private QuestionView questionView;
@@ -38,26 +38,38 @@ public class QuestionController implements ApplicationStrategy, AppController {
         scanner.nextLine();
 
         String selectedTable = tableList.get(--number);
-
-        questionView.showPromptRandomQuestion();
-        scanner.nextLine();
-
         List<Question> list = quetionsService.findAllQuestion(selectedTable);
 
-        playRandomQuiz(list);
+        List<Question> cachedList = new ArrayList<>(list);
 
-        questionView.showPromptAskPlay();
-        String answer = scanner.nextLine();
-        if (answer.equals("Y")) {
-            start();
-        } else if (answer.equals("n")) {
-            return;
+        executeRandomQuiz(cachedList);
+        while (true) {
+
+            questionView.showSelectAskPlay();
+            String answer = scanner.nextLine();
+
+            if (answer.equals("Y")) {
+                cachedList.addAll(list);
+                executeRandomQuiz(cachedList);
+                continue;
+            } else if (answer.equals("n")) {
+                questionView.showPromptReturnMainMenu();
+                return;
+            } else {
+                questionView.showPromptYorN();
+            }
         }
 
     }
 
-    private void playRandomQuiz(List<Question> list) {
-        
+    private void executeRandomQuiz(List<Question> cachedList) {
+        questionView.showPromptRandomQuestion();
+        scanner.nextLine();
+        playRandomQuiz(cachedList);
+    }
+
+    private List<Question> playRandomQuiz(List<Question> list) {
+
         while (!list.isEmpty()) {
             Map<Question, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
 
@@ -74,5 +86,7 @@ public class QuestionController implements ApplicationStrategy, AppController {
             list.remove(question);
 
         }
+
+        return list;
     }
 }

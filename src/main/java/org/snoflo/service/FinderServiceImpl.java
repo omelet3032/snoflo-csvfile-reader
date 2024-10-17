@@ -20,14 +20,8 @@ public class FinderServiceImpl implements FinderService {
 		this.finderRepository = finderRepository;
 	}
 
-	// @Override
-	// public void saveQuestionList(List<Question> csvRowList, String fileName) {
-	// finderRepository.save(csvRowList, fileName);
-	// }
-
 	@Override
 	public void saveQuestionList(Path selectedFile, String fileName) {
-		// String fileName = convertPathToString(selectedFile);
 
 		List<Question> csvRowList = csvFileParser.readCsvFile(selectedFile);
 		finderRepository.save(csvRowList, fileName);
@@ -36,8 +30,6 @@ public class FinderServiceImpl implements FinderService {
 
 	@Override
 	public void createQuestionTable(String fileName) {
-	// public void createQuestionTable(Path selectedFile) {
-		// String fileName = convertPathToString(selectedFile);
 
 		try {
 			finderRepository.createTable(fileName);
@@ -50,17 +42,11 @@ public class FinderServiceImpl implements FinderService {
 
 	@Override
 	public void truncateQuestionTable(String fileName) {
-	// public void truncateQuestionTable(Path selectedFile) {
-		// String fileName = convertPathToString(selectedFile);
-
 		finderRepository.truncateTable(fileName);
 	}
 
 	@Override
 	public String findRegisteredTable(String fileName) {
-	// public String findRegisteredTable(Path selectedFile) {
-
-		// String fileName = convertPathToString(selectedFile);
 
 		List<String> tableList = finderRepository.findAllTable();
 

@@ -4,22 +4,12 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
-import org.snoflo.application.ApplicationStrategy;
-// import org.snoflo.application.ApplicationBuilder.AppBuilder;
-import org.snoflo.builder.AppSystemBuilder;
-import org.snoflo.builder.FinderSystemBuilder;
-import org.snoflo.domain.Question;
 import org.snoflo.function.CsvFileFinder;
-import org.snoflo.function.CsvFileParser;
 import org.snoflo.service.FinderService;
 import org.snoflo.view.FinderView;
 
-// csvFile을 세팅하는 도메인 컨트롤러
-// file 선택후 save 메서드로 db에 csvfile을 저장하는 책임
+public class FinderController implements AppController {
 
-public class FinderController implements ApplicationStrategy, AppController {
-
-    // private CsvFileParser csvFileParser;
     private CsvFileFinder csvFileFinder;
 
     private FinderView finderView;
@@ -30,7 +20,6 @@ public class FinderController implements ApplicationStrategy, AppController {
 
     public FinderController(Scanner scanner, CsvFileFinder csvFileFinder, FinderService finderService,
             FinderView finderView) {
-        // this.csvFileParser = csvFileParser;
         this.csvFileFinder = csvFileFinder;
         this.finderService = finderService;
         this.finderView = finderView;
@@ -43,6 +32,7 @@ public class FinderController implements ApplicationStrategy, AppController {
         Path selectedCsvFile = searchCsvFile(selectedFolder);
 
         toDatabase(selectedCsvFile);
+        return;
     }
 
     private void toDatabase(Path selectedFile) {
@@ -56,34 +46,42 @@ public class FinderController implements ApplicationStrategy, AppController {
             finderService.createQuestionTable(csvFileName);
 
         } else {
+
             finderView.showSelectOverwriteFile(csvFileName);
-            String answer = scanner.nextLine();
 
-            if (answer.equals("Y")) {
-                finderService.truncateQuestionTable(csvFileName);
+            String answer;
 
-            } else if (answer.equals("n")) {
-                System.out.println("메인 메뉴로 돌아갑니다.");
-                return;
-            }
+            while (true) {
+
+                answer = scanner.nextLine();
+
+                if (answer.equals("Y")) {
+                    finderService.truncateQuestionTable(csvFileName);
+                    break;
+                } else if (answer.equals("n")) {
+                    finderView.showPromptReturnMainMenu();
+                    return;
+                } else {
+                    finderView.showPromptYorN();
+                }
+            }   
+
         }
 
-        // List<Question> csvRowList = csvFileParser.readCsvFile(selectedFile);
-        
-        // finderService.saveQuestionList(csvRowList, selectedFile);
+        finderView.showPromptSaveCsvFileToDatabase(csvFileName);
         finderService.saveQuestionList(selectedFile, csvFileName);
 
     }
 
     private String convertPathToString(Path selectedFile) {
-		String csvFileName = selectedFile.getFileName().toString();
-		csvFileName = csvFileName
-				.replace(".csv", "")
-				.toLowerCase();
+        String csvFileName = selectedFile.getFileName().toString();
+        csvFileName = csvFileName
+                .replace(".csv", "")
+                .toLowerCase();
 
-		return csvFileName;
+        return csvFileName;
 
-	}
+    }
 
     private Path searchFolder() {
         finderView.showPromptFolder();

@@ -1,19 +1,16 @@
 package org.snoflo.factory;
 
-
-import org.snoflo.entry.ResourceManager;
-import org.snoflo.system.AppSystem;
-
+import org.snoflo.application.ResourceManager;
+import org.snoflo.controller.AppController;
 
 public abstract class AppFactory {
 
-    public final AppSystem createOperation(ResourceManager resourceManager) {
-        AppSystem system = createProduct(resourceManager);
-         
-        return system;
+    public final AppController createOperation(ResourceManager resourceManager) {
+        AppController controller = createProduct(resourceManager);
+
+        return controller;
     }
 
-   abstract protected AppSystem createProduct(ResourceManager resourceManager);
+    abstract public AppController createProduct(ResourceManager resourceManager);
 
-   abstract protected void initialize(ResourceManager resourceManager);
 }

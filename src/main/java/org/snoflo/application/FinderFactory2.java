@@ -1,9 +1,7 @@
-package org.snoflo.factory;
+package org.snoflo.application;
 
 import java.util.Scanner;
 
-import org.snoflo.application.ResourceManager;
-import org.snoflo.controller.AppController;
 import org.snoflo.controller.FinderController;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
@@ -15,12 +13,10 @@ import org.snoflo.view.FinderView;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class FinderFactory extends AppFactory {
-
-    @Override
-    public AppController createProduct(ResourceManager resourceManager) {
-
-        HikariDataSource hikariDataSource = resourceManager.getDataSource();
+public class FinderFactory2 {
+    
+    public FinderController getFinderController(ResourceManager resourceManager) {
+         HikariDataSource hikariDataSource = resourceManager.getDataSource();
         Scanner scanner = resourceManager.getScanner();
 
         CsvFileParser csvFileParser = new CsvFileParser();
@@ -32,8 +28,5 @@ public class FinderFactory extends AppFactory {
         FinderController finderController = new FinderController(scanner, csvFileFinder, finderService, finderView);
 
         return finderController;
-
     }
-
-
 }

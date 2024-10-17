@@ -42,4 +42,8 @@ public class FinderView implements AppView {
         System.out.println("덮어씌우시겠습니까?");
         System.out.println("Y/n");
     }
+
+    public void showPromptSaveCsvFileToDatabase(String csvFileName) {
+        System.out.println("데이터베이스에 " + csvFileName + "을 저장하였습니다.");
+    }
 }
