@@ -12,7 +12,7 @@ import org.snoflo.function.RandomQuestion;
 import org.snoflo.service.QuestionService;
 import org.snoflo.view.QuestionView;
 
-public class QuestionController implements AppController {
+public class QuestionController {
 
     private QuestionService quetionsService;
     private QuestionView questionView;
@@ -28,7 +28,6 @@ public class QuestionController implements AppController {
         this.questionView = questionView;
     }
 
-    @Override
     public void start() {
 
         List<String> tableList = quetionsService.findQuestionTable();

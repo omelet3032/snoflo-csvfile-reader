@@ -8,7 +8,7 @@ import org.snoflo.function.CsvFileFinder;
 import org.snoflo.service.FinderService;
 import org.snoflo.view.FinderView;
 
-public class FinderController implements AppController {
+public class FinderController {
 
     private CsvFileFinder csvFileFinder;
 
@@ -26,7 +26,6 @@ public class FinderController implements AppController {
         this.scanner = scanner;
     }
 
-    @Override
     public void start() {
         Path selectedFolder = searchFolder();
         Path selectedCsvFile = searchCsvFile(selectedFolder);

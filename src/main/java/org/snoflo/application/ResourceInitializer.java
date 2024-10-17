@@ -7,20 +7,20 @@ import org.snoflo.function.H2WebConsole;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class ResourceManager {
+public class ResourceInitializer {
 
-    private static H2WebConsole console;
-    private HikariDataSource dataSource;
+    private H2WebConsole console;
+	private HikariDataSource dataSource;
     private Scanner scanner;
-
-    public ResourceManager() {
+    
+    public ResourceInitializer() {
+        this.console = new H2WebConsole();
         this.dataSource = AppDataSource.getInstance();
         this.scanner = new Scanner(System.in);
     }
-
-    static {
-        console = new H2WebConsole();
-        console.connect();
+    
+    public H2WebConsole getConsole() {
+        return this.console;
     }
 
     public HikariDataSource getDataSource() {
@@ -29,12 +29,6 @@ public class ResourceManager {
 
     public Scanner getScanner() {
         return scanner;
-    }
-
-    public void close() {
-        console.stop();
-        this.dataSource.close();
-        this.scanner.close();
     }
 
 }

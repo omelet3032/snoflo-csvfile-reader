@@ -2,32 +2,39 @@ package org.snoflo.controller;
 
 import java.util.Scanner;
 
-import org.snoflo.application.ResourceManager;
+import org.snoflo.application.ResourceHandler;
+import org.snoflo.application.ResourceInitializer;
 import org.snoflo.view.EntryView;
 
-public class EntryController implements AppController {
+public class EntryController {
 
     private FinderController finderController;
     private QuestionController questionController;
 
-    private ResourceManager resourceManager;
-    private EntryView mainView;
+    private EntryView entryView;
 
-    public EntryController(ResourceManager resourceManager, FinderController finderController,
+    private Scanner scanner;
+
+    private ResourceHandler resourceHandler;
+
+    public EntryController(ResourceHandler resourceHandler, Scanner scanner, FinderController finderController,
             QuestionController questionController) {
-        this.resourceManager = resourceManager;
         this.finderController = finderController;
         this.questionController = questionController;
-        this.mainView = new EntryView();
+        this.entryView = new EntryView();
+        this.scanner = scanner;
+        this.resourceHandler = resourceHandler;
     }
 
-    @Override
     public void start() {
+
+        resourceHandler.connectH2WebConsole();
+
         String answer;
         while (true) {
-            mainView.showPromptMainMenu();
-            mainView.showSelectStartMenu();
-            answer = resourceManager.getScanner().nextLine();
+            entryView.showPromptMainMenu();
+            entryView.showSelectStartMenu();
+            answer = scanner.nextLine();
 
             switch (answer) {
                 case "1":
@@ -39,39 +46,15 @@ public class EntryController implements AppController {
                 case "3":
                     exitApp();
                 default:
-                    mainView.showPromptCorrectNumber();
+                    entryView.showPromptCorrectNumber();
             }
         }
     }
 
     private void exitApp() {
-        mainView.showPromptExitApp();
-        resourceManager.close();
+        entryView.showPromptExitApp();
+        resourceHandler.closeResource();
         System.exit(0);
     }
-
-    // @Override
-    // public void start() {
-
-    // String answer;
-    // mainView.showPromptMainMenu();
-    // mainView.showSelectStartMenu();
-
-    // while (true) {
-
-    // answer = resourceManager.getScanner().nextLine();
-
-    // if (answer.equals("1")) {
-    // questionController.start();
-    // } else if (answer.equals("2")) {
-    // finderController.start();
-    // } else if (answer.equals("3")) {
-    // return;
-    // } else {
-    // System.out.println("1,2,3중 하나를 눌러주세요.");
-    // }
-
-    // }
-    // }
 
 }
