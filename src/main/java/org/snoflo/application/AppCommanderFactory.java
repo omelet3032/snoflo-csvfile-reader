@@ -11,6 +11,7 @@ import org.snoflo.commander.AppCommander;
 import org.snoflo.controller.CsvFileFinderController;
 import org.snoflo.controller.CsvFileRegisterController;
 import org.snoflo.controller.RandomQuizController;
+import org.snoflo.function.AppDataSource;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
 import org.snoflo.function.RandomQuiz;
@@ -24,90 +25,50 @@ import org.snoflo.service.QuestionService;
 import org.snoflo.service.QuestionServiceImpl;
 import org.snoflo.view.CsvFileFinderView;
 import org.snoflo.view.CsvFileRegisterView;
+import org.snoflo.view.EntryView;
 import org.snoflo.view.QuestionView;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class EntryCommanderFactory {
+public class AppCommanderFactory {
 
     private ResourceInitializer resourceInitializer;
     private ResourceHandler resourceHandler;
 
-    public EntryCommanderFactory() {
+    public AppCommanderFactory() {
         this.resourceInitializer = new ResourceInitializer();
         this.resourceHandler = new ResourceHandler();
     }
 
-    public EntryCommander creatEntryCommander() {
+    public AppCommander creatEntryCommander() {
 
         EntryController entryController = new ControllerFactory().createEntryController();
 
         return new EntryCommander(entryController, resourceHandler);
     }
 
-    // private EntryController createEntryController() {
-
-    // HikariDataSource hikariDataSource = resourceInitializer.getDataSource();
-    // Scanner scanner = resourceInitializer.getScanner();
-
-    // CsvFileFinderController csvFileFinderController = new
-    // ControllerFactory(scanner)
-    // .createCsvFileFinderController();
-    // CsvFileRegisterController csvFileRegisterController = new
-    // ControllerFactory(hikariDataSource, scanner)
-    // .createCsvFileRegisterController();
-    // RandomQuizController randomQuizController = new
-    // ControllerFactory(hikariDataSource, scanner)
-    // .createQuestionController();
-
-    // AppCommander csvFileManagerCommander = new
-    // CsvFileManagerCommander(csvFileFinderController,
-    // csvFileRegisterController);
-    // AppCommander randomQuizCommander = new
-    // RandomQuizCommander(randomQuizController);
-
-    // EntryController entryController = new EntryController(resourceHandler,
-    // csvFileManagerCommander,
-    // randomQuizCommander, scanner);
-
-    // return entryController;
-    // }
-
     private class ControllerFactory {
 
-        private HikariDataSource hikariDataSource;
-        private Scanner scanner;
-
-        public ControllerFactory() {
-        }
-
-        public ControllerFactory(Scanner scanner) {
-            this.scanner = scanner;
-        }
-
-        public ControllerFactory(HikariDataSource hikariDataSource, Scanner scanner) {
-            this.hikariDataSource = hikariDataSource;
-            this.scanner = scanner;
-        }
+        private HikariDataSource hikariDataSource = resourceInitializer.getDataSource();
+        private Scanner scanner = resourceInitializer.getScanner();
 
         public EntryController createEntryController() {
 
-            HikariDataSource hikariDataSource = resourceInitializer.getDataSource();
-            Scanner scanner = resourceInitializer.getScanner();
+            EntryView entryView = new EntryView();
 
-            CsvFileFinderController csvFileFinderController = new ControllerFactory(scanner)
+            CsvFileFinderController csvFileFinderController = new ControllerFactory()
                     .createCsvFileFinderController();
-            CsvFileRegisterController csvFileRegisterController = new ControllerFactory(hikariDataSource, scanner)
+            CsvFileRegisterController csvFileRegisterController = new ControllerFactory()
                     .createCsvFileRegisterController();
-            RandomQuizController randomQuizController = new ControllerFactory(hikariDataSource, scanner)
+            RandomQuizController randomQuizController = new ControllerFactory()
                     .createQuestionController();
 
             AppCommander csvFileManagerCommander = new CsvFileManagerCommander(csvFileFinderController,
                     csvFileRegisterController);
             AppCommander randomQuizCommander = new RandomQuizCommander(randomQuizController);
 
-            EntryController entryController = new EntryController(resourceHandler, csvFileManagerCommander,
-                    randomQuizCommander, scanner);
+            EntryController entryController = new EntryController(csvFileManagerCommander,
+                    randomQuizCommander, scanner, entryView);
 
             return entryController;
         }

@@ -33,4 +33,10 @@ public class EntryView implements AppView {
         System.out.println("앱을 종료합니다.");
         System.out.println("---------------------------------");
     }
+
+    public void showAskExitApp() {
+        System.out.println("---------------------------------");
+        System.out.println("앱을 종료하시겠습니까?");
+        System.out.println("---------------------------------");
+    }
 }

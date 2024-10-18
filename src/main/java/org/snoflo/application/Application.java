@@ -1,12 +1,12 @@
 package org.snoflo.application;
 
-import org.snoflo.commander.EntryCommander;
+import org.snoflo.commander.AppCommander;
 
 public class Application {
 
     public void start() {
 
-        EntryCommander entryCommander = new EntryCommanderFactory().creatEntryCommander();
+        AppCommander entryCommander = new AppCommanderFactory().creatEntryCommander();
         entryCommander.executeCommander();
     }
 

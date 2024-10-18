@@ -16,9 +16,12 @@ public class EntryCommander implements AppCommander {
 
 	@Override
 	public void executeCommander() {
-        resourceHandler.connectH2WebConsole();
+        this.resourceHandler.connectH2WebConsole();
+
         this.entryController.start();
-		resourceHandler.closeResource();
+
+		this.resourceHandler.closeResource();
+        
         System.exit(0);
 	}
 
