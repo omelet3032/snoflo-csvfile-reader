@@ -13,20 +13,18 @@ import org.snoflo.function.RandomQuiz;
 import org.snoflo.service.QuestionService;
 import org.snoflo.view.QuestionView;
 
-public class QuestionController {
+public class RandomQuizController {
 
     private QuestionService quetionsService;
     private QuestionView questionView;
-    private RandomQuestion randomQuestion;
 
     private Scanner scanner;
 
     private RandomQuiz randomQuiz;
 
-    public QuestionController(Scanner scanner, RandomQuestion randomQuestion, RandomQuiz randomQuiz,
+    public RandomQuizController(Scanner scanner, RandomQuiz randomQuiz,
             QuestionService questionService,
             QuestionView questionView) {
-        this.randomQuestion = randomQuestion;
         this.scanner = scanner;
         this.quetionsService = questionService;
         this.questionView = questionView;
