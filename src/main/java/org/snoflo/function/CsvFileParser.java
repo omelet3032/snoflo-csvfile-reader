@@ -7,13 +7,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 
 public class CsvFileParser {
 
-	public List<RandomFields> readCsvFile(Path selectedFile) {
+	public List<CsvFileRow> readCsvFile(Path selectedFile) {
 
-		List<RandomFields> questionList = new ArrayList<>();
+		List<CsvFileRow> questionList = new ArrayList<>();
 
 
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
@@ -26,7 +26,7 @@ public class CsvFileParser {
 
 			while ((line = reader.readLine()) != null) {
 
-				RandomFields question = new RandomFields();
+				CsvFileRow question = new CsvFileRow();
 
 				String[] values = line.split(",");
 
@@ -78,7 +78,7 @@ public class CsvFileParser {
 	}
 
 	private String appendDescriptionColumn(
-			RandomFields question,
+			CsvFileRow question,
 			StringBuilder descriptionBuilder,
 			String[] values) {
 

@@ -5,11 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 
 public interface FinderRepository extends AppRepository {
 
-    public void save(List<RandomFields> list, String fileName);
+    public void save(List<CsvFileRow> list, String fileName);
 
     default void createTable(String fileName) throws SQLException {
 

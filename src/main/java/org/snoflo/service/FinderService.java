@@ -3,7 +3,7 @@ package org.snoflo.service;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 
 public interface FinderService extends AppService {
 

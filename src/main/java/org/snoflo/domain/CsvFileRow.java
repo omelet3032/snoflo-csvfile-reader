@@ -8,21 +8,21 @@ import java.util.Random;
 import org.snoflo.dto.QuestionDto;
 import org.snoflo.dto.RandomQuestionDto;
 
-public class RandomFields {
+public class CsvFileRow {
 
 	private String concept;
 
 	private String description;
 
-	public RandomFields() {
+	public CsvFileRow() {
 	}
 
-	public RandomFields(String concept, String description) {
+	public CsvFileRow(String concept, String description) {
 		this.concept = concept;
 		this.description = description;
 	}
 
-	public QuestionDto toDto(RandomFields question) {
+	public QuestionDto toDto(CsvFileRow question) {
 		return new QuestionDto(question.getConcept(), question.getDescription());
 	}
 

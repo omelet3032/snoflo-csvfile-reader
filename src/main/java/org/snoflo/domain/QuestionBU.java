@@ -17,7 +17,7 @@ public class QuestionBU {
 		this.description = description;
 	}
 
-	public QuestionDto toDto(RandomFields question) {
+	public QuestionDto toDto(CsvFileRow question) {
 		return new QuestionDto(question.getConcept(), question.getDescription());
 	}
 

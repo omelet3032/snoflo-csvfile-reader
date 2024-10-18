@@ -1,15 +1,17 @@
 package org.snoflo.controller;
 
 import java.util.Scanner;
+import java.util.logging.Handler;
 
 import org.snoflo.application.ResourceHandler;
-import org.snoflo.application.ResourceInitializer;
 import org.snoflo.view.EntryView;
 
 public class EntryController {
 
-    private FinderController finderController;
+    private CsvFileRegisterController finderController;
     private QuestionController questionController;
+
+    private CustomHandler handler;
 
     private EntryView entryView;
 
@@ -17,9 +19,19 @@ public class EntryController {
 
     private ResourceHandler resourceHandler;
 
-    public EntryController(ResourceHandler resourceHandler, Scanner scanner, FinderController finderController,
+    // public EntryController(ResourceHandler resourceHandler, Scanner scanner,
+    // CsvFileRegisterController finderController,
+    // QuestionController questionController) {
+    // this.finderController = finderController;
+    // this.questionController = questionController;
+    // this.entryView = new EntryView();
+    // this.scanner = scanner;
+    // this.resourceHandler = resourceHandler;
+    // }
+
+    public EntryController(ResourceHandler resourceHandler, Scanner scanner, CustomHandler handler,
             QuestionController questionController) {
-        this.finderController = finderController;
+        this.handler = handler;
         this.questionController = questionController;
         this.entryView = new EntryView();
         this.scanner = scanner;
@@ -41,7 +53,8 @@ public class EntryController {
                     questionController.start();
                     break;
                 case "2":
-                    finderController.start();
+                    // finderController.start(); // 이 부분에 핸들러 클래스가 들어와야 한다.
+                    handler.executeHandler();
                     break;
                 case "3":
                     exitApp();

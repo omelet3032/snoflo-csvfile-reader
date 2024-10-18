@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -21,9 +21,9 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<RandomFields> findAll(String selectedFile) {
+    public List<CsvFileRow> findAll(String selectedFile) {
 
-        List<RandomFields> list = new ArrayList<>();
+        List<CsvFileRow> list = new ArrayList<>();
 
         try (Connection conection = getDataSource().getConnection()) {
 
@@ -38,7 +38,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 String concept = rs.getString("concept");
                 String description = rs.getString("description");
 
-                list.add(new RandomFields(concept, description));
+                list.add(new CsvFileRow(concept, description));
             }
 
         } catch (SQLException e) {

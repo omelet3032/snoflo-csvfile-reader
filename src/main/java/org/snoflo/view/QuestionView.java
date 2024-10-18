@@ -2,14 +2,14 @@ package org.snoflo.view;
 
 import java.util.List;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 
 public class QuestionView implements AppView {
 
-    public void showResultFindAll(List<RandomFields> list) {
+    public void showResultFindAll(List<CsvFileRow> list) {
         System.out.println("--------------------------------");
         System.out.println();
-        for (RandomFields question : list) {
+        for (CsvFileRow question : list) {
             System.out.println(question.toString());
         }
     }
@@ -29,7 +29,7 @@ public class QuestionView implements AppView {
         System.out.println("-----------------------------");
     }
 
-    public void showResultFindById(RandomFields concept) {
+    public void showResultFindById(CsvFileRow concept) {
         System.out.println();
         System.out.println("conceptById : " + concept);
     }

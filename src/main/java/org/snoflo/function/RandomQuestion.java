@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 import org.snoflo.dto.RandomQuestionDto;
 
 public class RandomQuestion {
@@ -16,9 +16,9 @@ public class RandomQuestion {
         this.random = new Random();
     }
     
-    public Map<RandomFields, RandomQuestionDto> getRandomQuestion(List<RandomFields> list) {
+    public Map<CsvFileRow, RandomQuestionDto> getRandomQuestion(List<CsvFileRow> list) {
 
-        RandomFields question = getRandomElement(list);
+        CsvFileRow question = getRandomElement(list);
 
         String concept = question.getConcept();
         String description = question.getDescription();
@@ -33,7 +33,7 @@ public class RandomQuestion {
 
         RandomQuestionDto questionDto = question.toRandomQuestionDto(questionValue, answerValue);
 
-        Map<RandomFields, RandomQuestionDto> map = new HashMap<>();
+        Map<CsvFileRow, RandomQuestionDto> map = new HashMap<>();
 
         map.put(question, questionDto);
 
@@ -41,9 +41,9 @@ public class RandomQuestion {
 
     }
 
-    private RandomFields getRandomElement(List<RandomFields> list) {
+    private CsvFileRow getRandomElement(List<CsvFileRow> list) {
         int randomElement = random.nextInt(list.size());
-        RandomFields element = list.get(randomElement);
+        CsvFileRow element = list.get(randomElement);
         return element;
     }
 

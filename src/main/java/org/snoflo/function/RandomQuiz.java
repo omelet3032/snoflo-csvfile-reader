@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.view.QuestionView;
 
@@ -17,13 +17,13 @@ public class RandomQuiz {
         this.randomQuestion = new RandomQuestion();
     }
 
-    public List<RandomFields> playRandomQuiz(List<RandomFields> list, QuestionView questionView, Scanner scanner) {
+    public List<CsvFileRow> playRandomQuiz(List<CsvFileRow> list, QuestionView questionView, Scanner scanner) {
 
         while (!list.isEmpty()) {
-            Map<RandomFields, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
+            Map<CsvFileRow, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
 
-            Set<RandomFields> key = map.keySet();
-            RandomFields question = key.iterator().next();
+            Set<CsvFileRow> key = map.keySet();
+            CsvFileRow question = key.iterator().next();
 
             for (RandomQuestionDto dto : map.values()) {
                 questionView.showResultQuestionField(dto.question());

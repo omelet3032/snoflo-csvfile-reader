@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -19,7 +19,7 @@ public class FinderRepositoryImpl implements FinderRepository {
     }
 
     @Override
-    public void save(List<RandomFields> list, String fileName) {
+    public void save(List<CsvFileRow> list, String fileName) {
 
         String insertSql = "INSERT INTO " + fileName + " (concept, description)" +
                 " VALUES (?, ?)";
@@ -27,7 +27,7 @@ public class FinderRepositoryImpl implements FinderRepository {
         try (Connection connection = getDataSource().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
 
-            for (RandomFields question : list) {
+            for (CsvFileRow question : list) {
                 String concept = question.getConcept();
                 String description = question.getDescription();
 

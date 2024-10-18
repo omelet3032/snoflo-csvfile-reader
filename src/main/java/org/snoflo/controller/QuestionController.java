@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import org.snoflo.domain.RandomFields;
+import org.snoflo.domain.CsvFileRow;
 import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.function.RandomQuestion;
 import org.snoflo.function.RandomQuiz;
@@ -20,10 +20,11 @@ public class QuestionController {
     private RandomQuestion randomQuestion;
 
     private Scanner scanner;
-    
+
     private RandomQuiz randomQuiz;
 
-    public QuestionController(Scanner scanner, RandomQuestion randomQuestion, RandomQuiz randomQuiz, QuestionService questionService,
+    public QuestionController(Scanner scanner, RandomQuestion randomQuestion, RandomQuiz randomQuiz,
+            QuestionService questionService,
             QuestionView questionView) {
         this.randomQuestion = randomQuestion;
         this.scanner = scanner;
@@ -41,12 +42,12 @@ public class QuestionController {
         scanner.nextLine();
 
         String selectedTable = tableList.get(--number);
-        List<RandomFields> list = quetionsService.findAllQuestion(selectedTable);
+        List<CsvFileRow> list = quetionsService.findAllQuestion(selectedTable);
 
-        List<RandomFields> cachedList = new ArrayList<>(list);
+        List<CsvFileRow> cachedList = new ArrayList<>(list);
 
         executeRandomQuiz(cachedList);
-        
+
         while (true) {
 
             questionView.showSelectAskPlay();
@@ -66,31 +67,10 @@ public class QuestionController {
 
     }
 
-    private void executeRandomQuiz(List<RandomFields> cachedList) {
+    private void executeRandomQuiz(List<CsvFileRow> cachedList) {
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
         randomQuiz.playRandomQuiz(cachedList, questionView, scanner);
     }
 
-    // private List<RandomFields> playRandomQuiz(List<RandomFields> list) {
-
-    //     while (!list.isEmpty()) {
-    //         Map<RandomFields, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);
-
-    //         Set<RandomFields> key = map.keySet();
-    //         RandomFields question = key.iterator().next();
-
-    //         for (RandomQuestionDto dto : map.values()) {
-    //             questionView.showResultQuestionField(dto.question());
-    //             scanner.nextLine();
-    //             questionView.showResultAnswerField(dto.answer());
-    //             scanner.nextLine();
-    //         }
-
-    //         list.remove(question);
-
-    //     }
-
-    //     return list;
-    // }
 }

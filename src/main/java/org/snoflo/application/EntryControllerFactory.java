@@ -3,7 +3,9 @@ package org.snoflo.application;
 import java.util.Scanner;
 
 import org.snoflo.controller.EntryController;
-import org.snoflo.controller.FinderController;
+import org.snoflo.controller.CsvFileFinderController;
+import org.snoflo.controller.CsvFileRegisterController;
+import org.snoflo.controller.CustomHandler;
 import org.snoflo.controller.QuestionController;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
@@ -17,7 +19,8 @@ import org.snoflo.service.FinderService;
 import org.snoflo.service.FinderServiceImpl;
 import org.snoflo.service.QuestionService;
 import org.snoflo.service.QuestionServiceImpl;
-import org.snoflo.view.FinderView;
+import org.snoflo.view.CsvFileFinderView;
+import org.snoflo.view.CsvFileRegisterView;
 import org.snoflo.view.QuestionView;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -37,11 +40,19 @@ public class EntryControllerFactory {
         HikariDataSource hikariDataSource = resourceInitializer.getDataSource();
         Scanner scanner = resourceInitializer.getScanner();
 
-        FinderController finderController = new ControllerFactory(hikariDataSource, scanner).createFinderController();
+        CsvFileFinderController csvFileFinderController = new ControllerFactory(scanner).createCsvFileFinderController();
+        CsvFileRegisterController csvFileRegisterController = new ControllerFactory(hikariDataSource, scanner)
+                .createFinderController();
         QuestionController questionController = new ControllerFactory(hikariDataSource, scanner)
                 .createQuestionController();
 
-        EntryController entryController = new EntryController(resourceHandler, scanner, finderController,
+        CustomHandler handler = new CustomHandler(csvFileFinderController, csvFileRegisterController);
+
+        // EntryController entryController = new EntryController(resourceHandler,
+        // scanner, csvFileRegisterController,
+        // questionController);
+
+        EntryController entryController = new EntryController(resourceHandler, scanner, handler,
                 questionController);
 
         return entryController;
@@ -52,20 +63,24 @@ public class EntryControllerFactory {
         private HikariDataSource hikariDataSource;
         private Scanner scanner;
 
+        public ControllerFactory(Scanner scanner) {
+            this.scanner = scanner;
+        }
+
         public ControllerFactory(HikariDataSource hikariDataSource, Scanner scanner) {
             this.hikariDataSource = hikariDataSource;
             this.scanner = scanner;
         }
 
-        public FinderController createFinderController() {
+        public CsvFileRegisterController createFinderController() {
 
             CsvFileParser csvFileParser = new CsvFileParser();
-            CsvFileFinder csvFileFinder = new CsvFileFinder();
 
             FinderRepository finderRepository = new FinderRepositoryImpl(hikariDataSource);
             FinderService finderService = new FinderServiceImpl(csvFileParser, finderRepository);
-            FinderView finderView = new FinderView();
-            FinderController finderController = new FinderController(scanner, csvFileFinder, finderService, finderView);
+            CsvFileRegisterView registerView = new CsvFileRegisterView();
+            CsvFileRegisterController finderController = new CsvFileRegisterController(scanner, finderService,
+                    registerView);
 
             return finderController;
         }
@@ -77,10 +92,20 @@ public class EntryControllerFactory {
             QuestionRepository questionRepository = new QuestionRepositoryImpl(hikariDataSource);
             QuestionService questionService = new QuestionServiceImpl(questionRepository);
             QuestionView questionView = new QuestionView();
-            QuestionController questionController = new QuestionController(scanner, randomQuestion, randomQuiz, questionService,
+            QuestionController questionController = new QuestionController(scanner, randomQuestion, randomQuiz,
+                    questionService,
                     questionView);
 
             return questionController;
+        }
+
+        public CsvFileFinderController createCsvFileFinderController() {
+            CsvFileFinder csvFileFinder = new CsvFileFinder();
+            CsvFileFinderView csvFileFinderView = new CsvFileFinderView();
+            CsvFileFinderController csvFileFinderController = new CsvFileFinderController(csvFileFinderView,
+                    csvFileFinder, scanner);
+
+            return csvFileFinderController;
         }
     }
 }
