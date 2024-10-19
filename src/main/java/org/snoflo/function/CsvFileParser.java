@@ -15,7 +15,6 @@ public class CsvFileParser {
 
 		List<CsvFileRow> questionList = new ArrayList<>();
 
-
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 
 			String line = reader.readLine();

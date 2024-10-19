@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.snoflo.domain.CsvFileRow;
 
-public interface FinderRepository extends AppRepository {
+public interface FileRegisterRepository extends AppRepository {
 
     public void save(List<CsvFileRow> list, String fileName);
 

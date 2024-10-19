@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.snoflo.domain.CsvFileRow;
 import org.snoflo.dto.RandomQuestionDto;
-import org.snoflo.view.QuestionView;
+import org.snoflo.view.RandomQuizView;
 
 public class RandomQuiz {
 
@@ -17,7 +17,7 @@ public class RandomQuiz {
         this.randomQuestion = new RandomQuestion();
     }
 
-    public List<CsvFileRow> playRandomQuiz(List<CsvFileRow> list, QuestionView questionView, Scanner scanner) {
+    public List<CsvFileRow> playRandomQuiz(List<CsvFileRow> list, RandomQuizView questionView, Scanner scanner) {
 
         while (!list.isEmpty()) {
             Map<CsvFileRow, RandomQuestionDto> map = randomQuestion.getRandomQuestion(list);

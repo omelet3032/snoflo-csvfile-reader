@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.snoflo.domain.CsvFileRow;
 
-public interface QuestionService extends AppService {
+public interface RandomQuizService extends AppService {
 
     List<CsvFileRow> findAllQuestion(String selectedFile);
 

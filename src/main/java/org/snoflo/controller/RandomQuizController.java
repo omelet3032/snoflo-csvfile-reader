@@ -10,21 +10,21 @@ import org.snoflo.domain.CsvFileRow;
 import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.function.RandomQuestion;
 import org.snoflo.function.RandomQuiz;
-import org.snoflo.service.QuestionService;
-import org.snoflo.view.QuestionView;
+import org.snoflo.service.RandomQuizService;
+import org.snoflo.view.RandomQuizView;
 
 public class RandomQuizController {
 
-    private QuestionService quetionsService;
-    private QuestionView questionView;
+    private RandomQuizService quetionsService;
+    private RandomQuizView questionView;
 
     private Scanner scanner;
 
     private RandomQuiz randomQuiz;
 
     public RandomQuizController(Scanner scanner, RandomQuiz randomQuiz,
-            QuestionService questionService,
-            QuestionView questionView) {
+            RandomQuizService questionService,
+            RandomQuizView questionView) {
         this.scanner = scanner;
         this.quetionsService = questionService;
         this.questionView = questionView;
@@ -49,6 +49,7 @@ public class RandomQuizController {
         while (true) {
 
             questionView.showSelectAskPlay();
+            questionView.showSelectYorN();
             String answer = scanner.nextLine();
 
             if (answer.equals("Y")) {
@@ -59,7 +60,7 @@ public class RandomQuizController {
                 questionView.showPromptReturnMainMenu();
                 return;
             } else {
-                questionView.showPromptYorN();
+                questionView.showSelectYorN();
             }
         }
 

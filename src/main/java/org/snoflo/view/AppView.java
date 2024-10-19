@@ -8,7 +8,7 @@ public interface AppView {
         System.out.println("---------------------------------");
     }
 
-    default void showPromptYorN() {
+    default void showSelectYorN() {
         System.out.println("---------------------------------");
         System.out.println("Y/n중 하나를 입력해주세요.");
         System.out.println("---------------------------------");

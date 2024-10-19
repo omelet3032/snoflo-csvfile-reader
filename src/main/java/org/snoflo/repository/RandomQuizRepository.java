@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.snoflo.domain.CsvFileRow;
 
-public interface QuestionRepository extends AppRepository {
+public interface RandomQuizRepository extends AppRepository {
 
     public List<CsvFileRow> findAll(String selectedFile);
 

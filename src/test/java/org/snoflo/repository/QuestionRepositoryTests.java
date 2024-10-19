@@ -15,7 +15,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class QuestionRepositoryTests {
 
-    private QuestionRepositoryImpl questionRepository;
+    private RandomQuizRepositoryImpl questionRepository;
     private HikariDataSource dataSource;
 
     @BeforeEach

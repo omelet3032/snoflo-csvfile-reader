@@ -4,18 +4,18 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
-import org.snoflo.service.FinderService;
+import org.snoflo.service.FileRegisterService;
 import org.snoflo.view.CsvFileRegisterView;
 
 public class CsvFileRegisterController {
 
     private CsvFileRegisterView registerView;
 
-    private FinderService finderService;
+    private FileRegisterService finderService;
 
     private Scanner scanner;
 
-    public CsvFileRegisterController(Scanner scanner, FinderService finderService, CsvFileRegisterView registerView) {
+    public CsvFileRegisterController(Scanner scanner, FileRegisterService finderService, CsvFileRegisterView registerView) {
         this.finderService = finderService;
         this.registerView = registerView;
         this.scanner = scanner;
@@ -50,7 +50,7 @@ public class CsvFileRegisterController {
                 registerView.showPromptReturnMainMenu();
                 return;
             } else {
-                registerView.showPromptYorN();
+                registerView.showSelectYorN();
             }
         }
 

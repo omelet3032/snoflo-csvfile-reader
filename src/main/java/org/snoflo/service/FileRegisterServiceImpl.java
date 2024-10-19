@@ -7,15 +7,15 @@ import java.util.List;
 import org.h2.jdbc.JdbcSQLSyntaxErrorException;
 import org.snoflo.domain.CsvFileRow;
 import org.snoflo.function.CsvFileParser;
-import org.snoflo.repository.FinderRepository;
+import org.snoflo.repository.FileRegisterRepository;
 
-public class FinderServiceImpl implements FinderService {
+public class FileRegisterServiceImpl implements FileRegisterService {
 
 	private CsvFileParser csvFileParser;
 
-	private FinderRepository finderRepository;
+	private FileRegisterRepository finderRepository;
 
-	public FinderServiceImpl(CsvFileParser csvFileParser, FinderRepository finderRepository) {
+	public FileRegisterServiceImpl(CsvFileParser csvFileParser, FileRegisterRepository finderRepository) {
 		this.csvFileParser = csvFileParser;
 		this.finderRepository = finderRepository;
 	}

@@ -20,8 +20,8 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class RepositoryTests {
 
-    private QuestionRepositoryImpl questionRepository;
-    private FinderRepositoryImpl finderRepository;
+    private RandomQuizRepositoryImpl questionRepository;
+    private FileRegisterRepositoryImpl finderRepository;
     private HikariDataSource dataSource;
 
     // @BeforeEach
@@ -44,8 +44,8 @@ public class RepositoryTests {
         dataSource = new HikariDataSource(config);
 
         new TestDbCreator(dataSource);
-        finderRepository = new FinderRepositoryImpl(dataSource);
-        questionRepository = new QuestionRepositoryImpl(dataSource);
+        finderRepository = new FileRegisterRepositoryImpl(dataSource);
+        questionRepository = new RandomQuizRepositoryImpl(dataSource);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class RepositoryTests {
         questionList.add(new CsvFileRow("싱글톤", "전역 변수"));
         questionList.add(new CsvFileRow("프록시", "대리 객체"));
 
-        finderRepository.save(questionList);
+        // finderRepository.save(questionList);
 
         System.out.println("테스트 성공?");
 
@@ -85,7 +85,7 @@ public class RepositoryTests {
         questionList.add(new CsvFileRow("싱글톤", "전역 변수"));
         questionList.add(new CsvFileRow("프록시", "대리 객체"));
 
-        finderRepository.save(questionList);
+        // finderRepository.save(questionList);
 
         // List<Question> list = questionRepository.findAll();
         // System.out.println("findAll list \n " + list);

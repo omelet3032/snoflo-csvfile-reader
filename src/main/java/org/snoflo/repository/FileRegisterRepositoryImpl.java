@@ -10,11 +10,11 @@ import org.snoflo.domain.CsvFileRow;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class FinderRepositoryImpl implements FinderRepository {
+public class FileRegisterRepositoryImpl implements FileRegisterRepository {
 
     private HikariDataSource dataSource;
 
-    public FinderRepositoryImpl(HikariDataSource dataSource) {
+    public FileRegisterRepositoryImpl(HikariDataSource dataSource) {
         this.dataSource = dataSource;
     }
 

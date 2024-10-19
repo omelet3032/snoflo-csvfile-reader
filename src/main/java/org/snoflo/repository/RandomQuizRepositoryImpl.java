@@ -12,11 +12,11 @@ import org.snoflo.domain.CsvFileRow;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class QuestionRepositoryImpl implements QuestionRepository {
+public class RandomQuizRepositoryImpl implements RandomQuizRepository {
 
     private HikariDataSource dataSource;
 
-    public QuestionRepositoryImpl(HikariDataSource dataSource) {
+    public RandomQuizRepositoryImpl(HikariDataSource dataSource) {
         this.dataSource = dataSource;
     }
 

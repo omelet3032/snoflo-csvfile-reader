@@ -3,13 +3,13 @@ package org.snoflo.service;
 import java.util.List;
 
 import org.snoflo.domain.CsvFileRow;
-import org.snoflo.repository.QuestionRepository;
+import org.snoflo.repository.RandomQuizRepository;
 
-public class QuestionServiceImpl implements QuestionService {
+public class RandomQuizServiceImpl implements RandomQuizService {
 
-    private QuestionRepository questionRepository;
+    private RandomQuizRepository questionRepository;
 
-    public QuestionServiceImpl(QuestionRepository questionRepository) {
+    public RandomQuizServiceImpl(RandomQuizRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 

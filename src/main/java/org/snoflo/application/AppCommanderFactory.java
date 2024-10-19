@@ -15,18 +15,18 @@ import org.snoflo.function.AppDataSource;
 import org.snoflo.function.CsvFileFinder;
 import org.snoflo.function.CsvFileParser;
 import org.snoflo.function.RandomQuiz;
-import org.snoflo.repository.FinderRepository;
-import org.snoflo.repository.FinderRepositoryImpl;
-import org.snoflo.repository.QuestionRepository;
-import org.snoflo.repository.QuestionRepositoryImpl;
-import org.snoflo.service.FinderService;
-import org.snoflo.service.FinderServiceImpl;
-import org.snoflo.service.QuestionService;
-import org.snoflo.service.QuestionServiceImpl;
+import org.snoflo.repository.FileRegisterRepository;
+import org.snoflo.repository.FileRegisterRepositoryImpl;
+import org.snoflo.repository.RandomQuizRepository;
+import org.snoflo.repository.RandomQuizRepositoryImpl;
+import org.snoflo.service.FileRegisterService;
+import org.snoflo.service.FileRegisterServiceImpl;
+import org.snoflo.service.RandomQuizService;
+import org.snoflo.service.RandomQuizServiceImpl;
 import org.snoflo.view.CsvFileFinderView;
 import org.snoflo.view.CsvFileRegisterView;
 import org.snoflo.view.EntryView;
-import org.snoflo.view.QuestionView;
+import org.snoflo.view.RandomQuizView;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -40,12 +40,13 @@ public class AppCommanderFactory {
         this.resourceHandler = new ResourceHandler();
     }
 
-    public AppCommander creatEntryCommander() {
+    public AppCommander createEntryCommander() {
 
         EntryController entryController = new ControllerFactory().createEntryController();
 
         return new EntryCommander(entryController, resourceHandler);
     }
+
 
     private class ControllerFactory {
 
@@ -56,12 +57,9 @@ public class AppCommanderFactory {
 
             EntryView entryView = new EntryView();
 
-            CsvFileFinderController csvFileFinderController = new ControllerFactory()
-                    .createCsvFileFinderController();
-            CsvFileRegisterController csvFileRegisterController = new ControllerFactory()
-                    .createCsvFileRegisterController();
-            RandomQuizController randomQuizController = new ControllerFactory()
-                    .createQuestionController();
+            CsvFileFinderController csvFileFinderController = createCsvFileFinderController();
+            CsvFileRegisterController csvFileRegisterController = createCsvFileRegisterController();
+            RandomQuizController randomQuizController = createQuestionController();
 
             AppCommander csvFileManagerCommander = new CsvFileManagerCommander(csvFileFinderController,
                     csvFileRegisterController);
@@ -73,12 +71,12 @@ public class AppCommanderFactory {
             return entryController;
         }
 
-        public CsvFileRegisterController createCsvFileRegisterController() {
+        private CsvFileRegisterController createCsvFileRegisterController() {
 
             CsvFileParser csvFileParser = new CsvFileParser();
 
-            FinderRepository finderRepository = new FinderRepositoryImpl(hikariDataSource);
-            FinderService finderService = new FinderServiceImpl(csvFileParser, finderRepository);
+            FileRegisterRepository finderRepository = new FileRegisterRepositoryImpl(hikariDataSource);
+            FileRegisterService finderService = new FileRegisterServiceImpl(csvFileParser, finderRepository);
             CsvFileRegisterView registerView = new CsvFileRegisterView();
             CsvFileRegisterController finderController = new CsvFileRegisterController(scanner, finderService,
                     registerView);
@@ -86,7 +84,7 @@ public class AppCommanderFactory {
             return finderController;
         }
 
-        public CsvFileFinderController createCsvFileFinderController() {
+        private CsvFileFinderController createCsvFileFinderController() {
             CsvFileFinder csvFileFinder = new CsvFileFinder();
 
             CsvFileFinderView csvFileFinderView = new CsvFileFinderView();
@@ -96,13 +94,13 @@ public class AppCommanderFactory {
             return csvFileFinderController;
         }
 
-        public RandomQuizController createQuestionController() {
+        private RandomQuizController createQuestionController() {
 
             RandomQuiz randomQuiz = new RandomQuiz();
 
-            QuestionRepository questionRepository = new QuestionRepositoryImpl(hikariDataSource);
-            QuestionService questionService = new QuestionServiceImpl(questionRepository);
-            QuestionView questionView = new QuestionView();
+            RandomQuizRepository questionRepository = new RandomQuizRepositoryImpl(hikariDataSource);
+            RandomQuizService questionService = new RandomQuizServiceImpl(questionRepository);
+            RandomQuizView questionView = new RandomQuizView();
             RandomQuizController questionController = new RandomQuizController(scanner, randomQuiz,
                     questionService,
                     questionView);

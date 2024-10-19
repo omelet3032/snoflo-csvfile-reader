@@ -3,6 +3,7 @@ package org.snoflo.controller;
 import java.util.Scanner;
 
 import org.snoflo.commander.AppCommander;
+import org.snoflo.commander.CustomContext;
 import org.snoflo.view.EntryView;
 
 public class EntryController {
@@ -32,17 +33,19 @@ public class EntryController {
             entryView.showPromptMainMenu();
             entryView.showSelectStartMenu();
             answer = scanner.nextLine();
-
+            CustomContext context = new CustomContext();
             switch (answer) {
                 case "1":
-                    randomQuizCommander.executeCommander();
+                    // randomQuizCommander.executeCommander();
+                    context.runContext(randomQuizCommander);
                     break;
                 case "2":
-                    csvFileManagerCommander.executeCommander();
+                    // csvFileManagerCommander.executeCommander();
+                    context.runContext(csvFileManagerCommander);
                     break;
                 case "3":
                     entryView.showAskExitApp();
-                    entryView.showPromptYorN();
+                    entryView.showSelectYorN();
 
                     while (true) {
 
@@ -55,7 +58,7 @@ public class EntryController {
                             entryView.showPromptReturnMainMenu();
                             break;
                         } else {
-                            entryView.showPromptYorN();
+                            entryView.showSelectYorN();
                         }
                     }
                     break;
