@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.snoflo.domain.CsvFileRow;
 
-public interface FileRegisterService extends AppService {
+public interface FileRegisterService  {
 
 	// public void saveQuestionList(List<Question> csvRowList, String fileName);
 

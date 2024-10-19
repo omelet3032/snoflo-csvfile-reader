@@ -8,16 +8,20 @@ import org.h2.jdbc.JdbcSQLSyntaxErrorException;
 import org.snoflo.domain.CsvFileRow;
 import org.snoflo.function.CsvFileParser;
 import org.snoflo.repository.FileRegisterRepository;
+import org.snoflo.repository.TableRepository;
 
 public class FileRegisterServiceImpl implements FileRegisterService {
 
 	private CsvFileParser csvFileParser;
 
 	private FileRegisterRepository finderRepository;
+	private TableRepository tableRepository;
 
-	public FileRegisterServiceImpl(CsvFileParser csvFileParser, FileRegisterRepository finderRepository) {
+
+	public FileRegisterServiceImpl(CsvFileParser csvFileParser, FileRegisterRepository finderRepository, TableRepository tableRepository) {
 		this.csvFileParser = csvFileParser;
 		this.finderRepository = finderRepository;
+		this.tableRepository = tableRepository;
 	}
 
 	@Override
@@ -32,7 +36,8 @@ public class FileRegisterServiceImpl implements FileRegisterService {
 	public void createQuestionTable(String fileName) {
 
 		try {
-			finderRepository.createTable(fileName);
+			// finderRepository.createTable(fileName);
+			tableRepository.createTable(fileName);
 		} catch (JdbcSQLSyntaxErrorException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -42,13 +47,15 @@ public class FileRegisterServiceImpl implements FileRegisterService {
 
 	@Override
 	public void truncateQuestionTable(String fileName) {
-		finderRepository.truncateTable(fileName);
+		// finderRepository.truncateTable(fileName);
+		tableRepository.truncateTable(fileName);
 	}
 
 	@Override
 	public String findRegisteredTable(String fileName) {
 
-		List<String> tableList = finderRepository.findAllTable();
+		// List<String> tableList = finderRepository.findAllTable();
+		List<String> tableList = tableRepository.findAllTable();
 
 		for (int i = 0; i < tableList.size(); i++) {
 			if (tableList.get(i).equalsIgnoreCase(fileName)) {

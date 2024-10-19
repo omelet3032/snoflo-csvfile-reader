@@ -24,7 +24,7 @@ public class FileRegisterRepositoryImpl implements FileRegisterRepository {
         String insertSql = "INSERT INTO " + fileName + " (concept, description)" +
                 " VALUES (?, ?)";
 
-        try (Connection connection = getDataSource().getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
 
             for (CsvFileRow question : list) {
@@ -46,9 +46,5 @@ public class FileRegisterRepositoryImpl implements FileRegisterRepository {
 
     }
 
-    @Override
-    public HikariDataSource getDataSource() {
-        return this.dataSource;
-    }
 
 }

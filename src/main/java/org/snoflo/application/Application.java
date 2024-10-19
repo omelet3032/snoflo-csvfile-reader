@@ -1,17 +1,17 @@
 package org.snoflo.application;
 
-import org.snoflo.commander.AppCommander;
-import org.snoflo.commander.CustomContext;
+import org.snoflo.strategy.AppStrategy;
+import org.snoflo.strategy.AppContext;
 
 public class Application {
 
     public void start() {
 
-        AppCommander entryCommander = new AppCommanderFactory().createEntryCommander();
+        AppStrategy entryStrategy = new AppCommanderFactory().createEntryCommander();
         // entryCommander.executeCommander();
     
-        CustomContext context = new CustomContext();
-        context.runContext(entryCommander);
+        AppContext context = new AppContext();
+        context.runContext(entryStrategy);
     }
 
 

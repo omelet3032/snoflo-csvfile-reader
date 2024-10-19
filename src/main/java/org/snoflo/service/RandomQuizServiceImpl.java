@@ -4,13 +4,17 @@ import java.util.List;
 
 import org.snoflo.domain.CsvFileRow;
 import org.snoflo.repository.RandomQuizRepository;
+import org.snoflo.repository.TableRepository;
 
 public class RandomQuizServiceImpl implements RandomQuizService {
 
     private RandomQuizRepository questionRepository;
+    private TableRepository tableRepository;
 
-    public RandomQuizServiceImpl(RandomQuizRepository questionRepository) {
+
+    public RandomQuizServiceImpl(RandomQuizRepository questionRepository, TableRepository tableRepository) {
         this.questionRepository = questionRepository;
+        this.tableRepository = tableRepository;
     }
 
     @Override
@@ -20,7 +24,7 @@ public class RandomQuizServiceImpl implements RandomQuizService {
 
     @Override
     public List<String> findQuestionTable() {
-        return this.questionRepository.findAllTable();
+        return this.tableRepository.findAllTable();
     }
 
 }

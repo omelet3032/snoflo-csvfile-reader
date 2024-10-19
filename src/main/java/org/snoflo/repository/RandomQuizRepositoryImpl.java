@@ -25,7 +25,7 @@ public class RandomQuizRepositoryImpl implements RandomQuizRepository {
 
         List<CsvFileRow> list = new ArrayList<>();
 
-        try (Connection conection = getDataSource().getConnection()) {
+        try (Connection conection = dataSource.getConnection()) {
 
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT concept, description ")
@@ -47,27 +47,23 @@ public class RandomQuizRepositoryImpl implements RandomQuizRepository {
         return list;
     }
 
-    @Override
-    public List<String> findAllTable() {
-        List<String> list = new ArrayList<>();
+    // @Override
+    // public List<String> findAllTable() {
+    //     List<String> list = new ArrayList<>();
 
-        try (Connection conn = getDataSource().getConnection()) {
-            DatabaseMetaData meta = conn.getMetaData();
-            ResultSet tables = meta.getTables(null, "PUBLIC", "%", new String[] { "TABLE" });
+    //     try (Connection conn = dataSource.getConnection()) {
+    //         DatabaseMetaData meta = conn.getMetaData();
+    //         ResultSet tables = meta.getTables(null, "PUBLIC", "%", new String[] { "TABLE" });
 
-            while (tables.next()) {
-                String tableName = tables.getString("TABLE_NAME");
-                list.add(tableName);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    //         while (tables.next()) {
+    //             String tableName = tables.getString("TABLE_NAME");
+    //             list.add(tableName);
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    //     return list;
+    // }
 
-    @Override
-    public HikariDataSource getDataSource() {
-        return this.dataSource;
-    }
 
 }

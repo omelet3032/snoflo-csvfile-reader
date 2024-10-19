@@ -1,17 +1,17 @@
-package org.snoflo.commander;
+package org.snoflo.strategy;
 
 import org.snoflo.controller.RandomQuizController;
 
-public class RandomQuizCommander implements AppCommander{
+public class RandomQuizStrategy implements AppStrategy{
     
     private RandomQuizController randomQuizController;
 
-    public RandomQuizCommander(RandomQuizController randomQuizController) {
+    public RandomQuizStrategy(RandomQuizController randomQuizController) {
         this.randomQuizController = randomQuizController;
     }
 
     @Override
-    public void executeCommander() {
+    public void runStrategy() {
         this.randomQuizController.start();
         return;
     }
