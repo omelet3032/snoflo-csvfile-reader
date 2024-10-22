@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.snoflo.domain.CsvFileRow;
+import org.snoflo.domain.Row;
 
 public interface FileRegisterRepository {
 
-    public void save(List<CsvFileRow> list, String fileName);
+    public void save(List<Row> list, String fileName);
 
 }

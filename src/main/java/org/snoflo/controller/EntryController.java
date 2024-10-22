@@ -8,9 +8,9 @@ import org.snoflo.view.EntryView;
 
 public class EntryController {
 
-    private AppStrategy csvFileManagerCommander;
+    private AppStrategy fileManagerStrategy;
 
-    private AppStrategy randomQuizCommander;
+    private AppStrategy randomQuizStrategy;
 
     private Scanner scanner;
 
@@ -20,13 +20,13 @@ public class EntryController {
 
     public EntryController(
             AppContext context,
-            AppStrategy csvFileManagerCommander,
-            AppStrategy randomQuizCommander, 
+            AppStrategy fileManagerStrategy,
+            AppStrategy randomQuizStrategy, 
             Scanner scanner, 
             EntryView entryView) {
         this.context = context;
-        this.csvFileManagerCommander = csvFileManagerCommander;
-        this.randomQuizCommander = randomQuizCommander;
+        this.fileManagerStrategy = fileManagerStrategy;
+        this.randomQuizStrategy = randomQuizStrategy;
         this.scanner = scanner;
         this.entryView = entryView;
     }
@@ -41,10 +41,10 @@ public class EntryController {
             answer = scanner.nextLine();
             switch (answer) {
                 case "1":
-                    context.runContext(randomQuizCommander);
+                    context.runContext(randomQuizStrategy);
                     break;
                 case "2":
-                    context.runContext(csvFileManagerCommander);
+                    context.runContext(fileManagerStrategy);
                     break;
                 case "3":
                     entryView.showAskExitApp();

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.snoflo.domain.CsvFileRow;
+import org.snoflo.domain.Row;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -21,9 +21,9 @@ public class RandomQuizRepositoryImpl implements RandomQuizRepository {
     }
 
     @Override
-    public List<CsvFileRow> findAll(String selectedFile) {
+    public List<Row> findAll(String selectedFile) {
 
-        List<CsvFileRow> list = new ArrayList<>();
+        List<Row> list = new ArrayList<>();
 
         try (Connection conection = dataSource.getConnection()) {
 
@@ -38,7 +38,7 @@ public class RandomQuizRepositoryImpl implements RandomQuizRepository {
                 String concept = rs.getString("concept");
                 String description = rs.getString("description");
 
-                list.add(new CsvFileRow(concept, description));
+                list.add(new Row(concept, description));
             }
 
         } catch (SQLException e) {

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CsvFileFinder {
+public class FileFinder {
 
     public List<Path> getFolderList() {
         Path dirPath = Paths.get(System.getProperty("user.dir"));

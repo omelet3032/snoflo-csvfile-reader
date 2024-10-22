@@ -1,24 +1,21 @@
 package org.snoflo.domain;
 
+
 import org.snoflo.dto.QuestionDto;
 import org.snoflo.dto.RandomQuestionDto;
 
-public class QuestionBU {
+public class Row {
 
 	private String concept;
 
 	private String description;
 
-	public QuestionBU() {
+	public Row() {
 	}
 
-	public QuestionBU(String concept, String description) {
+	public Row(String concept, String description) {
 		this.concept = concept;
 		this.description = description;
-	}
-
-	public QuestionDto toDto(CsvFileRow question) {
-		return new QuestionDto(question.getConcept(), question.getDescription());
 	}
 
 	public RandomQuestionDto toRandomQuestionDto(String question, String answer) {
@@ -45,6 +42,5 @@ public class QuestionBU {
 	public String toString() {
 		return "concept : " + concept + "\ndescription : " + description + "";
 	}
-
-
+	
 }

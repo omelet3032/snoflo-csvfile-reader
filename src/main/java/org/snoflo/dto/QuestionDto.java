@@ -1,5 +1,5 @@
 package org.snoflo.dto;
 
-public record QuestionDto(String concept, String description) {
+public record QuestionDto(String questionValue, String answerValue) {
     
 }

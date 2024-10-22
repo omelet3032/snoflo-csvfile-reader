@@ -1,21 +1,20 @@
 package org.snoflo.controller;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Scanner;
 
 import org.snoflo.service.FileRegisterService;
-import org.snoflo.view.CsvFileRegisterView;
+import org.snoflo.view.FileRegisterView;
 
-public class CsvFileRegisterController {
+public class FileRegisterController {
 
-    private CsvFileRegisterView registerView;
+    private FileRegisterView registerView;
 
     private FileRegisterService finderService;
 
     private Scanner scanner;
 
-    public CsvFileRegisterController(Scanner scanner, FileRegisterService finderService, CsvFileRegisterView registerView) {
+    public FileRegisterController(Scanner scanner, FileRegisterService finderService, FileRegisterView registerView) {
         this.finderService = finderService;
         this.registerView = registerView;
         this.scanner = scanner;

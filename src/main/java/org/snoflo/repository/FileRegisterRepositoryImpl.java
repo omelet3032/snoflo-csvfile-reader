@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.snoflo.domain.CsvFileRow;
+import org.snoflo.domain.Row;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -19,7 +19,7 @@ public class FileRegisterRepositoryImpl implements FileRegisterRepository {
     }
 
     @Override
-    public void save(List<CsvFileRow> list, String fileName) {
+    public void save(List<Row> list, String fileName) {
 
         String insertSql = "INSERT INTO " + fileName + " (concept, description)" +
                 " VALUES (?, ?)";
@@ -27,7 +27,7 @@ public class FileRegisterRepositoryImpl implements FileRegisterRepository {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
 
-            for (CsvFileRow question : list) {
+            for (Row question : list) {
                 String concept = question.getConcept();
                 String description = question.getDescription();
 

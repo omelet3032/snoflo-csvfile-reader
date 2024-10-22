@@ -6,9 +6,10 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import org.snoflo.domain.CsvFileRow;
+import org.snoflo.domain.Row;
+import org.snoflo.dto.QuestionDto;
 import org.snoflo.dto.RandomQuestionDto;
-import org.snoflo.function.RandomQuestion;
+import org.snoflo.function.RandomQuestionGenerator;
 import org.snoflo.function.RandomQuiz;
 import org.snoflo.service.RandomQuizService;
 import org.snoflo.view.RandomQuizView;
@@ -21,6 +22,7 @@ public class RandomQuizController {
     private Scanner scanner;
 
     private RandomQuiz randomQuiz;
+    private RandomQuestionGenerator randomQuestionGenerator;
 
     public RandomQuizController(Scanner scanner, RandomQuiz randomQuiz,
             RandomQuizService questionService,
@@ -29,6 +31,7 @@ public class RandomQuizController {
         this.quetionsService = questionService;
         this.questionView = questionView;
         this.randomQuiz = randomQuiz;
+        this.randomQuestionGenerator = new RandomQuestionGenerator();
     }
 
     public void start() {
@@ -40,11 +43,14 @@ public class RandomQuizController {
         scanner.nextLine();
 
         String selectedTable = tableList.get(--number);
-        List<CsvFileRow> list = quetionsService.findAllQuestion(selectedTable);
+        List<Row> list = quetionsService.findAllQuestion(selectedTable);
 
-        List<CsvFileRow> cachedList = new ArrayList<>(list);
+        List<Row> cachedList = new ArrayList<>(list);
 
-        executeRandomQuiz(cachedList);
+        // List<QuestionDto> questionList = randomQuestionGenerator.getRandomQuestion2(cachedList);
+        // randomQuiz.playRandomQuiz2(questionList, questionView, scanner);
+
+        executeRandomQuiz2(cachedList);
 
         while (true) {
 
@@ -54,7 +60,7 @@ public class RandomQuizController {
 
             if (answer.equals("Y")) {
                 cachedList.addAll(list);
-                executeRandomQuiz(cachedList);
+                executeRandomQuiz2(cachedList);
                 continue;
             } else if (answer.equals("n")) {
                 questionView.showPromptReturnMainMenu();
@@ -66,10 +72,16 @@ public class RandomQuizController {
 
     }
 
-    private void executeRandomQuiz(List<CsvFileRow> cachedList) {
+    private void executeRandomQuiz(List<Row> cachedList) {
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
+        // randomQuestionGenerator.getRandomQuestion(cachedList);
         randomQuiz.playRandomQuiz(cachedList, questionView, scanner);
+    }
+
+    private void executeRandomQuiz2(List<Row> cachedList) {
+        List<QuestionDto> questionList = randomQuestionGenerator.getRandomQuestion2(cachedList);
+        randomQuiz.playRandomQuiz2(questionList, questionView, scanner);
     }
 
 }

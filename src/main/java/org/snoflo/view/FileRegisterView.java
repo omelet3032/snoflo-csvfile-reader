@@ -1,7 +1,7 @@
 package org.snoflo.view;
 
 
-public class CsvFileRegisterView implements AppView {
+public class FileRegisterView implements AppView {
 
     public void showPromptRegisterFile(String fileName) {
         System.out.println("---------------------------------");

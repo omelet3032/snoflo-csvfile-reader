@@ -3,7 +3,7 @@ package org.snoflo.view;
 import java.nio.file.Path;
 import java.util.List;
 
-public class CsvFileFinderView {
+public class FileFinderView {
     
      public void showPromptFolder() {
         System.out.println("---------------------------------");

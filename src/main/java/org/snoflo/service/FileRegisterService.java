@@ -3,7 +3,7 @@ package org.snoflo.service;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.snoflo.domain.CsvFileRow;
+import org.snoflo.domain.Row;
 
 public interface FileRegisterService  {
 

@@ -7,13 +7,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.snoflo.domain.CsvFileRow;
+import org.snoflo.domain.Row;
 
-public class CsvFileParser {
+public class FileParser {
 
-	public List<CsvFileRow> readCsvFile(Path selectedFile) {
+	public List<Row> readCsvFile(Path selectedFile) {
 
-		List<CsvFileRow> questionList = new ArrayList<>();
+		List<Row> questionList = new ArrayList<>();
 
 		try (BufferedReader reader = Files.newBufferedReader(selectedFile)) {
 
@@ -25,7 +25,7 @@ public class CsvFileParser {
 
 			while ((line = reader.readLine()) != null) {
 
-				CsvFileRow question = new CsvFileRow();
+				Row question = new Row();
 
 				String[] values = line.split(",");
 
@@ -77,7 +77,7 @@ public class CsvFileParser {
 	}
 
 	private String appendDescriptionColumn(
-			CsvFileRow question,
+			Row question,
 			StringBuilder descriptionBuilder,
 			String[] values) {
 

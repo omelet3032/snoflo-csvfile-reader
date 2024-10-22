@@ -5,20 +5,20 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.h2.jdbc.JdbcSQLSyntaxErrorException;
-import org.snoflo.domain.CsvFileRow;
-import org.snoflo.function.CsvFileParser;
+import org.snoflo.domain.Row;
+import org.snoflo.function.FileParser;
 import org.snoflo.repository.FileRegisterRepository;
 import org.snoflo.repository.TableRepository;
 
 public class FileRegisterServiceImpl implements FileRegisterService {
 
-	private CsvFileParser csvFileParser;
+	private FileParser csvFileParser;
 
 	private FileRegisterRepository finderRepository;
 	private TableRepository tableRepository;
 
 
-	public FileRegisterServiceImpl(CsvFileParser csvFileParser, FileRegisterRepository finderRepository, TableRepository tableRepository) {
+	public FileRegisterServiceImpl(FileParser csvFileParser, FileRegisterRepository finderRepository, TableRepository tableRepository) {
 		this.csvFileParser = csvFileParser;
 		this.finderRepository = finderRepository;
 		this.tableRepository = tableRepository;
@@ -27,7 +27,7 @@ public class FileRegisterServiceImpl implements FileRegisterService {
 	@Override
 	public void saveQuestionList(Path selectedFile, String fileName) {
 
-		List<CsvFileRow> csvRowList = csvFileParser.readCsvFile(selectedFile);
+		List<Row> csvRowList = csvFileParser.readCsvFile(selectedFile);
 		finderRepository.save(csvRowList, fileName);
 
 	}

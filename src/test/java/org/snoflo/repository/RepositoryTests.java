@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.snoflo.TestDbCreator;
-import org.snoflo.domain.CsvFileRow;
+import org.snoflo.domain.Row;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -51,10 +51,10 @@ public class RepositoryTests {
     @Test
     public void testSave() {
         System.out.println("testSave() 메서드");
-        List<CsvFileRow> questionList = new ArrayList<>();
-        questionList.add(new CsvFileRow("빌더", "객체 조립"));
-        questionList.add(new CsvFileRow("싱글톤", "전역 변수"));
-        questionList.add(new CsvFileRow("프록시", "대리 객체"));
+        List<Row> questionList = new ArrayList<>();
+        questionList.add(new Row("빌더", "객체 조립"));
+        questionList.add(new Row("싱글톤", "전역 변수"));
+        questionList.add(new Row("프록시", "대리 객체"));
 
         // finderRepository.save(questionList);
 
@@ -80,10 +80,10 @@ public class RepositoryTests {
     public void TestfindAll() {
         System.out.println("TestfindAll 메서드 진입");
 
-        List<CsvFileRow> questionList = new ArrayList<>();
-        questionList.add(new CsvFileRow("빌더", "객체 조립"));
-        questionList.add(new CsvFileRow("싱글톤", "전역 변수"));
-        questionList.add(new CsvFileRow("프록시", "대리 객체"));
+        List<Row> questionList = new ArrayList<>();
+        questionList.add(new Row("빌더", "객체 조립"));
+        questionList.add(new Row("싱글톤", "전역 변수"));
+        questionList.add(new Row("프록시", "대리 객체"));
 
         // finderRepository.save(questionList);
 

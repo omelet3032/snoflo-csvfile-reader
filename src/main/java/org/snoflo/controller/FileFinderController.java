@@ -5,20 +5,20 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import org.snoflo.function.CsvFileFinder;
-import org.snoflo.view.CsvFileFinderView;
+import org.snoflo.function.FileFinder;
+import org.snoflo.view.FileFinderView;
 
-public class CsvFileFinderController {
+public class FileFinderController {
 
-    private CsvFileFinderView registerView;
+    private FileFinderView finderView;
 
-    private CsvFileFinder csvFileFinder;
+    private FileFinder fileFinder;
 
     private Scanner scanner;
 
-    public CsvFileFinderController(CsvFileFinderView registerView, CsvFileFinder csvFileFinder, Scanner scanner) {
-        this.registerView = registerView;
-        this.csvFileFinder = csvFileFinder;
+    public FileFinderController(FileFinderView finderView, FileFinder fileFinder, Scanner scanner) {
+        this.finderView = finderView;
+        this.fileFinder = fileFinder;
         this.scanner = scanner;
     }
 
@@ -29,11 +29,11 @@ public class CsvFileFinderController {
     }
 
     private Path searchFolder() {
-        registerView.showPromptFolder();
+        finderView.showPromptFolder();
 
-        List<Path> folderList = csvFileFinder.getFolderList();
+        List<Path> folderList = this.fileFinder.getFolderList();
 
-        registerView.showSelectFolder(folderList);
+        finderView.showSelectFolder(folderList);
         // int number = scanner.nextInt();
 
         int number = -1;
@@ -59,11 +59,11 @@ public class CsvFileFinderController {
     }
 
     private Path searchCsvFile(Path selectedFolder) {
-        registerView.showPromptCsvFile();
+        finderView.showPromptCsvFile();
 
-        List<Path> fileList = csvFileFinder.getFileList(selectedFolder);
+        List<Path> fileList = this.fileFinder.getFileList(selectedFolder);
 
-        registerView.showSelectCsvFile(fileList);
+        finderView.showSelectCsvFile(fileList);
         // int number = scanner.nextInt();
 
         int number = -1;

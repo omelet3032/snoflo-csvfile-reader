@@ -2,7 +2,7 @@ package org.snoflo.service;
 
 import java.util.List;
 
-import org.snoflo.domain.CsvFileRow;
+import org.snoflo.domain.Row;
 import org.snoflo.repository.RandomQuizRepository;
 import org.snoflo.repository.TableRepository;
 
@@ -18,7 +18,7 @@ public class RandomQuizServiceImpl implements RandomQuizService {
     }
 
     @Override
-    public List<CsvFileRow> findAllQuestion(String selectedFile) {
+    public List<Row> findAllQuestion(String selectedFile) {
         return this.questionRepository.findAll(selectedFile);
     }
 
