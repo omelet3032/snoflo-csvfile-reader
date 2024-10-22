@@ -1,14 +1,12 @@
 package org.snoflo.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
+import org.snoflo.domain.Question;
 import org.snoflo.domain.Row;
-import org.snoflo.dto.QuestionDto;
-import org.snoflo.dto.RandomQuestionDto;
 import org.snoflo.function.RandomQuestionGenerator;
 import org.snoflo.function.RandomQuiz;
 import org.snoflo.service.RandomQuizService;
@@ -47,10 +45,7 @@ public class RandomQuizController {
 
         List<Row> cachedList = new ArrayList<>(list);
 
-        // List<QuestionDto> questionList = randomQuestionGenerator.getRandomQuestion2(cachedList);
-        // randomQuiz.playRandomQuiz2(questionList, questionView, scanner);
-
-        executeRandomQuiz2(cachedList);
+        executeRandomQuiz(cachedList);
 
         while (true) {
 
@@ -60,7 +55,7 @@ public class RandomQuizController {
 
             if (answer.equals("Y")) {
                 cachedList.addAll(list);
-                executeRandomQuiz2(cachedList);
+                executeRandomQuiz(cachedList);
                 continue;
             } else if (answer.equals("n")) {
                 questionView.showPromptReturnMainMenu();
@@ -75,13 +70,22 @@ public class RandomQuizController {
     private void executeRandomQuiz(List<Row> cachedList) {
         questionView.showPromptRandomQuestion();
         scanner.nextLine();
-        // randomQuestionGenerator.getRandomQuestion(cachedList);
-        randomQuiz.playRandomQuiz(cachedList, questionView, scanner);
-    }
 
-    private void executeRandomQuiz2(List<Row> cachedList) {
-        List<QuestionDto> questionList = randomQuestionGenerator.getRandomQuestion2(cachedList);
-        randomQuiz.playRandomQuiz2(questionList, questionView, scanner);
+        List<Question> questionList = randomQuestionGenerator.getRandomQuestion(cachedList);
+
+        // Iterator<Question> iterator = questionList.iterator();
+
+        // while (iterator.hasNext()) {
+
+        // Question question = iterator.next();
+        // questionView.showResultQuestionField(question.getQuestion());
+        // scanner.nextLine();
+        // questionView.showResultAnswerField(question.getAnswer());
+        // scanner.nextLine();
+
+        // iterator.remove();
+        // }
+        randomQuiz.playRandomQuiz(questionList, questionView, scanner);
     }
 
 }

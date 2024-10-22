@@ -1,9 +1,5 @@
 package org.snoflo.domain;
 
-
-import org.snoflo.dto.QuestionDto;
-import org.snoflo.dto.RandomQuestionDto;
-
 public class Row {
 
 	private String concept;
@@ -16,10 +12,6 @@ public class Row {
 	public Row(String concept, String description) {
 		this.concept = concept;
 		this.description = description;
-	}
-
-	public RandomQuestionDto toRandomQuestionDto(String question, String answer) {
-		return new RandomQuestionDto(question, answer);
 	}
 
 	public String getConcept() {
