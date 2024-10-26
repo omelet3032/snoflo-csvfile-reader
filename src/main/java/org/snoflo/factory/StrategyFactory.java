@@ -1,5 +1,6 @@
 package org.snoflo.factory;
 
+import java.lang.reflect.Proxy;
 import java.util.Scanner;
 
 import org.snoflo.application.ResourceHandler;
@@ -8,6 +9,7 @@ import org.snoflo.controller.FileFinderController;
 import org.snoflo.controller.FileRegisterController;
 import org.snoflo.controller.EntryController;
 import org.snoflo.controller.RandomQuizController;
+import org.snoflo.exception.CustomExceptionHandler;
 import org.snoflo.function.FileFinder;
 import org.snoflo.function.FileParser;
 import org.snoflo.function.RandomQuiz;
@@ -16,6 +18,7 @@ import org.snoflo.repository.FileRegisterRepositoryImpl;
 import org.snoflo.repository.RandomQuizRepository;
 import org.snoflo.repository.RandomQuizRepositoryImpl;
 import org.snoflo.repository.TableRepository;
+import org.snoflo.repository.TableRepositoryImpl;
 import org.snoflo.service.FileRegisterService;
 import org.snoflo.service.FileRegisterServiceImpl;
 import org.snoflo.service.RandomQuizService;
@@ -75,7 +78,7 @@ public class StrategyFactory {
         private HikariDataSource hikariDataSource = resourceInitializer.getDataSource();
         private Scanner scanner = resourceInitializer.getScanner();
 
-        private TableRepository tableRepository = new TableRepository(hikariDataSource);
+        private TableRepository tableRepository = new TableRepositoryImpl(hikariDataSource);
 
         public ControllerFactory() {
         }
@@ -98,9 +101,23 @@ public class StrategyFactory {
 
             FileParser fileParser = new FileParser();
 
+            // TableRepository tableRepositoryProxy = (TableRepository)
+            // Proxy.newProxyInstance(
+            // TableRepository.class.getClassLoader(),
+            // new Class[] { TableRepository.class },
+            // new CustomExceptionHandler(tableRepository));
+
+            // FileRegisterService registerServiceProxy = (FileRegisterService) Proxy.newProxyInstance(
+            //         FileRegisterService.class.getClassLoader(),
+            //         new Class[] { FileRegisterService.class },
+            //         new CustomExceptionHandler(finderService));
+
             FileRegisterRepository finderRepository = new FileRegisterRepositoryImpl(hikariDataSource);
+
             FileRegisterService finderService = new FileRegisterServiceImpl(fileParser, finderRepository,
                     tableRepository);
+
+
             FileRegisterView registerView = new FileRegisterView();
             FileRegisterController finderController = new FileRegisterController(scanner, finderService,
                     registerView);

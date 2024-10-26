@@ -1,13 +1,13 @@
 package org.snoflo.service;
 
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.snoflo.domain.Row;
 
 public interface FileRegisterService  {
 
-	// public void saveQuestionList(List<Question> csvRowList, String fileName);
 
 	public void createQuestionTable(String fileName);
 
@@ -17,10 +17,5 @@ public interface FileRegisterService  {
 
 	public void saveQuestionList(Path selectedFile, String fileName);
 
-	// public void createQuestionTable(Path selectedFile);
-
-	// public void truncateQuestionTable(Path selectedFile);
-
-	// public String findRegisteredTable(Path selectedFile);
 
 }

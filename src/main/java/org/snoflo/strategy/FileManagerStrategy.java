@@ -1,6 +1,7 @@
 package org.snoflo.strategy;
 
 import java.nio.file.Path;
+import java.sql.SQLException;
 
 import org.snoflo.controller.FileFinderController;
 import org.snoflo.controller.FileRegisterController;

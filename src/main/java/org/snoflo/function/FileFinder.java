@@ -8,14 +8,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// 메서드가 짧으니 람다로..? 
 public class FileFinder {
 
+    private final Path DIRECTORY_PATH = Paths.get(System.getProperty("user.dir"));
+    private final int MAX_DEPTH = 1;
+
     public List<Path> getFolderList() {
-        Path dirPath = Paths.get(System.getProperty("user.dir"));
-        int maxDepth = 1;
 
         try {
-            return Files.walk(dirPath, maxDepth).filter(Files::isDirectory).collect(Collectors.toList());
+            return Files.walk(DIRECTORY_PATH, MAX_DEPTH).filter(Files::isDirectory).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }

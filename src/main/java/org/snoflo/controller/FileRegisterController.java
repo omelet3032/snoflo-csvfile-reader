@@ -1,6 +1,7 @@
 package org.snoflo.controller;
 
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import org.snoflo.service.FileRegisterService;
