@@ -1,4 +1,4 @@
-package org.snoflo.application;
+package org.snoflo.factory;
 
 import java.util.Scanner;
 
@@ -12,7 +12,7 @@ public class ResourceInitializer {
     private H2WebConsole console;
 	private HikariDataSource dataSource;
     private Scanner scanner;
-    
+
     public ResourceInitializer() {
         this.console = new H2WebConsole();
         this.dataSource = AppDataSource.getInstance();

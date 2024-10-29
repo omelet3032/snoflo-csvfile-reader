@@ -1,7 +1,7 @@
 package org.snoflo.strategy;
 
-import org.snoflo.application.ResourceHandler;
 import org.snoflo.controller.EntryController;
+import org.snoflo.factory.ResourceHandler;
 
 public class EntryStrategy implements AppStrategy {
     

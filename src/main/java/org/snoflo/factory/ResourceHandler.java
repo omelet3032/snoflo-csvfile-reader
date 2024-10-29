@@ -1,4 +1,4 @@
-package org.snoflo.application;
+package org.snoflo.factory;
 
 
 public class ResourceHandler {

@@ -33,20 +33,17 @@ import org.snoflo.view.RandomQuizView;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public class StrategyFactory {
+public class StrategyFactoryBU {
 
     private ResourceInitializer resourceInitializer;
     private ResourceHandler resourceHandler;
 
     private AppContext context;
 
-    private SimpleIoCContainer container;
-
-    public StrategyFactory(AppContext context, SimpleIoCContainer container) {
+    public StrategyFactoryBU(AppContext context) {
         this.context = context;
         this.resourceInitializer = new ResourceInitializer();
         this.resourceHandler = new ResourceHandler();
-        this.container = container;
     }
 
     public AppStrategy createEntryStrategy() {
