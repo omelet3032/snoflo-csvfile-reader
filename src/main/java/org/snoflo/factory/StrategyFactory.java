@@ -40,13 +40,10 @@ public class StrategyFactory {
 
     private AppContext context;
 
-    private SimpleIoCContainer container;
-
-    public StrategyFactory(AppContext context, SimpleIoCContainer container) {
+    public StrategyFactory(AppContext context) {
         this.context = context;
         this.resourceInitializer = new ResourceInitializer();
         this.resourceHandler = new ResourceHandler();
-        this.container = container;
     }
 
     public AppStrategy createEntryStrategy() {

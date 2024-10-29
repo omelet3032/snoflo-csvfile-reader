@@ -73,19 +73,22 @@ public class RandomQuizController {
 
         List<Question> questionList = randomQuestionGenerator.getRandomQuestion(cachedList);
 
-        // Iterator<Question> iterator = questionList.iterator();
+        Iterator<Question> iterator = questionList.iterator();
 
-        // while (iterator.hasNext()) {
+        while (iterator.hasNext()) {
 
-        // Question question = iterator.next();
-        // questionView.showResultQuestionField(question.getQuestion());
-        // scanner.nextLine();
-        // questionView.showResultAnswerField(question.getAnswer());
-        // scanner.nextLine();
+            Question question = iterator.next();
+            questionView.showResultQuestionField(question.getQuestion());
+            scanner.nextLine();
+            questionView.showResultAnswerField(question.getAnswer());
+            scanner.nextLine();
 
-        // iterator.remove();
-        // }
-        randomQuiz.playRandomQuiz(questionList, questionView, scanner);
+            iterator.remove();
+        }
+
+        questionView.showPromptEndRandomQuiz();
+        scanner.nextLine();
+
     }
 
 }

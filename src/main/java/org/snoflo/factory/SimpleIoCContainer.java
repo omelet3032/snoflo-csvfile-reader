@@ -13,7 +13,7 @@ public class SimpleIoCContainer {
     }
 
     // 클래스를 등록하고 나중에 인스턴스화
-    public <T> void registerClass(Class<T> clazz) {
+    public <T> void registerProtoType(Class<T> clazz) {
         try {
             instances.put(clazz, clazz.getDeclaredConstructor().newInstance());
         } catch (Exception e) {
